@@ -3,16 +3,16 @@
 
 using namespace std;
 
-typedef  pair<int,int> par_int ;
+typedef pair<int,int> par_int ;
 typedef vector<par_int> vector_pares;
 
 void calcSubsecuencia(string orig, string dest, vector_pares & subsec)
 {
-	int k = 0;
-	int j= 0;
+    int k = 0;
+	int j = 0;
 	for (int i = 0; i < orig.length(); i++) {
 		j=k;
-		while(j < dest.length() && orig[i] != dest[j]) 
+		while(j < dest.length() && orig[i] != dest[j])
 			j++;
 		if (j < dest.length()) {
 			subsec.push_back(par_int(i,j));
@@ -20,7 +20,7 @@ void calcSubsecuencia(string orig, string dest, vector_pares & subsec)
 		}
 	}
 }
-	
+
 int main(int argc, char *argv[])
 {
 	vector_pares subsec;
