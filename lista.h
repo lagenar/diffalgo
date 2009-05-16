@@ -6,7 +6,7 @@ class Lista {
   struct nodo_lista{
     T elem;
     struct nodo_lista* sig;
-  } cabeza, final;
+  } *cabeza, *final;
 
   void _eliminarLista();
   
