@@ -1,0 +1,43 @@
+#include "Archivo.h"
+#include <iostream>
+
+Archivo::Archivo(ifstream & arch)
+{
+    cantLineas = nroLineas(arch);
+    lineas = new string[cantLineas];
+    int n(0); // n es el contador que sirve para determinar las posiciones en el arreglo de strings.
+    while (getline(arch, lineas[n])) {
+        n++;
+    }
+}
+
+Archivo::~Archivo()
+{
+    delete [] lineas;
+}
+
+string Archivo::getLinea(int n)
+{
+    return lineas[n];
+}
+
+void Archivo::setLinea(int n, string linea)
+{
+    lineas[n]=linea;
+}
+
+int Archivo::nroLineas(ifstream & arch)
+{
+    string linea;
+    int n(1); // n es la cantidad de líneas.
+    while (getline(arch, linea))
+        n++;
+    arch.clear();
+    arch.seekg(0, ios::beg);
+    return n;
+}
+
+int Archivo::getCantLineas()
+{
+    return cantLineas;
+}
