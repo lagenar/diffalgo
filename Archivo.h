@@ -13,6 +13,7 @@ class Archivo
         void setLinea(int, string);
         static int nroLineas(ifstream &);
         int getCantLineas();
+        void imprimirArchivo();
     private:
         int cantLineas;
         string * lineas;

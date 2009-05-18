@@ -8,9 +8,10 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 	Archivo a(arch);
-	for (int i=0;i<a.getCantLineas();i++){
+	/*for (int i=0;i<a.getCantLineas();i++){
 		cout << a.getLinea(i) << endl;
-	}
+	}*/
+	a.imprimirArchivo();
 	arch.close();
 	return 0;
 }
