@@ -5,7 +5,7 @@ CambioAgregar::CambioAgregar(int lineaOrigen, int lineaDestinoComienzo, int line
     this->lineaDestinoComienzo=lineaDestinoComienzo;
     this->lineaDestinoFinal=lineaDestinoFinal;
 }
-string CambioAgregar::getDiff(const Archivo & archdest)
+string CambioAgregar::getDiff(const Archivo & archorig, const Archivo & archdest)
 {
     stringstream resultado; // Se usa para la conversión de int a string.
     resultado << lineaOrigen << "a" << lineaDestinoComienzo << "," << lineaDestinoFinal << endl;
@@ -19,7 +19,7 @@ CambioEliminar::CambioEliminar(int lineaDestino, int lineaOrigenComienzo, int li
     this->lineaOrigenComienzo=lineaOrigenComienzo;
     this->lineaOrigenFinal=lineaOrigenFinal;
 }
-string CambioEliminar::getDiff(const Archivo & archorig){
+string CambioEliminar::getDiff(const Archivo & archorig, const Archivo & archdest){
     stringstream resultado;
     resultado << lineaOrigenComienzo << "," << lineaOrigenFinal << "d" << lineaDestino << endl;
     for (int i=lineaOrigenComienzo; i <= lineaOrigenFinal; i++)

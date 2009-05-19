@@ -3,11 +3,12 @@
 
 Archivo::Archivo(ifstream & arch)
 {
+    string temp;
     cantLineas = nroLineas(arch);
     lineas = new string[cantLineas];
     int n(0); // n es el contador que sirve para determinar las posiciones en el arreglo de strings.
-    while (getline(arch, lineas[n])) {
-        n++;
+    while (getline(arch, temp)) {
+        lineas[n++]=temp;
     }
 }
 
@@ -29,7 +30,7 @@ void Archivo::setLinea(int n, string linea)
 int Archivo::nroLineas(ifstream & arch)
 {
     string linea;
-    int n(1); // n es la cantidad de líneas.
+    int n(0); // n es la cantidad de líneas.
     while (getline(arch, linea))
         n++;
     arch.clear();

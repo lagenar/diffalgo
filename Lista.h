@@ -13,7 +13,7 @@ template <class T>
 class Lista {
   struct nodo_lista<T> *cabeza, *cola;
   void _eliminarLista();
-  
+
  public:
   Lista();
   ~Lista();
@@ -34,7 +34,7 @@ void Lista<T>::insertarFinal(T elem)
   nodo_lista<T>* nuevo = new nodo_lista<T>;
   nuevo->elem = elem;
   nuevo->sig = 0;
-  if (cabeza == 0) 
+  if (cabeza == 0)
     cabeza = cola =  nuevo;
   else {
     cola->sig = nuevo;
@@ -70,6 +70,7 @@ class IteradorLista {
   void sucesor();
   bool terminado();
   T elemActual();
+  T elemUltimo();
 };
 
 template <class T>
@@ -101,6 +102,12 @@ template <class T>
 T IteradorLista<T>::elemActual()
 {
   return (cursor->elem);
+}
+
+template <class T>
+T IteradorLista<T>::elemUltimo()
+{
+    return (lista->cola->elem);
 }
 
 #endif

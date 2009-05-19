@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1242756941 source:/home/mmatos/Desktop/AyDA/diffalgo/Archivo.cpp
+1242762478 source:/home/mmatos/Desktop/AyDA/diffalgo/Archivo.cpp
 	"Archivo.h"
 	<iostream>
 
 1242756941 /home/mmatos/Desktop/AyDA/diffalgo/Archivo.h
 	<fstream>
 
-1242757282 source:/home/mmatos/Desktop/AyDA/diffalgo/Cambio.cpp
+1242764683 source:/home/mmatos/Desktop/AyDA/diffalgo/Cambio.cpp
 	"Cambio.h"
 
-1242757260 /home/mmatos/Desktop/AyDA/diffalgo/Cambio.h
+1242764683 /home/mmatos/Desktop/AyDA/diffalgo/Cambio.h
 	"Archivo.h"
 	<string>
 	<sstream>
@@ -18,4 +18,21 @@
 	"Cambio.h"
 	<fstream>
 	<iostream>
+
+1242768957 source:/home/mmatos/Desktop/AyDA/diffalgo/Diferencial.cpp
+	"Diferencial.h"
+	<iostream>
+
+1242764471 /home/mmatos/Desktop/AyDA/diffalgo/Diferencial.h
+	"Lista.h"
+	"Cambio.h"
+	"Archivo.h"
+
+1242767163 /home/mmatos/Desktop/AyDA/diffalgo/Lista.h
+
+1242764772 source:/home/mmatos/Desktop/AyDA/diffalgo/pruebadiferencial.cpp
+	<iostream>
+	<fstream>
+	"Diferencial.h"
+	"Archivo.h"
 
