@@ -41,8 +41,10 @@ int Archivo::getCantLineas()
 {
     return cantLineas;
 }
-void Archivo::imprimirArchivo()
+
+void Archivo::guardarArchivo(ostream & arch)
 {
-    for (int i=0; i<cantLineas; i++)
-        cout << lineas[i] << endl;
+    for (int i = 0; i < cantLineas; i++)
+        arch << lineas[i] << endl;
 }
+

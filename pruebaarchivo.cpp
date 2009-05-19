@@ -1,5 +1,6 @@
 #include "Archivo.h"
 #include <iostream>
+
 int main(int argc, char * argv[])
 {
 	ifstream arch(argv[1]);
@@ -8,10 +9,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 	Archivo a(arch);
-	/*for (int i=0;i<a.getCantLineas();i++){
-		cout << a.getLinea(i) << endl;
-	}*/
-	a.imprimirArchivo();
+	a.guardarArchivo(cout);
 	arch.close();
 	return 0;
 }

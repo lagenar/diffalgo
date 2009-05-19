@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="Archivo.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="842" topLine="25" />
+	<File name="Archivo.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="789" topLine="24" />
 	</File>
-	<File name="Archivo.h" open="0" top="0" tabpos="0">
-		<Cursor position="329" topLine="0" />
+	<File name="Archivo.h" open="1" top="0" tabpos="2">
+		<Cursor position="240" topLine="0" />
+	</File>
+	<File name="Lista.h" open="0" top="0" tabpos="0">
+		<Cursor position="141" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
