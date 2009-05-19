@@ -16,9 +16,9 @@ Archivo::~Archivo()
     delete [] lineas;
 }
 
-string Archivo::getLinea(int n)
+string Archivo::getLinea(int n) const
 {
-    return lineas[n];
+    return lineas[n-1];
 }
 
 void Archivo::setLinea(int n, string linea)

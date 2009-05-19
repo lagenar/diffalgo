@@ -9,7 +9,7 @@ class Archivo
     public:
         Archivo(ifstream &);
         ~Archivo();
-        string getLinea(int);
+        string getLinea(int) const;
         void setLinea(int, string);
         static int nroLineas(ifstream &);
         int getCantLineas();
