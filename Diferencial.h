@@ -4,10 +4,12 @@
 #include "Cambio.h"
 #include "Archivo.h"
 
-struct parInt{
-                int primero;
-                int segundo;
-        };
+class parInt {
+    public:
+        int primero;
+        int segundo;
+        parInt(int p, int s) : primero(p), segundo(s) { }
+};
 
 class Diferencial
 {

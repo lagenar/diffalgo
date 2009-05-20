@@ -16,16 +16,13 @@ Diferencial::~Diferencial()
 
 void Diferencial::calcularSubsecuencia()
 {
-    parInt par;
     int k(1), j(1);
     for (int i=1; i<=archorig->getCantLineas(); i++) {
         j=k;
         while(j<=archdest->getCantLineas() && archorig->getLinea(i)!=archdest->getLinea(j))
             j++;
         if (j<=archdest->getCantLineas()) {
-            par.primero=i;
-            par.segundo=j;
-            subsecuencia.insertarFinal(par);
+            subsecuencia.insertarFinal(parInt(i, j));
             k=j+1;
         }
     }
