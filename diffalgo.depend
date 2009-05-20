@@ -68,3 +68,35 @@
 	"Diferencial.h"
 	<iostream>
 
+1242784373 source:/home/lucas/Escritorio/diffalgo/Archivo.cpp
+	"Archivo.h"
+	<iostream>
+
+1242784373 /home/lucas/Escritorio/diffalgo/Archivo.h
+	<fstream>
+
+1242784373 source:/home/lucas/Escritorio/diffalgo/Cambio.cpp
+	"Cambio.h"
+
+1242784373 /home/lucas/Escritorio/diffalgo/Cambio.h
+	"Archivo.h"
+	<string>
+	<sstream>
+
+1242784799 source:/home/lucas/Escritorio/diffalgo/Diferencial.cpp
+	"Diferencial.h"
+	<iostream>
+
+1242784373 /home/lucas/Escritorio/diffalgo/Diferencial.h
+	"Lista.h"
+	"Cambio.h"
+	"Archivo.h"
+
+1242784373 /home/lucas/Escritorio/diffalgo/Lista.h
+
+1242784373 source:/home/lucas/Escritorio/diffalgo/pruebadiferencial.cpp
+	<iostream>
+	<fstream>
+	"Diferencial.h"
+	"Archivo.h"
+

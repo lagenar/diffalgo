@@ -35,11 +35,11 @@ void Diferencial::crearCambios()
     if(!it.terminado()){ //Si la subsecuencia no es vacía.
 
         if (i < it.elemActual().primero) {
-            Cambios.insertarFinal(new CambioEliminar(it.elemActual().segundo,1,it.elemActual().primero-1));
+            Cambios.insertarFinal(new CambioEliminar(0,1,it.elemActual().primero-1));
             i=it.elemActual().primero;
         }
         if (j < it.elemActual().segundo) {
-            Cambios.insertarFinal(new CambioAgregar(1,1,it.elemActual().segundo-1));
+            Cambios.insertarFinal(new CambioAgregar(0,1,it.elemActual().segundo-1));
             j=it.elemActual().segundo;
         }
         it.sucesor();
