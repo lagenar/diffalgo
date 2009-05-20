@@ -73,7 +73,6 @@ class IteradorLista {
   void sucesor();
   bool terminado();
   T elemActual();
-  T elemUltimo();
 };
 
 template <class T>
@@ -105,12 +104,6 @@ template <class T>
 T IteradorLista<T>::elemActual()
 {
   return (cursor->elem);
-}
-
-template <class T>
-T IteradorLista<T>::elemUltimo()
-{
-    return (lista->cola->elem);
 }
 
 #endif

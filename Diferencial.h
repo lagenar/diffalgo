@@ -22,7 +22,7 @@ class Diferencial
         Lista<parInt> subsecuencia;
         typedef IteradorLista<parInt> iterSubsecuencia;
         Lista<Cambio*> Cambios;
-        Archivo *archorig, *archdest;
+        Archivo *archorig, *archobj;
 
         void calcularSubsecuencia();
         void crearCambios();

@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="/home/mmatos/Desktop/f1 /home/mmatos/Desktop/f2" />
+				<Option parameters="/home/lucas/diffalgo/f1 /home/lucas/diffalgo/f2" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
