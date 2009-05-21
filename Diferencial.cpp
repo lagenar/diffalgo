@@ -52,8 +52,8 @@ void Diferencial::crearCambios()
     while (!it.terminado()) {
         if (it.elemActual().primero > i + 1)
             Cambios.insertarFinal(new CambioEliminar(k , i + 1, it.elemActual().primero - 1));
-       if (it.elemActual().segundo > k + 1)
-                Cambios.insertarFinal(new CambioAgregar(i,k+1,it.elemActual().segundo-1));
+        if (it.elemActual().segundo > k + 1)
+            Cambios.insertarFinal(new CambioAgregar(i, k + 1, it.elemActual().segundo - 1));
         i = it.elemActual().primero;
         k = it.elemActual().segundo;
         it.sucesor();
@@ -72,11 +72,11 @@ void Diferencial::crearCambios()
 
 void Diferencial::imprimirDiff()
 {
-    this->calcularSubsecuencia();
-    this->crearCambios();
+    calcularSubsecuencia();
+    crearCambios();
     IteradorLista<Cambio*> it(&Cambios);
     while (!it.terminado()) {
-        cout << it.elemActual()->getDiff(*archorig,*archobj);
+        cout << it.elemActual()->getDiff(*archorig, *archobj);
         it.sucesor();
     }
 }

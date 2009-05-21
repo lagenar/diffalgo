@@ -9,14 +9,15 @@ using namespace std;
 class Cambio
 {
     public:
-        virtual string getDiff(const Archivo &, const Archivo &) =0;
-        virtual void aplicarPatch()=0;
+        virtual ~Cambio() { };
+        virtual string getDiff(const Archivo &, const Archivo &) = 0;
+        virtual void aplicarPatch() = 0;
 };
 
 class CambioAgregar: public Cambio
 {
     public:
-        CambioAgregar(int,int,int);
+        CambioAgregar(int , int, int);
         ~CambioAgregar() {  }
         string getDiff(const Archivo &, const Archivo &);
         void aplicarPatch() {  }

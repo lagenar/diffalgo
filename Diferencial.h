@@ -17,7 +17,6 @@ class Diferencial
         Diferencial(Archivo *, Archivo *);
         virtual ~Diferencial();
         void imprimirDiff();
-    protected:
     private:
         Lista<parInt> subsecuencia;
         typedef IteradorLista<parInt> iterSubsecuencia;
