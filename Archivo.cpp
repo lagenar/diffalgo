@@ -24,7 +24,7 @@ string Archivo::getLinea(int n) const
 
 void Archivo::setLinea(int n, const string & linea)
 {
-    lineas[n]=linea;
+    lineas[n-1] = linea;
 }
 
 int Archivo::nroLineas(ifstream & arch)
