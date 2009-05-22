@@ -81,6 +81,23 @@ Introducción
 Utilidades Diff y Patch
 \end_layout
 
+\begin_layout Standard
+Diff es una utilidad de comparación de archivos que, dados dos archivos
+ de texto
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Las versiones modernas también soportan archivos binarios 
+\end_layout
+
+\end_inset
+
+, genera una serie de cambios.
+ A partir de esta información la utilidad patch, aplicando los cambios correspon
+dientes al archivo origen, produce como salida el archivo objetivo.
+\end_layout
+
 \begin_layout Subsection
 Estrategías utilizadas
 \end_layout
