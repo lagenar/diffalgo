@@ -51,13 +51,13 @@
 	<string>
 	<sstream>
 
-1242870635 source:/home/lucas/diffalgo/pruebadiferencial.cpp
+1242996586 source:/home/lucas/diffalgo/pruebadiferencial.cpp
 	<iostream>
 	<fstream>
 	"Diferencial.h"
 	"Archivo.h"
 
-1242870949 /home/lucas/diffalgo/Diferencial.h
+1242996711 /home/lucas/diffalgo/Diferencial.h
 	"Lista.h"
 	"Cambio.h"
 	"Archivo.h"

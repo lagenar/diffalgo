@@ -14,7 +14,7 @@ class parInt {
 class Diferencial
 {
     public:
-        Diferencial(Archivo *, Archivo *);
+        Diferencial(Archivo &, Archivo &);
         virtual ~Diferencial();
         void imprimirDiff();
     private:
@@ -24,7 +24,7 @@ class Diferencial
         Archivo *archorig, *archobj;
 
         void calcularSubsecuencia();
-        void crearCambios();
+        void calcularCambios();
 };
 
 #endif // DIFERENCIAL_H
