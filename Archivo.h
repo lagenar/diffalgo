@@ -12,7 +12,6 @@ class Archivo
         string getLinea(int) const;
         void setLinea(int, const string &);
         int getCantLineas() const;
-        void guardarArchivo(ostream &);
         static int nroLineas(ifstream &);
     private:
         int cantLineas;

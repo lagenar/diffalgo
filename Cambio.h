@@ -9,7 +9,6 @@ using namespace std;
 class Cambio
 {
     public:
-        virtual ~Cambio() { };
         virtual string getDiff(const Archivo &, const Archivo &) = 0;
         virtual void aplicarPatch() = 0;
 };
@@ -17,8 +16,7 @@ class Cambio
 class CambioAgregar: public Cambio
 {
     public:
-        CambioAgregar(int , int, int);
-        ~CambioAgregar() {  }
+        CambioAgregar(int, int, int);
         string getDiff(const Archivo &, const Archivo &);
         void aplicarPatch() {  }
     private:
@@ -31,7 +29,6 @@ class CambioEliminar: public Cambio
 {
     public:
         CambioEliminar(int, int, int);
-        ~CambioEliminar() {  }
         string getDiff(const Archivo &, const Archivo &);
         void aplicarPatch() {  }
     private:

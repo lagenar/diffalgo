@@ -42,10 +42,3 @@ int Archivo::getCantLineas() const
 {
     return cantLineas;
 }
-
-void Archivo::guardarArchivo(ostream & arch)
-{
-    for (int i = 0; i < cantLineas; i++)
-        arch << lineas[i] << endl;
-}
-

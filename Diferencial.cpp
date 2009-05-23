@@ -9,12 +9,7 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj)
     this->archobj = &archobj;
 }
 
-Diferencial::~Diferencial()
-{
-
-}
-
-void Diferencial::calcularSubsecuencia()
+void Diferencial::calcularSubsecuencia(Lista<parInt> & subsecuencia)
 {
     int k = 1;
     int j = 1;
@@ -29,7 +24,7 @@ void Diferencial::calcularSubsecuencia()
     }
 }
 
-void Diferencial::calcularCambios()
+void Diferencial::calcularCambios(Lista<Cambio*> & Cambios, Lista<parInt> & subsecuencia)
 {
     int i = 1;
     int k = 1;
@@ -72,8 +67,10 @@ void Diferencial::calcularCambios()
 
 void Diferencial::imprimirDiff()
 {
-    calcularSubsecuencia();
-    calcularCambios();
+    Lista<parInt> subsecuencia;
+    Lista<Cambio*> Cambios;
+    calcularSubsecuencia(subsecuencia);
+    calcularCambios(Cambios, subsecuencia);
     IteradorLista<Cambio*> it(&Cambios);
     while (!it.terminado()) {
         cout << it.elemActual()->getDiff(*archorig, *archobj);

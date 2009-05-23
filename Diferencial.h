@@ -15,16 +15,13 @@ class Diferencial
 {
     public:
         Diferencial(Archivo &, Archivo &);
-        virtual ~Diferencial();
+        ~Diferencial() { }
         void imprimirDiff();
     private:
-        Lista<parInt> subsecuencia;
-        typedef IteradorLista<parInt> iterSubsecuencia;
-        Lista<Cambio*> Cambios;
         Archivo *archorig, *archobj;
 
-        void calcularSubsecuencia();
-        void calcularCambios();
+        void calcularSubsecuencia(Lista<parInt> &);
+        void calcularCambios(Lista<Cambio*> &, Lista<parInt> &);
 };
 
 #endif // DIFERENCIAL_H
