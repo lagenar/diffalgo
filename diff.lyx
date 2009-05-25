@@ -220,7 +220,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $sucesor:\: IteradorLista\left(I\right)\rightarrow IteradorLista$
+\begin_inset Formula $sucesor:\: IteradorLista\left(i\right)\rightarrow IteradorLista$
 \end_inset
 
 
@@ -228,7 +228,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $pre:\: not\: terminado\left(I\right)$
+\begin_inset Formula $pre:\: not\: terminado\left(i\right)$
 \end_inset
 
 
@@ -236,7 +236,7 @@ FUNCTIONS
 
 \end_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $elemActual:\: IteradorLista\left(I\right)\rightarrow Elem$
+\begin_inset Formula $elemActual:\: IteradorLista\left(i\right)\rightarrow Elem$
 \end_inset
 
 
@@ -244,7 +244,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $pre:\: not\: terminado\left(I\right)$
+\begin_inset Formula $pre:\: not\: terminado\left(i\right)$
 \end_inset
 
 
@@ -276,7 +276,7 @@ El tipo subsecuencia es una lista de ParNat.
 \end_layout
 
 \begin_layout LyX-Code
-Class ParNat
+CLASS ParNat
 \end_layout
 
 \begin_layout LyX-Code
@@ -345,19 +345,182 @@ Subsecuencia
 \end_layout
 
 \begin_layout Standard
-El tipo Subsecuencia
+El tipo Subsecuencia es una lista de pares de números naturales.
+ Su función en el sistema es la de contener los índices de las líneas de
+ una subsecuencia común entre dos archivos.
+ Su definición es simple porque la funcionalidad de el tipo lista es suficiente.
+\end_layout
+
+\begin_layout LyX-Code
+CLASS Subsecuencia
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS ParNat
+\end_layout
+
+\begin_layout LyX-Code
+INHERITS Lista[ParNat]
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+TYPES Subsecuencia
+\end_layout
+
+\begin_layout LyX-Code
+END-CLASS
 \end_layout
 
 \begin_layout Subsubsection
 Arreglo
 \end_layout
 
+\begin_layout Standard
+El TDA Arreglo es una colección de elementos de acceso aleatorio y de tamaño
+ fijo.
+ Se optó por un indexamiento al estilo pascal, es decir, de 1 a n.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Siendo n el tamaño del arreglo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este tipo es base de los TDA Archivo y Línea.
+\end_layout
+
+\begin_layout LyX-Code
+CLASS Arreglo[Elem]
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS Nat
+\end_layout
+
+\begin_layout LyX-Code
+BASIC CONSTRUCTORS crear, setCelda
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+TYPES Arreglo
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $crear:\: Nat\rightarrow Arreglo$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $tamaño:\: Arreglo\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $setCelda:\: Arreglo\left(a\right)\: x\: Nat(i)\rightarrow Arreglo$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\:1\leq i\leq tamaño\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $getCelda:\: Arreglo\left(a\right)\: x\: Nat(i)\rightarrow Elem$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\:1\leq i\leq tamaño\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+END-CLASS
+\end_layout
+
 \begin_layout Subsection
-Tipos Indispensables
+Tipos Principales
 \end_layout
 
 \begin_layout Subsubsection
 Línea
+\end_layout
+
+\begin_layout Standard
+El TDA Línea representa una cadena de caracteres.
+ Para su definición se utiliza el TDA Arreglo parametrizado con el tipo
+ char.
+ También se incluye la funcionalidad básica para comparar dos líneas.
+\end_layout
+
+\begin_layout LyX-Code
+CLASS Línea
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS Char, Boolean
+\end_layout
+
+\begin_layout LyX-Code
+INHERITS Arreglo[Char]
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $iguales:\: Línea\: x\: Línea\rightarrow Boolean$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+END-CLASS
 \end_layout
 
 \begin_layout Subsubsection
