@@ -81,23 +81,6 @@ Introducción
 Utilidades Diff y Patch
 \end_layout
 
-\begin_layout Standard
-Diff es una utilidad de comparación de archivos que, dados dos archivos
- de texto
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Las versiones modernas también soportan archivos binarios 
-\end_layout
-
-\end_inset
-
-, genera una serie de cambios.
- A partir de esta información la utilidad patch, aplicando los cambios correspon
-dientes al archivo origen, produce como salida el archivo objetivo.
-\end_layout
-
 \begin_layout Subsection
 Estrategías utilizadas
 \end_layout
@@ -110,20 +93,259 @@ Tipos de datos abstractos
 Tipos auxiliares
 \end_layout
 
+\begin_layout Standard
+Se definieron TDA auxiliares para obtener una especificación más completa
+ del sistema.
+\end_layout
+
+\begin_layout Standard
+El soporte de herencia del lenguaje NEREUS nos permitió definir algunos
+ de los los TDA principales a partir de los auxiliares, y a su vez, hay
+ relaciones de herencia entre tipos auxiliares.
+\end_layout
+
 \begin_layout Subsubsection
 Lista
+\end_layout
+
+\begin_layout Standard
+Es una lista genérica, pero con funcionalidad reducida comparado con la
+ especificación estandar de lista.
+ Este tipo sólo permite inserciones al final y no es posible eliminar un
+ elemento por separado.
+ Este tipo es heredado por subsecuencia.
+\end_layout
+
+\begin_layout LyX-Code
+CLASS Lista[Elem]
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS Boolean
+\end_layout
+
+\begin_layout LyX-Code
+BASIC CONSTRUCTORS crear, agregarFinalLista
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+TYPES Lista
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $crear:\:\rightarrow Lista$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $agregarFinalLista:\: Lista\: x\: Elem\rightarrow Lista$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $vaciaLista:\: Lista\rightarrow Boolean$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+END-CLASS
+\end_layout
+
+\begin_layout LyX-Code
+
 \end_layout
 
 \begin_layout Subsubsection
 IteradorLista
 \end_layout
 
+\begin_layout Standard
+Este tipo tiene el objeto de permitir acceder a los elementos de una lista
+ secuencialmente.
+\end_layout
+
+\begin_layout LyX-Code
+CLASS IteradorLista[Elem]
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS Boolean, Lista[Elem]
+\end_layout
+
+\begin_layout LyX-Code
+BASIC CONSTRUCTORS crear
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+TYPES IteradorLista
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $crear:\: Lista\rightarrow IteradorLista$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $terminado:\: IteradorLista\rightarrow Boolean$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $sucesor:\: IteradorLista\left(I\right)\rightarrow IteradorLista$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\: not\: terminado\left(I\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $elemActual:\: IteradorLista\left(I\right)\rightarrow Elem$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\: not\: terminado\left(I\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+END-CLASS
+\end_layout
+
 \begin_layout Subsubsection
-Par
+ParNat
+\end_layout
+
+\begin_layout Standard
+Es un TDA que contiene dos números naturales.
+ Se utiliza para definir el tipo subsecuencia
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+El tipo subsecuencia es una lista de ParNat.
+\end_layout
+
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout LyX-Code
+Class ParNat
+\end_layout
+
+\begin_layout LyX-Code
+IMPORTS Nat
+\end_layout
+
+\begin_layout LyX-Code
+BASIC CONSTRUCTORS crear
+\end_layout
+
+\begin_layout LyX-Code
+DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+TYPES ParNat
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $crear:\: Nat\: x\: Nat\rightarrow ParNat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $setPrimero:\: Nat\rightarrow ParNat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getPrimero:\: ParNat\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $setSegundo:\: Nat\rightarrow ParNat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getSegundo:\: ParNat\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+END-CLASS
 \end_layout
 
 \begin_layout Subsubsection
 Subsecuencia
+\end_layout
+
+\begin_layout Standard
+El tipo Subsecuencia
 \end_layout
 
 \begin_layout Subsubsection
