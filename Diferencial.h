@@ -16,13 +16,13 @@ class Diferencial
     public:
         Diferencial(Archivo &, Archivo &);
         ~Diferencial() { }
-        void calcularCambios();
         void imprimirDiff();
     private:
         Archivo *archorig, *archobj;
         Lista<parInt> subsecuencia;
         Lista<Cambio*> Cambios;
 
+        void calcularCambios();
         void calcularSubsecuencia();
 };
 
