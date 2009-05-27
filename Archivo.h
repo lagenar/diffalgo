@@ -7,13 +7,15 @@ using namespace std;
 class Archivo
 {
     public:
-        Archivo(ifstream &);
+        Archivo(const char []);
         ~Archivo();
         string getLinea(int) const;
         void setLinea(int, const string &);
         int getCantLineas() const;
+        bool isOpen() const;
         static int nroLineas(ifstream &);
     private:
+        bool errorAbrir;
         int cantLineas;
         string * lineas;
 };

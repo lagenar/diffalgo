@@ -43,7 +43,7 @@ void Diferencial::calcularCambios(Lista<Cambio*> & Cambios, Lista<parInt> & subs
         it.sucesor();
     } else
         k = i = 0; /*subsecuencia vacia: los indices se ponen en 0 para que se agregen todas
-                     las lineas del archivo destino y se eliminen todas las del origen*/
+                     las lineas del archivo objetivo y se eliminen todas las del origen*/
     while (!it.terminado()) {
         if (it.elemActual().primero > i + 1)
             Cambios.insertarFinal(new CambioEliminar(k , i + 1, it.elemActual().primero - 1));
