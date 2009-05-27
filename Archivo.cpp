@@ -1,8 +1,15 @@
 #include "Archivo.h"
 #include <iostream>
 
-Archivo::Archivo(ifstream & arch)
+Archivo::Archivo(const char nombre[])
 {
+    errorAbrir = false;
+    ifstream arch(nombre);
+    if (!arch.is_open()) { //si el archivo no se puede abrir, se retorna inmediatamente
+                           //quien use esta clase debe llamar al método isOpen para verificar
+        errorAbrir = true;
+        return;
+    }
     cantLineas = nroLineas(arch);
     lineas = new string[cantLineas];
     int n = 0;
@@ -10,11 +17,18 @@ Archivo::Archivo(ifstream & arch)
     while (getline(arch, temp)) {
         lineas[n++] = temp;
     }
+    arch.close();
+}
+
+bool Archivo::isOpen() const
+{
+    return !errorAbrir;
 }
 
 Archivo::~Archivo()
 {
-    delete [] lineas;
+    if (!errorAbrir) // solo se hace el delete si se han alocado lineas
+        delete [] lineas;
 }
 
 string Archivo::getLinea(int n) const
