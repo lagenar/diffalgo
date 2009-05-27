@@ -7,6 +7,8 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj)
 {
     this->archorig = &archorig;
     this->archobj = &archobj;
+    calcularSubsecuencia();
+    calcularCambios();
 }
 
 void Diferencial::calcularSubsecuencia()
