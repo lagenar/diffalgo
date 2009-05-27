@@ -23,6 +23,7 @@ class Lista {
   Lista();
   ~Lista();
   void insertarFinal(const T & elem);
+  void insertarPrincipio(const T & elem);
   friend class IteradorLista<T>;
 };
 
@@ -43,6 +44,13 @@ void Lista<T>::insertarFinal(const T & elem)
     cola->sig = nuevo;
     cola = nuevo;
   }
+}
+
+template <class T>
+void Lista<T>::insertarPrincipio(const T & elem)
+{
+  Nodo<T>* nuevo = new Nodo<T>(elem, cabeza);
+  cabeza = nuevo;
 }
 
 template <class T>
