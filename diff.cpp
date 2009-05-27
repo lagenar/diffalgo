@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     }
 
     Diferencial diff(origen, objetivo);
+    diff.calcularCambios();
     diff.imprimirDiff();
     return 0;
 }
