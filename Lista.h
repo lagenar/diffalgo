@@ -77,7 +77,6 @@ class IteradorLista {
  public:
   IteradorLista(const Lista<T> *);
   ~IteradorLista() { };
-  void rewind();
   void sucesor();
   bool terminado();
   T elemActual();
@@ -88,12 +87,6 @@ IteradorLista<T>::IteradorLista(const Lista<T> * L)
 {
   cursor = L->cabeza;
   lista = L;
-}
-
-template <class T>
-void IteradorLista<T>::rewind()
-{
-  cursor = lista->cabeza;
 }
 
 template <class T>
