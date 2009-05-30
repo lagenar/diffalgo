@@ -81,10 +81,6 @@ Introducción
 Utilidades Diff y Patch
 \end_layout
 
-\begin_layout Subsection
-Estrategías utilizadas
-\end_layout
-
 \begin_layout Section
 Tipos de datos abstractos
 \end_layout
@@ -94,13 +90,14 @@ Tipos auxiliares
 \end_layout
 
 \begin_layout Standard
-Se definieron TDA auxiliares para obtener una especificación más completa
- del sistema.
+Además de los tipos principales necesarios se implementaron tipos auxiliares,
+ que permiten lograr una especificación mas genéral en terminos de los TDAs
+ ya conocidos.
 \end_layout
 
 \begin_layout Standard
 El soporte de herencia del lenguaje NEREUS nos permitió definir algunos
- de los los TDA principales a partir de los auxiliares, y a su vez, hay
+ de los los tipos principales a partir de los auxiliares, y a su vez, existen
  relaciones de herencia entre tipos auxiliares.
 \end_layout
 
@@ -111,9 +108,7 @@ Lista
 \begin_layout Standard
 Es una lista genérica, pero con funcionalidad reducida comparado con la
  especificación estandar de lista.
- Este tipo sólo permite inserciones al final y no es posible eliminar un
- elemento por separado.
- Este tipo es heredado por subsecuencia.
+ Este tipo sólo permite inserciones al final y no es posible eliminar elementos.
 \end_layout
 
 \begin_layout LyX-Code
@@ -261,18 +256,8 @@ ParInt
 \end_layout
 
 \begin_layout Standard
-Es un TDA que contiene dos números enteros.
- Se utiliza para definir el tipo subsecuencia
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-El tipo subsecuencia es una lista de ParNat.
-\end_layout
-
-\end_inset
-
- .
+Es un tipo contenedor de dos numeros enteros.
+ Se utiliza para definir el tipo subsecuencia.
 \end_layout
 
 \begin_layout LyX-Code
@@ -308,7 +293,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $setPrimero:\: Int\rightarrow ParInt$
+\begin_inset Formula $setPrimero:\: Int\: x\: ParInt\rightarrow ParInt$
 \end_inset
 
 
@@ -322,7 +307,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $setSegundo:\: Int\rightarrow ParInt$
+\begin_inset Formula $setSegundo:\: Int\: x\: ParInt\rightarrow ParInt$
 \end_inset
 
 
@@ -345,10 +330,9 @@ Subsecuencia
 \end_layout
 
 \begin_layout Standard
-El tipo Subsecuencia es una lista de pares de números enteros.
+Es una lista de pares de números enteros.
  Su función en el sistema es la de contener los índices de las líneas de
  una subsecuencia común entre dos archivos.
- Su definición es simple porque la funcionalidad de el tipo lista es suficiente.
 \end_layout
 
 \begin_layout LyX-Code
@@ -380,11 +364,10 @@ Arreglo
 \end_layout
 
 \begin_layout Standard
-El TDA Arreglo es una colección de elementos de acceso aleatorio y de tamaño
- fijo.
+Es una colección de elementos de acceso aleatorio y de tamaño fijo.
  Se optó por un indexamiento al estilo pascal, es decir, de 1 a n.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Siendo n el tamaño del arreglo
@@ -396,7 +379,7 @@ Siendo n el tamaño del arreglo
 \end_layout
 
 \begin_layout Standard
-Este tipo es base de los TDA Archivo y Línea.
+Este tipo es base de los TDAs Archivo y Línea.
 \end_layout
 
 \begin_layout LyX-Code
@@ -484,10 +467,11 @@ Línea
 \end_layout
 
 \begin_layout Standard
-El TDA Línea representa una cadena de caracteres.
- Para su definición se utiliza el TDA Arreglo parametrizado con el tipo
- char.
- También se incluye la funcionalidad básica para comparar dos líneas.
+Representa una cadena de caracteres.
+ Para su definición se utiliza como base el TDA Arreglo parametrizado con
+ el tipo básico char.
+ También se agregó a la especificación la funcionalidad básica para comparar
+ dos líneas.
 \end_layout
 
 \begin_layout LyX-Code
@@ -532,12 +516,11 @@ Archivo
 \end_layout
 
 \begin_layout Standard
-Este TDA es la representación en memoria de un conjunto de líneas almacenadas
- en un archivo.
- Utiliza el tipo arreglo como base parametrizado con el tipo línea.
+Es la representación de una secuencia de líneas.
+ Utiliza el tipo arreglo parametrizado con el tipo Línea como base.
  Su funcionalidad es dar acceso aleatorio a las líneas.
- Para conseguir mayor claridad se redefinieron los nombres de las funciones
- setCelda y getCelda del TDA Arreglo.
+ Para mayor claridad se redefinieron los nombres de las funciones setCelda
+ y getCelda del TDA Arreglo.
 \end_layout
 
 \begin_layout LyX-Code
@@ -565,8 +548,10 @@ Cambio
 \end_layout
 
 \begin_layout Standard
-El TDA Cambio es una clase totalmente abstracta que sirve de base para los
- dos tipos de cambio.
+Representa un cambio genérico a un archivo, sirve de base para los dos tipos
+ de cambio específicos.
+ Su funcionalidad es la de producir y aplicar eliminaciones o adiciones
+ a un archivo en la porción que le corresponde.
 \end_layout
 
 \begin_layout LyX-Code
@@ -602,7 +587,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getDiff:\: Cambio\: x\: Archivo\rightarrow Arreglo[Línea]$
+\begin_inset Formula $getDiff:\: Cambio\: x\: Archivo\rightarrow Archivo$
 \end_inset
 
 
@@ -625,8 +610,8 @@ CambioAgregar
 \end_layout
 
 \begin_layout Standard
-Es una clase heredada de cambio que define la operación para agregar un
- conjunto de líneas.
+Es un tipo heredado de cambio que define la operación para agregar un conjunto
+ de líneas.
 \end_layout
 
 \begin_layout LyX-Code
@@ -654,8 +639,7 @@ CambioEliminar
 \end_layout
 
 \begin_layout Standard
-Es la clase correspondiente a la operación para eliminar un conjunto de
- líneas.
+Es el tipo correspondiente a la operación para eliminar un conjunto de líneas.
 \end_layout
 
 \begin_layout LyX-Code
@@ -683,10 +667,11 @@ Diferencial
 \end_layout
 
 \begin_layout Standard
-El TDA Diferencial es el tipo más importante del sistema.
+Es el tipo más importante del sistema.
  A partir de dos archivos genera una subsecuencia de líneas comunes y a
- partir de ésta calcula una lista de los cambios necesarios para obtener
- una archivo a partir del otro.
+ partir de ésta calcula una lista con los cambios necesarios para obtener
+ un archivo a partir del otro.
+ 
 \end_layout
 
 \begin_layout LyX-Code
@@ -694,9 +679,15 @@ CLASS Diferencial
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Subsecuencia, Archivo, Lista[Cambio]
+IMPORTS Subsecuencia, Archivo, Lista[Cambio], CambioAgregar,
 \end_layout
 
+\begin_deeper
+\begin_layout LyX-Code
+    CambioEliminar
+\end_layout
+
+\end_deeper
 \begin_layout LyX-Code
 BASIC CONSTRUCTORS crear
 \end_layout
@@ -709,6 +700,10 @@ DEFERRED
 TYPES Diferencial
 \end_layout
 
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
 \begin_deeper
 \begin_layout LyX-Code
 \begin_inset Formula $crear:\: Archivo\: x\: Archivo\rightarrow Diferencial$
@@ -718,7 +713,21 @@ TYPES Diferencial
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getDiff:\: Diferencial\rightarrow Archivo$
+\begin_inset Formula $calcularSubsecuencia:\: Diferencial\rightarrow Subsecuencia$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $calcularCambios:\: Subsecuencia\: x\: Diferencial\rightarrow Lista[Cambio]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getDiff:\: Lista[Cambio]\: x\: Diferencial\rightarrow Archivo$
 \end_inset
 
 
@@ -730,7 +739,7 @@ END-CLASS
 \end_layout
 
 \begin_layout Section
-Implementación de los TDA
+Implementación de los TDAs
 \end_layout
 
 \begin_layout Subsection
@@ -738,17 +747,7 @@ Estructura del proyecto
 \end_layout
 
 \begin_layout Standard
-El proyecto fue desarrollado con el entorno de desarrollo integrado
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-IDE (Integrated Development Environment)
-\end_layout
-
-\end_inset
-
-Code::Blocks.
+El proyecto fue desarrollado con el entorno de desarrollo integrado Code::Blocks.
  
 \end_layout
 
@@ -789,7 +788,7 @@ Archivo.cpp: implementación de la clase Archivo.
 \end_layout
 
 \begin_layout Itemize
-Lista.h: encabezado e implementación del template Lista y de IteradorLista.
+Lista.h: encabezado e implementación del template Lista e IteradorLista.
 \end_layout
 
 \begin_layout Subsection
@@ -801,23 +800,17 @@ Lista
 \end_layout
 
 \begin_layout Standard
-La implementación del TDA Lista está basada en la introducción a la librería
- STL de la cátedras Análisis y Diseño de Algoritmos II 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "key-1"
+Este tipo se implementó con un template para que pueda ser parametrizado.
+\end_layout
 
-\end_inset
-
-.
- Para que la inserción al final de la lista tenga una complejidad temporal
+\begin_layout Standard
+Para que la inserción al final de la lista tenga una complejidad temporal
  
 \begin_inset Formula $O\left(1\right)$
 \end_inset
 
 , se mantiene un puntero al último nodo.
- Para que puede contener elementos de distinto tipo se implentó con un template.
- La función principal de la lista es insertarFinal.
+ La función más importante de Lista es insertarFinal.
 \end_layout
 
 \begin_layout LyX-Code
@@ -843,8 +836,10 @@ IteradorLista
 
 \begin_layout Standard
 Este tipo también se implementó con un template.
- Recibe un puntero a una lista en el constructor y sus funciones principales
- son:
+ Recibe un puntero a una lista en el constructor.
+ Puede acceder a los atributos privados de los objetos de tipo Lista ya
+ que ha sido declarado como amigo(friend).
+ Sus métodos principales son:
 \end_layout
 
 \begin_layout LyX-Code
@@ -971,38 +966,70 @@ Archivo
 
 \begin_layout Standard
 En la implementación de este TDA se representaron las líneas mediante la
- composición de un arreglo de strings.
- Para crear un Archivo se le pasa el nombre al constructor.
+ composición de un arreglo de strings
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Si bien podríamos haber creado una clase arreglo de la que pueda heredarse,
+ preferimos hacerlo por composición, para conseguir más control sobre el
+ arreglo en caso de situaciones problemáticas, como la no existencia de
+ un archivo o los errores de lectura.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Para crear un Archivo se le pasa el nombre del archivo físico al constructor.
  La clase Archivo setea una variable booleana (errorAbrir) que permite al
  cliente, invocando al método isOpen, verificar que el archivo haya sido
  abierto correctamente.
  Para calcular el número de líneas de un archivo se implementó el método
- estático nroLineas que recibe un ifstream y retorna un entero, con esta
- información se crea dinámicamente el arreglo de líneas (string * lineas)
- y se lo carga.
+ estático nroLineas que recibe un objeto de tipo ifstream y retorna un entero,
+ con esta información se crea dinámicamente el arreglo de líneas (string
+ * lineas) y se lo carga con el contenido del archivo.
 \end_layout
 
 \begin_layout LyX-Code
 Archivo::Archivo(const char nombre[])
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 bool Archivo::isOpen() const
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 string Archivo::getLinea(int n) const
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 void Archivo::setLinea(int n, const string & linea)
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
-int Archivo::nroLineas(ifstream & arch) 
-\end_layout
+int Archivo::nroLineas(ifstream & arch)
+\begin_inset VSpace defskip
+\end_inset
 
-\begin_layout LyX-Code
 int Archivo::getCantLineas() const 
 \end_layout
 
@@ -1026,7 +1053,20 @@ Cambio
 \begin_layout Standard
 Para favorecer el polimorfismo se implementó una clase abstracta, que representa
  a un cambio genérico.
- La funcionalidad para aplicar un patch no se implementó en esta entrega.
+ La funcionalidad para aplicar un patch no se implementó en esta entrega
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Simplemente se declaró un método que no recibe y no retorna parámetros,
+ que será declarado e implementado correctamente en la segunda entrega
+\end_layout
+
+\end_inset
+
+.
+ Los archivos se pasan al método getDiff para que este pueda extraer las
+ lineas que necesite para crear la porción del diff.
 \end_layout
 
 \begin_layout LyX-Code
@@ -1058,11 +1098,10 @@ CambioAgregar
 \end_layout
 
 \begin_layout Standard
-Este TDA se implementó como una clase derivada de la clase Cambio, y se
- implementó el método getDiff.
+Este TDA se implementó como una clase derivada de la clase Cambio.
  Contiene tres atributos privados que representan la línea del archivo origen
  a partir de la cual se agrega y las líneas de comienzo y fin del archivo
- destino.
+ destino (pasados en el constructor).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1072,7 +1111,8 @@ CambioEliminar
 \begin_layout Standard
 Esta clase es la simétrica a CambioAgregar para eliminación.
  Contiene tres atributos privados que representan las líneas de comienzo
- y fin del archivo origen y la línea del archivo destino.
+ y fin del archivo origen y la línea del archivo destino (pasados en el
+ constructor).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1080,28 +1120,57 @@ Diferencial
 \end_layout
 
 \begin_layout Standard
-Este TDA está implementado en la clase diferencia, se construye pasando
- dos objetos de tipo Archivo (origen y objetivo), este setea sus atributos
- privados subsecuencia y cambios invocando a los métodos privados calcularSubsec
-uencia y calcularCambios.
+Un objeto Diferencial se construye pasando dos objetos de tipo Archivo (origen
+ y objetivo), este setea sus atributos privados subsecuencia y cambios invocando
+ a los métodos privados calcularSubsecuencia y calcularCambios.
  Una vez creado el objeto el cliente puede invocar al método público imprimirDif
 f que saca por consola el resultado del diff.
 \end_layout
 
 \begin_layout LyX-Code
 Diferencial::Diferencial(Archivo & archorig, Archivo & archobj)
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 void Diferencial::calcularSubsecuencia()
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 void Diferencial::calcularCambios()
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 void Diferencial::imprimirDiff()
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La complejidad del método imprimirDiff es de 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, siendo 
+\begin_inset Formula $n$
+\end_inset
+
+ la cantidad de cambios.
+ Los métodos calcularSubsecuencia y calcularCambios se estudiarán en la
+ próxima sección.
 \end_layout
 
 \begin_layout Section
@@ -1113,22 +1182,155 @@ Algoritmo para calcular una subsecuencia común
 \end_layout
 
 \begin_layout Standard
+En esta primera entrega se implementó un algoritmo simple para calcular
+ subsecuencias comúnes de líneas entre dos archivos.
+ Está implementado en el método calcularSubsecuencia de la clase Diferencial.
+\end_layout
 
+\begin_layout Standard
+Básicamente, el algoritmo consiste en iterar sobre las líneas del archivo
+ origen y por cada una de estas iterar en el archivo objetivo hasta encontrar
+ una línea igual.
+ Si se encuentra la línea correspondiente, las próximas iteraciones en el
+ archivo objetivo comenzaran desde allí.
+ Cuando se encuentran las líneas iguales, el par de índices que las identifica
+ se inserta en la subsecuencia.
+ El algoritmo termina cuando se itero sobre todas las líneas del archivo
+ origen ó cuando el indice que indica desde donde se comienza en el archivo
+ destino en la iteración es mayor que la cantidad de líneas de este
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Este condición se da cuando la ultima línea del archivo destino está en
+ la subsecuencia 
+\end_layout
+
+\end_inset
+
+.
+ 
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Su pseudocódigo es el siguiente:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+k = 1 //indice que marca por donde se comienza en el archivo objetivo
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+j = 1
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+for (i = 1; i <= longitud(ArchOri) AND k <= longitud(ArchObj); i++)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+j = k
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+while (j <= longitud(ArchObj) AND ArchOri[i] != ArchObj[j])
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+j++
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (j <= longitud(ArchObj)) //se encontraron lineas iguales
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+subsecuencia.insertar(i,j)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+k = j + 1 //se sigue después de esta linea en la proxima iteración
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+La complejidad temporal del algoritmo claramente depende de la longitud
+ del archivo origen y objetivo, a las cuales llamaremos m y n respectivamente.
+\end_layout
+
+\begin_layout Standard
+El peor de los casos se da cuando los archivos no tienen líneas en común,
+ ya que en esta situación, por cada línea del archivo origen se itera por
+ todas las del objetivo (el índice k permanece constante).
+\end_layout
+
+\begin_layout Standard
+Entonces, sea 
+\begin_inset Formula $T\left(m,n\right)$
+\end_inset
+
+ el tiempo que tarda el algoritmo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{multline*}
+T\left(m,n\right)\leq\sum_{k=1}^{m}\left[C_{0}+\sum_{j=1}^{n}C_{1}\right]+C_{2}\leq m.C_{0}+\sum_{i=1}^{m}\left[\sum_{j=1}^{n}C_{1}\right]+C_{2}\\
+\leq m.C_{0}+\sum_{i=1}^{m}n.C_{1}+C_{2}\leq m.C_{0}+m.n.C_{1}+C_{2}\epsilon\: O\left(m.n\right)\end{multline*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, la complejidad del algoritmo para calcular una subsecuencia
+ común es de 
+\begin_inset Formula $O\left(n.m\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+El mejor de los casos se da cuando los archivos son iguales ya que el bucle
+ while interno no hace ninguna iteración, en consecuencia, tiene complejidad
+ de 
+\begin_inset Formula $\Omega\left(m\right)$
+\end_inset
+
+ siendo m la longitud de ambos archivos.
 \end_layout
 
 \begin_layout Subsection
 Algoritmo para crear la lista de cambios
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "aydalgo2"
-key "key-1"
-
-\end_inset
-
-http://www.exa.unicen.edu.ar/catedras/aydalgo2/docs/Introduccion-STL.zip
 \end_layout
 
 \end_body
