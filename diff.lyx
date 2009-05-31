@@ -77,8 +77,52 @@ LatexCommand tableofcontents
 Introducción
 \end_layout
 
-\begin_layout Subsection
-Utilidades Diff y Patch
+\begin_layout Standard
+Este informe contiene la documentación del trabajo práctico especial realizado
+ para la cátedra de Análisis y Diseño de Algoritmos I.
+\end_layout
+
+\begin_layout Standard
+La primera etapa del trabajo consiste en el diseño y la implementación de
+ una utilidad denominada 
+\emph on
+diff
+\emph default
+, que dados dos archivos (origen y objetivo) devuelva una secuencia de cambios
+ que permiten pasar de uno a otro.
+\end_layout
+
+\begin_layout Standard
+Para el diseño del proyecto se tuvieron en cuenta tanto los tipos de datos
+ necesarios, como el algoritmo a implementar.
+\end_layout
+
+\begin_layout Standard
+En cuanto a los tipos de datos, se consideraron los cuatro principales:
+ Línea, Archivo, Cambio y Diferencial y otros auxiliares: Lista, IteradorLista,
+ Subsecuencia, ParInt y Arreglo, que fueron necesarios para poder implementar
+ el algoritmo.
+ Además e realizaron las correspondientes especificaciones en NEREUS de
+ los TDAs.
+\end_layout
+
+\begin_layout Standard
+El algoritmo empleado para buscar una subsecuencia común entre los archivos
+ fue seleccionado de acuerdo a los requerimientos del enunciado, por lo
+ que no se eligió el óptimo.
+ Se realizó una análisis de la complejidad temporal de dicho algoritmo,
+ así como también del utilizado para crear la lista de cambios.
+\end_layout
+
+\begin_layout Standard
+Para la implementación, se utilizó el lenguaje C++ y el entorno de desarrollo
+ integrado (IDE) 
+\emph on
+Code::Blocks
+\emph default
+.
+ Se procedió llevando las especificaciones algebraicas de los TDAs a clases
+ de C++ e implementando el mencionado algoritmo.
 \end_layout
 
 \begin_layout Section
@@ -1197,7 +1241,7 @@ Básicamente, el algoritmo consiste en iterar sobre las líneas del archivo
  se inserta en la subsecuencia.
  El algoritmo termina cuando se itero sobre todas las líneas del archivo
  origen ó cuando el indice que indica desde donde se comienza en el archivo
- destino en la iteración es mayor que la cantidad de líneas de este
+ objetivo en la iteración es mayor que la cantidad de líneas de este
 \begin_inset Foot
 status collapsed
 
@@ -1312,7 +1356,7 @@ T\left(m,n\right)\leq\sum_{k=1}^{m}\left[C_{0}+\sum_{j=1}^{n}C_{1}\right]+C_{2}\
 \begin_layout Standard
 Por lo tanto, la complejidad del algoritmo para calcular una subsecuencia
  común es de 
-\begin_inset Formula $O\left(n.m\right)$
+\begin_inset Formula $O\left(m.n\right)$
 \end_inset
 
 .
@@ -1331,6 +1375,25 @@ El mejor de los casos se da cuando los archivos son iguales ya que el bucle
 
 \begin_layout Subsection
 Algoritmo para crear la lista de cambios
+\end_layout
+
+\begin_layout Standard
+A partir de una subsecuencia común de líneas, se debe generar la lista de
+ cambios que permita transformar un archivo a otro por medio de ediciones
+ (adiciones y eliminaciones de líneas).
+ Este algoritmo está implementado en el método calcularCambios de la clase
+ Diferencial.
+\end_layout
+
+\begin_layout Standard
+El algoritmo itera sobre la subsecuencia y encuentra los saltos que se producen
+ en los indices de cada par con respecto a los indices del par anterior.
+ Cuando se registra un salto en uno o ambos elementos del par actual, significa
+ que debe crearse un cambio; CambioEliminar cuando el salto se produce en
+ el índice del archivo origen y CambioAgregar cuando el salto es en el indice
+ del archivo objetivo.
+ Esta iteración puede implementarse con un bucle, pero es necesario considerar
+ fuera de éste las ediciones al principio y al final.
 \end_layout
 
 \end_body
