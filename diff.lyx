@@ -50,6 +50,10 @@ Utilidades Diff y Patch
 Primera entrega
 \end_layout
 
+\begin_layout Author
+Maximiliano Ezequiel Matos y Lucas Moauro
+\end_layout
+
 \begin_layout Date
 \begin_inset space ~
 \end_inset
@@ -102,7 +106,7 @@ En cuanto a los tipos de datos, se consideraron los cuatro principales:
  Línea, Archivo, Cambio y Diferencial y otros auxiliares: Lista, IteradorLista,
  Subsecuencia, ParInt y Arreglo, que fueron necesarios para poder implementar
  el algoritmo.
- Además e realizaron las correspondientes especificaciones en NEREUS de
+ Además se realizaron las correspondientes especificaciones en NEREUS de
  los TDAs.
 \end_layout
 
@@ -110,8 +114,8 @@ En cuanto a los tipos de datos, se consideraron los cuatro principales:
 El algoritmo empleado para buscar una subsecuencia común entre los archivos
  fue seleccionado de acuerdo a los requerimientos del enunciado, por lo
  que no se eligió el óptimo.
- Se realizó una análisis de la complejidad temporal de dicho algoritmo,
- así como también del utilizado para crear la lista de cambios.
+ Se realizó un análisis de la complejidad temporal de dicho algoritmo, así
+ como también del utilizado para crear la lista de cambios.
 \end_layout
 
 \begin_layout Standard
@@ -135,7 +139,7 @@ Tipos auxiliares
 
 \begin_layout Standard
 Además de los tipos principales necesarios se implementaron tipos auxiliares,
- que permiten lograr una especificación mas genéral en terminos de los TDAs
+ que permiten lograr una especificación mas general en términos de los TDAs
  ya conocidos.
 \end_layout
 
@@ -151,7 +155,7 @@ Lista
 
 \begin_layout Standard
 Es una lista genérica, pero con funcionalidad reducida comparado con la
- especificación estandar de lista.
+ especificación estándar de lista.
  Este tipo sólo permite inserciones al final y no es posible eliminar elementos.
 \end_layout
 
@@ -300,7 +304,7 @@ ParInt
 \end_layout
 
 \begin_layout Standard
-Es un tipo contenedor de dos numeros enteros.
+Es un tipo contenedor de dos números enteros.
  Se utiliza para definir el tipo subsecuencia.
 \end_layout
 
@@ -715,7 +719,8 @@ Es el tipo más importante del sistema.
  A partir de dos archivos genera una subsecuencia de líneas comunes y a
  partir de ésta calcula una lista con los cambios necesarios para obtener
  un archivo a partir del otro.
- 
+ La función getDiff devuelve el resultado de los cambios con el formato
+ del diff.
 \end_layout
 
 \begin_layout LyX-Code
@@ -1054,7 +1059,7 @@ bool Archivo::isOpen() const
 \end_layout
 
 \begin_layout LyX-Code
-string Archivo::getLinea(int n) const
+string Archivo::getLínea(int n) const
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1102,7 +1107,7 @@ Para favorecer el polimorfismo se implementó una clase abstracta, que represent
 status collapsed
 
 \begin_layout Plain Layout
-Simplemente se declaró un método que no recibe y no retorna parámetros,
+Simplemente se declaró un método que no recibe parámetros y no retorna nada,
  que será declarado e implementado correctamente en la segunda entrega
 \end_layout
 
@@ -1227,7 +1232,7 @@ Algoritmo para calcular una subsecuencia común
 
 \begin_layout Standard
 En esta primera entrega se implementó un algoritmo simple para calcular
- subsecuencias comúnes de líneas entre dos archivos.
+ subsecuencias comunes de líneas entre dos archivos.
  Está implementado en el método calcularSubsecuencia de la clase Diferencial.
 \end_layout
 
@@ -1240,8 +1245,8 @@ Básicamente, el algoritmo consiste en iterar sobre las líneas del archivo
  Cuando se encuentran las líneas iguales, el par de índices que las identifica
  se inserta en la subsecuencia.
  El algoritmo termina cuando se itero sobre todas las líneas del archivo
- origen ó cuando el indice que indica desde donde se comienza en el archivo
- objetivo en la iteración es mayor que la cantidad de líneas de este
+ origen ó cuando el índice que indica desde donde se comienza en el archivo
+ objetivo en la iteración es mayor que la cantidad de líneas de éste
 \begin_inset Foot
 status collapsed
 
@@ -1254,10 +1259,6 @@ Este condición se da cuando la ultima línea del archivo destino está en
 
 .
  
-\begin_inset Newpage pagebreak
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1267,7 +1268,7 @@ Su pseudocódigo es el siguiente:
 \begin_layout LyX-Code
 
 \size footnotesize
-k = 1 //indice que marca por donde se comienza en el archivo objetivo
+k = 1 //índice que marca por donde se comienza en el archivo objetivo
 \end_layout
 
 \begin_layout LyX-Code
@@ -1306,7 +1307,7 @@ j++
 \begin_layout LyX-Code
 
 \size footnotesize
-if (j <= longitud(ArchObj)) //se encontraron lineas iguales
+if (j <= longitud(ArchObj)) //se encontraron líneas iguales
 \end_layout
 
 \begin_deeper
@@ -1319,7 +1320,7 @@ subsecuencia.insertar(i,j)
 \begin_layout LyX-Code
 
 \size footnotesize
-k = j + 1 //se sigue después de esta linea en la proxima iteración
+k = j + 1 //se sigue después de esta linea en la próxima iteración
 \end_layout
 
 \end_deeper
@@ -1364,9 +1365,9 @@ Por lo tanto, la complejidad del algoritmo para calcular una subsecuencia
 \end_layout
 
 \begin_layout Standard
-El mejor de los casos se da cuando los archivos son iguales ya que el bucle
- while interno no hace ninguna iteración, en consecuencia, tiene complejidad
- de 
+El mejor de los casos se da cuando los archivos son iguales debido a que
+ el bucle while interno no hace ninguna iteración, en consecuencia, tiene
+ complejidad de 
 \begin_inset Formula $\Omega\left(m\right)$
 \end_inset
 
@@ -1386,14 +1387,253 @@ A partir de una subsecuencia común de líneas, se debe generar la lista de
 \end_layout
 
 \begin_layout Standard
-El algoritmo itera sobre la subsecuencia y encuentra los saltos que se producen
- en los indices de cada par con respecto a los indices del par anterior.
+El algoritmo consiste en iterar sobre la subsecuencia y encontrar los saltos
+ que se producen en los índices de cada par con respecto a los indices del
+ par anterior.
  Cuando se registra un salto en uno o ambos elementos del par actual, significa
  que debe crearse un cambio; CambioEliminar cuando el salto se produce en
- el índice del archivo origen y CambioAgregar cuando el salto es en el indice
+ el índice del archivo origen y CambioAgregar cuando el salto es en el índice
  del archivo objetivo.
  Esta iteración puede implementarse con un bucle, pero es necesario considerar
  fuera de éste las ediciones al principio y al final.
+\end_layout
+
+\begin_layout Standard
+su pseudocódigo es:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+//índices de los elementos anteriores en la subsecuencia
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+i = 1
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+k = 1
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Iterador it(subsecuencia)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+if (!it.terminado()) //si hay elementos en la subsecuencia
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.primero > i) //se produjo un salto al principio?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...))//
+\size scriptsize
+se crea el cambio que elimina al principio
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+i = it.elemActual.primero
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.segundo > k) //salto al principio?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioAgregar(...))
+\size scriptsize
+//se crea el cambio que agrega al principio
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+k = it.elemActual.segundo
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+it.sucesor() //se actualiza el iterador para el comienzo del bucle
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else // subsecuencia vacía
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+i = k = 0 
+\size scriptsize
+//en este caso se deben agregar todas las de objetivo
+\end_layout
+
+\begin_layout LyX-Code
+
+\size scriptsize
+            //y eliminar todas las de origen
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+while (!it.terminado())
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.primero > i + 1) // se produjo un salto?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...)) 
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.segundo > k + 1) // salto?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioAgregar(...))
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+i = it.elemActual.primero
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+k = it.elemActual.segundo
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+it.sucesor()
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size scriptsize
+// ahora deben chequearse los índices para ver si hay que agregar o eliminar
+ al final
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+if (longitud(archorig) > i)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...))
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (longitud(archobj) > k)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioAgregar(...))
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+La complejidad temporal del algoritmo depende directamente de la longitud
+ de la subsecuencia.
+ Las ediciones al principio y al final son 
+\begin_inset Formula $\Theta\left(1\right)$
+\end_inset
+
+, pero el bucle while es 
+\begin_inset Formula $\Theta\left(n\right)$
+\end_inset
+
+ siendo n el tamaño de la subsecuencia.
+ Por lo tanto la complejidad del algoritmo es de 
+\begin_inset Formula $\Theta\left(n\right)$
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+En este caso se puede usar la notación 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ porque la complejidad 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ y 
+\begin_inset Formula $O$
+\end_inset
+
+ es la misma
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \end_body
