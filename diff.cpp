@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
     }
 
     Diferencial diff(origen, objetivo);
+    Subsecuencia subsec;
+    calcularSubsecuencia(origen, objetivo, subsec);
+    calcularCambios(origen, objetivo, subsec, diff);
     diff.imprimirDiff();
     return 0;
 }

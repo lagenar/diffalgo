@@ -6,12 +6,16 @@
 
 class parInt {
     public:
-        int primero;
-        int segundo;
+        int Primero() { return primero; }
+        int Segundo() { return segundo; }
         parInt(int p, int s) : primero(p), segundo(s) { }
+    private:
+        int primero, segundo;
 };
 
-class Diferencial
+typedef Lista<parInt> Subsecuencia;
+
+class Diferencial : public Lista<Cambio*>
 {
     public:
         Diferencial(Archivo &, Archivo &);
@@ -19,11 +23,9 @@ class Diferencial
         void imprimirDiff();
     private:
         Archivo *archorig, *archobj;
-        Lista<parInt> subsecuencia;
-        Lista<Cambio*> Cambios;
-
-        void calcularCambios();
-        void calcularSubsecuencia();
 };
+
+void calcularSubsecuencia(const Archivo &, const Archivo &, Subsecuencia &);
+void calcularCambios(const Archivo &, const Archivo &, Subsecuencia &, Diferencial &);
 
 #endif // DIFERENCIAL_H
