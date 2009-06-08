@@ -26,12 +26,12 @@ void calcularCambios(const Archivo & archorig, const Archivo & archobj, Subsecue
     if (!it.terminado()) {
         if (it.elemActual().Primero() > 1) { /* se eliminan las lineas anteriores a la primera linea
                                               del archivo origen que esta en la subsec*/
-            diff.insertarFinal(new CambioEliminar(0, 1, it.elemActual().Primero() - 1));
+            diff.insertarFinal(new CambioEliminar(archorig, 0, 1, it.elemActual().Primero() - 1));
             i = it.elemActual().Primero();
         }
         if (it.elemActual().Segundo() > 1) { /* se agregan las lineas anteriores a la primera linea
                                               del archivo objetivo que esta en la subsec*/
-            diff.insertarFinal(new CambioAgregar(0, 1, it.elemActual().Segundo() - 1));
+            diff.insertarFinal(new CambioAgregar(archobj, 0, 1, it.elemActual().Segundo() - 1));
             k = it.elemActual().Segundo();
         }
         it.sucesor();
@@ -40,9 +40,9 @@ void calcularCambios(const Archivo & archorig, const Archivo & archobj, Subsecue
                      las lineas del archivo objetivo y se eliminen todas las del origen*/
     while (!it.terminado()) {
         if (it.elemActual().Primero() > i + 1)
-            diff.insertarFinal(new CambioEliminar(k , i + 1, it.elemActual().Primero() - 1));
+            diff.insertarFinal(new CambioEliminar(archorig, k , i + 1, it.elemActual().Primero() - 1));
         if (it.elemActual().Segundo() > k + 1)
-            diff.insertarFinal(new CambioAgregar(i, k + 1, it.elemActual().Segundo() - 1));
+            diff.insertarFinal(new CambioAgregar(archobj, i, k + 1, it.elemActual().Segundo() - 1));
         i = it.elemActual().Primero();
         k = it.elemActual().Segundo();
         it.sucesor();
@@ -51,12 +51,12 @@ void calcularCambios(const Archivo & archorig, const Archivo & archobj, Subsecue
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo origen
                                         */
-        diff.insertarFinal(new CambioEliminar(k, i + 1, archorig.getCantLineas()));
+        diff.insertarFinal(new CambioEliminar(archorig, k, i + 1, archorig.getCantLineas()));
     if (archobj.getCantLineas() > k) /* se crea el cambio que agrega las lineas
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo objetivo
                                         */
-        diff.insertarFinal(new CambioAgregar(i, k + 1, archobj.getCantLineas()));
+        diff.insertarFinal(new CambioAgregar(archobj, i, k + 1, archobj.getCantLineas()));
 }
 
 Diferencial::Diferencial(Archivo & archorig, Archivo & archobj)
@@ -69,7 +69,7 @@ void Diferencial::imprimirDiff()
 {
     IteradorLista<Cambio*> it(this);
     while (!it.terminado()) {
-        cout << it.elemActual()->getDiff(*archorig, *archobj);
+        cout << it.elemActual()->getDiff();
         it.sucesor();
     }
 }
