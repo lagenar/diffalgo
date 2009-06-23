@@ -50,6 +50,8 @@ template <class T>
 void Lista<T>::insertarPrincipio(const T & elem)
 {
   Nodo<T>* nuevo = new Nodo<T>(elem, cabeza);
+  if (cabeza == 0)
+    cola = nuevo;
   cabeza = nuevo;
 }
 
