@@ -18,14 +18,14 @@ typedef Lista<parInt> Subsecuencia;
 class Diferencial : public Lista<Cambio*>
 {
     public:
-        Diferencial(Archivo &, Archivo &);
+        Diferencial(Archivo &, Archivo &, const Subsecuencia &);
         ~Diferencial() { }
         void imprimirDiff();
     private:
+        void crearCambiosSubsecuencia(const Subsecuencia &);
         Archivo *archorig, *archobj;
 };
 
 void calcularSubsecuencia(const Archivo &, const Archivo &, Subsecuencia &);
-void calcularCambios(const Archivo &, const Archivo &, Subsecuencia &, Diferencial &);
 
 #endif // DIFERENCIAL_H
