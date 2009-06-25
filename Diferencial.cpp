@@ -90,9 +90,9 @@ void revertirDiff(Archivo & Diff)
     int i = 1;
     while (i <= Diff.getCantLineas()) {
         string linea = Diff.getLinea(i);
-        int pos_a = linea.find('a');
-        if (pos_a != -1) {
-            int pos_coma = linea.find(',');
+        unsigned pos_a = linea.find('a');
+        if (pos_a != string::npos) {
+            unsigned pos_coma = linea.find(',');
             int lineaOrig = atoi(linea.substr(0, pos_a).c_str());
             int lineaDestCom = atoi(linea.substr(pos_a + 1, pos_coma).c_str());
             int lineaDestFin = atoi(linea.substr(pos_coma + 1, linea.size()).c_str());
@@ -107,11 +107,11 @@ void revertirDiff(Archivo & Diff)
             }
             i = k;
         } else {
-            int pos_d = linea.find('d');
-            int pos_coma = linea.find(',');
+            unsigned pos_d = linea.find('d');
+            unsigned pos_coma = linea.find(',');
             int lineaOrigCom = atoi(linea.substr(0, pos_coma).c_str());
             int lineaOrigFin = atoi(linea.substr(pos_coma + 1, pos_d).c_str());
-            int lineaDest = atoi(linea.substr(pos_d +1, linea.size()).c_str());
+            int lineaDest = atoi(linea.substr(pos_d + 1, linea.size()).c_str());
             stringstream res;
             res << lineaDest << "a" << lineaOrigCom << "," << lineaOrigFin;
             Diff.setLinea(i, res.str());
@@ -136,27 +136,26 @@ void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
         if(Diff.getLinea(i).find('a') != string::npos)
             cambio = new CambioAgregar(Diff, i);
         else
-            cambio = new CambioEliminar(Diff,i);
-        i+=cambio->getCantLineas()+1;
+            cambio = new CambioEliminar(Diff, i);
+        i += cambio->getCantLineas() + 1;
         if(reversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
             Cambio * cambio2 = NULL;
             if(Diff.getLinea(i).find('a') != string::npos) {
                 cambio2 = new CambioAgregar(Diff,i);
-                if(cambio2->getIndiceReversa()<=cambio->getIndiceReversa()){
+                if(cambio2->getIndiceReversa() <= cambio->getIndiceReversa()){
                     this->insertarFinal(cambio2);
                     this->insertarFinal(cambio);
                 } else {
                     this->insertarFinal(cambio);
                     this->insertarFinal(cambio2);
                 }
-                i+=cambio2->getCantLineas()+1;
+                i += cambio2->getCantLineas() + 1;
             }
             else
                 this->insertarFinal(cambio);
         }
-        else {
+        else
             this->insertarFinal(cambio);
-            }
     }
 }
 
@@ -168,9 +167,9 @@ int Diferencial::calcularLineasObjetivo()
     while(!it.terminado()) {
         Cambio * cambio = it.elemActual();
         if(cambio->tipoCambio() == AGREGAR)
-            lineas_agregadas+=cambio->getCantLineas();
+            lineas_agregadas += cambio->getCantLineas();
         else
-            lineas_eliminadas+=cambio->getCantLineas();
+            lineas_eliminadas += cambio->getCantLineas();
         it.sucesor();
     }
     return archorig->getCantLineas() + lineas_agregadas - lineas_eliminadas;
