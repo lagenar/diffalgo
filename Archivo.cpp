@@ -1,6 +1,12 @@
 #include "Archivo.h"
 #include <iostream>
 
+Archivo::Archivo(int n)
+{
+    errorAbrir = false;
+    lineas = new string[n];
+}
+
 Archivo::Archivo(const char nombre[])
 {
     errorAbrir = false;

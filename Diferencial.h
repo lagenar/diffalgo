@@ -27,5 +27,5 @@ class Diferencial : public Lista<Cambio*>
 };
 
 void calcularSubsecuencia(const Archivo &, const Archivo &, Subsecuencia &);
-
+void revertirDiff(Archivo &);
 #endif // DIFERENCIAL_H

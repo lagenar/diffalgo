@@ -8,6 +8,7 @@ class Archivo
 {
     public:
         Archivo(const char []);
+        Archivo(int);
         ~Archivo();
         string getLinea(int) const;
         void setLinea(int, const string &);

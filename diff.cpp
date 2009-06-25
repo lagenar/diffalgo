@@ -6,6 +6,11 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    Archivo Diff("/home/mmatos/Desktop/diff.diff");
+    revertirDiff(Diff);
+    for(int i = 1; i<=Diff.getCantLineas(); i++)
+        cout << Diff.getLinea(i) << endl;
+    return 0;
     if (argc < 3) {
         cout << "uso: diff <archivo origen> <archivo objetivo>" << endl;
         return 0;
