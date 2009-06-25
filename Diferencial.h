@@ -19,10 +19,11 @@ class Diferencial : public Lista<Cambio*>
 {
     public:
         Diferencial(Archivo &, Archivo &, const Subsecuencia &);
-        Diferencial(Archivo &, bool);
+        Diferencial(Archivo &, Archivo &, bool);
         ~Diferencial() { }
         void imprimirDiff();
     private:
+        int calcularLineasObjetivo();
         void calcularCambiosDiff(Archivo &, bool);
         void crearCambiosSubsecuencia(const Subsecuencia &);
         Archivo *archorig, *archobj;

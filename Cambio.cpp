@@ -26,6 +26,18 @@ CambioAgregar::CambioAgregar(const Archivo & objetivo, int lineaOrigen, int line
         lineas.insertarFinal(objetivo.getLinea(k));
 }
 
+void CambioAgregar::aplicarPatch(Archivo & objetivo, int & indiceobjetivo)
+{
+    int i = indiceobjetivo;
+    IteradorLista<string> it(&lineas);
+    while(!it.terminado()) {
+        objetivo.setLinea(i, it.elemActual());
+        i++;
+        it.sucesor();
+    }
+    indiceobjetivo = i;
+}
+
 string CambioAgregar::getDiff()
 {
     stringstream resultado; // Se usa para la conversión de int a string.
@@ -62,6 +74,11 @@ CambioEliminar::CambioEliminar(const Archivo & origen, int lineaDestino, int lin
     this->lineaOrigenFinal = lineaOrigenFinal;
     for (int k = lineaOrigenComienzo; k <= lineaOrigenFinal; k++)
         lineas.insertarFinal(origen.getLinea(k));
+}
+
+void CambioEliminar::aplicarPatch(Archivo & objetivo, int & indiceorigen)
+{
+    indiceorigen+=getCantLineas();
 }
 
 string CambioEliminar::getDiff()
