@@ -20,6 +20,7 @@ class Cambio
 class CambioAgregar: public Cambio
 {
     public:
+        CambioAgregar(const Archivo &, int);
         CambioAgregar(const Archivo &, int, int, int);
         string getDiff();
         TipoCambio tipoCambio() { return AGREGAR;}
@@ -34,6 +35,7 @@ class CambioAgregar: public Cambio
 class CambioEliminar: public Cambio
 {
     public:
+        CambioEliminar(const Archivo &, int);
         CambioEliminar(const Archivo &, int, int, int);
         string getDiff();
         TipoCambio tipoCambio() { return ELIMINAR;}

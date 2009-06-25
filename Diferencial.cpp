@@ -1,5 +1,7 @@
 #include "Diferencial.h"
 #include <iostream>
+#include <cstdlib>
+#include <sstream>
 
 using namespace std;
 
@@ -76,3 +78,45 @@ void Diferencial::imprimirDiff()
         it.sucesor();
     }
 }
+
+void revertirDiff(Archivo & Diff)
+{
+    int i = 1;
+    while (i <= Diff.getCantLineas()) {
+        string linea = Diff.getLinea(i);
+        int pos_a = linea.find('a');
+        if (pos_a != -1) {
+            int pos_coma = linea.find(',');
+            int lineaOrig = atoi(linea.substr(0, pos_a).c_str());
+            int lineaDestCom = atoi(linea.substr(pos_a + 1, pos_coma).c_str());
+            int lineaDestFin = atoi(linea.substr(pos_coma + 1, linea.size()).c_str());
+            stringstream res;
+            res << lineaDestCom << "," << lineaDestFin << "d" << lineaOrig;
+            Diff.setLinea(i, res.str());
+            int k = i;
+            while (++k <= i + lineaDestFin - lineaDestCom +1) {
+                string temp = Diff.getLinea(k);
+                temp[0] = '<';
+                Diff.setLinea(k, temp);
+            }
+            i = k;
+        } else {
+            int pos_d = linea.find('d');
+            int pos_coma = linea.find(',');
+            int lineaOrigCom = atoi(linea.substr(0, pos_coma).c_str());
+            int lineaOrigFin = atoi(linea.substr(pos_coma + 1, pos_d).c_str());
+            int lineaDest = atoi(linea.substr(pos_d +1, linea.size()).c_str());
+            stringstream res;
+            res << lineaDest << "a" << lineaOrigCom << "," << lineaOrigFin;
+            Diff.setLinea(i, res.str());
+            int k = i;
+            while (++k <= i + lineaOrigFin - lineaOrigCom + 1) {
+                string temp = Diff.getLinea(k);
+                temp[0] = '>';
+                Diff.setLinea(k, temp);
+            }
+            i = k;
+        }
+    }
+}
+
