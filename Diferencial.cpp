@@ -70,6 +70,10 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuenc
     crearCambiosSubsecuencia(subsec);
 }
 
+Diferencial::Diferencial(Archivo & Diff, bool reversa) {
+    calcularCambiosDiff(Diff,reversa);
+}
+
 void Diferencial::imprimirDiff()
 {
     IteradorLista<Cambio*> it(this);
@@ -120,3 +124,36 @@ void revertirDiff(Archivo & Diff)
     }
 }
 
+void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
+{
+    if(reversa)
+        revertirDiff(Diff);
+    int i = 1;
+    while (i <= Diff.getCantLineas()) {
+        Cambio * cambio = NULL;
+        if(Diff.getLinea(i).find('a') != -1)
+            cambio = new CambioAgregar(Diff, i);
+        else
+            cambio = new CambioEliminar(Diff,i);
+        i+=cambio->getCantLineas()+1;
+        if(reversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
+            Cambio * cambio2 = NULL;
+            if(Diff.getLinea(i).find('a') != -1) {
+                cambio2 = new CambioAgregar(Diff,i);
+                if(cambio2->getIndiceReversa()<=cambio->getIndiceReversa()){
+                    this->insertarFinal(cambio2);
+                    this->insertarFinal(cambio);
+                } else {
+                    this->insertarFinal(cambio);
+                    this->insertarFinal(cambio2);
+                }
+                i+=cambio2->getCantLineas()+1;
+            }
+            else
+                this->insertarFinal(cambio);
+        }
+        else {
+            this->insertarFinal(cambio);
+            }
+    }
+}
