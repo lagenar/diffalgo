@@ -9,7 +9,7 @@ CambioAgregar::CambioAgregar(const Archivo & Diff, int comienzo)
     lineaOrigen = atoi(cabecera.substr(0, pos_a).c_str());
     lineaDestinoComienzo = atoi(cabecera.substr(pos_a + 1, pos_coma).c_str());
     lineaDestinoFinal = atoi(cabecera.substr(pos_coma + 1, cabecera.size()).c_str());
-    int k = comienzo + 1;
+    int k = comienzo;
     while (++k <= comienzo + lineaDestinoFinal - lineaDestinoComienzo + 1)
     {
         string linea = Diff.getLinea(k);
@@ -46,7 +46,7 @@ CambioEliminar::CambioEliminar(const Archivo & Diff, int comienzo)
     lineaDestino = atoi(cabecera.substr(pos_d + 1, cabecera.size()).c_str());
     lineaOrigenComienzo = atoi(cabecera.substr(0, pos_coma).c_str());
     lineaOrigenFinal = atoi(cabecera.substr(pos_coma + 1, pos_d).c_str());
-    int k = comienzo + 1;
+    int k = comienzo;
     while (++k <= comienzo + lineaOrigenFinal - lineaOrigenComienzo + 1)
     {
         string linea = Diff.getLinea(k);
