@@ -70,7 +70,9 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuenc
     crearCambiosSubsecuencia(subsec);
 }
 
-Diferencial::Diferencial(Archivo & Diff, bool reversa) {
+Diferencial::Diferencial(Archivo & Diff, Archivo & origen, bool reversa) {
+    archorig = &origen;
+    archobj = NULL;
     calcularCambiosDiff(Diff,reversa);
 }
 
@@ -156,4 +158,20 @@ void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
             this->insertarFinal(cambio);
             }
     }
+}
+
+int Diferencial::calcularLineasObjetivo()
+{
+    IteradorLista<Cambio*> it(this);
+    int lineas_eliminadas = 0;
+    int lineas_agregadas = 0;
+    while(!it.terminado()) {
+        Cambio * cambio = it.elemActual();
+        if(cambio->tipoCambio() == AGREGAR)
+            lineas_agregadas+=cambio->getCantLineas();
+        else
+            lineas_eliminadas+=cambio->getCantLineas();
+        it.sucesor();
+    }
+    return archorig->getCantLineas() + lineas_agregadas - lineas_eliminadas;
 }
