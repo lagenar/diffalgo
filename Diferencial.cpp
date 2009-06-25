@@ -133,14 +133,14 @@ void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
     int i = 1;
     while (i <= Diff.getCantLineas()) {
         Cambio * cambio = NULL;
-        if(Diff.getLinea(i).find('a') != -1)
+        if(Diff.getLinea(i).find('a') != string::npos)
             cambio = new CambioAgregar(Diff, i);
         else
             cambio = new CambioEliminar(Diff,i);
         i+=cambio->getCantLineas()+1;
         if(reversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
             Cambio * cambio2 = NULL;
-            if(Diff.getLinea(i).find('a') != -1) {
+            if(Diff.getLinea(i).find('a') != string::npos) {
                 cambio2 = new CambioAgregar(Diff,i);
                 if(cambio2->getIndiceReversa()<=cambio->getIndiceReversa()){
                     this->insertarFinal(cambio2);
