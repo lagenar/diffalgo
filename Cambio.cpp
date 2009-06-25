@@ -78,7 +78,7 @@ CambioEliminar::CambioEliminar(const Archivo & origen, int lineaDestino, int lin
 
 void CambioEliminar::aplicarPatch(Archivo & objetivo, int & indiceorigen)
 {
-    indiceorigen+=getCantLineas();
+    indiceorigen += getCantLineas();
 }
 
 string CambioEliminar::getDiff()
