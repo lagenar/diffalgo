@@ -90,9 +90,9 @@ void revertirDiff(Archivo & Diff)
     int i = 1;
     while (i <= Diff.getCantLineas()) {
         string linea = Diff.getLinea(i);
-        unsigned pos_a = linea.find('a');
+        size_t pos_a = linea.find('a');
         if (pos_a != string::npos) {
-            unsigned pos_coma = linea.find(',');
+            size_t pos_coma = linea.find(',');
             int lineaOrig = atoi(linea.substr(0, pos_a).c_str());
             int lineaDestCom = atoi(linea.substr(pos_a + 1, pos_coma).c_str());
             int lineaDestFin = atoi(linea.substr(pos_coma + 1, linea.size()).c_str());
@@ -107,8 +107,8 @@ void revertirDiff(Archivo & Diff)
             }
             i = k;
         } else {
-            unsigned pos_d = linea.find('d');
-            unsigned pos_coma = linea.find(',');
+            size_t pos_d = linea.find('d');
+            size_t pos_coma = linea.find(',');
             int lineaOrigCom = atoi(linea.substr(0, pos_coma).c_str());
             int lineaOrigFin = atoi(linea.substr(pos_coma + 1, pos_d).c_str());
             int lineaDest = atoi(linea.substr(pos_d + 1, linea.size()).c_str());
