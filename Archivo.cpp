@@ -1,10 +1,13 @@
 #include "Archivo.h"
 #include <iostream>
 
+using namespace std;
+
 Archivo::Archivo(int n)
 {
     errorAbrir = false;
     lineas = new string[n];
+    cantLineas = n;
 }
 
 Archivo::Archivo(const char nombre[])
@@ -45,6 +48,12 @@ string Archivo::getLinea(int n) const
 void Archivo::setLinea(int n, const string & linea)
 {
     lineas[n-1] = linea;
+}
+
+void Archivo::imprimir() const
+{
+    for (int i = 1; i <= getCantLineas(); i++)
+        cout << getLinea(i) << endl;
 }
 
 int Archivo::nroLineas(ifstream & arch)

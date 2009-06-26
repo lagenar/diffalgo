@@ -13,6 +13,7 @@ class Archivo
         string getLinea(int) const;
         void setLinea(int, const string &);
         int getCantLineas() const;
+        void imprimir() const;
         bool isOpen() const;
         static int nroLineas(ifstream &);
     private:

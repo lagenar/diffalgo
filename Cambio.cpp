@@ -26,16 +26,14 @@ CambioAgregar::CambioAgregar(const Archivo & objetivo, int lineaOrigen, int line
         lineas.insertarFinal(objetivo.getLinea(k));
 }
 
-void CambioAgregar::aplicarPatch(Archivo & objetivo, int & indiceobjetivo)
+void CambioAgregar::aplicarPatch(Archivo & objetivo, int & ind_orig, int & ind_obj)
 {
-    int i = indiceobjetivo;
     IteradorLista<string> it(&lineas);
     while(!it.terminado()) {
-        objetivo.setLinea(i, it.elemActual());
-        i++;
+        objetivo.setLinea(ind_obj, it.elemActual());
+        ind_obj++;
         it.sucesor();
     }
-    indiceobjetivo = i;
 }
 
 string CambioAgregar::getDiff()
@@ -48,6 +46,11 @@ string CambioAgregar::getDiff()
         it.sucesor();
     }
     return resultado.str();
+}
+
+bool CambioAgregar::editaAPartirDe(int n)
+{
+    return (n == lineaOrigen + 1);
 }
 
 CambioEliminar::CambioEliminar(const Archivo & Diff, int comienzo)
@@ -76,9 +79,9 @@ CambioEliminar::CambioEliminar(const Archivo & origen, int lineaDestino, int lin
         lineas.insertarFinal(origen.getLinea(k));
 }
 
-void CambioEliminar::aplicarPatch(Archivo & objetivo, int & indiceorigen)
+void CambioEliminar::aplicarPatch(Archivo & objetivo, int & ind_orig, int & ind_obj)
 {
-    indiceorigen += getCantLineas();
+    ind_orig += getCantLineas();
 }
 
 string CambioEliminar::getDiff()
@@ -91,4 +94,9 @@ string CambioEliminar::getDiff()
         it.sucesor();
     }
     return resultado.str();
+}
+
+bool CambioEliminar::editaAPartirDe(int n)
+{
+    return (n == lineaOrigenComienzo);
 }
