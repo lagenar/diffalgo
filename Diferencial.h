@@ -22,6 +22,7 @@ class Diferencial : public Lista<Cambio*>
         Diferencial(Archivo &, Archivo &, bool);
         ~Diferencial() { }
         void imprimirDiff();
+        void aplicarPatch();
     private:
         int calcularLineasObjetivo();
         void calcularCambiosDiff(Archivo &, bool);

@@ -13,10 +13,11 @@ class Cambio
 {
     public:
         virtual string getDiff() = 0;
-        virtual void aplicarPatch(Archivo&, int &) = 0;
+        virtual void aplicarPatch(Archivo&, int &, int &) = 0;
         virtual TipoCambio tipoCambio() = 0;
         virtual int getCantLineas() = 0;
         virtual int getIndiceReversa() = 0;
+        virtual bool editaAPartirDe(int) = 0;
 };
 
 class CambioAgregar: public Cambio
@@ -27,8 +28,9 @@ class CambioAgregar: public Cambio
         string getDiff();
         TipoCambio tipoCambio() { return AGREGAR;}
         int getCantLineas() { return lineaDestinoFinal - lineaDestinoComienzo +1; }
-        void aplicarPatch(Archivo &, int &);
+        void aplicarPatch(Archivo &, int &, int &);
         int getIndiceReversa() { return lineaOrigen; }
+        bool editaAPartirDe(int);
     private:
         int lineaOrigen;
         int lineaDestinoComienzo;
@@ -44,8 +46,9 @@ class CambioEliminar: public Cambio
         string getDiff();
         TipoCambio tipoCambio() { return ELIMINAR;}
         int getCantLineas() { return lineaOrigenFinal - lineaOrigenComienzo + 1; }
-        void aplicarPatch(Archivo &, int &);
+        void aplicarPatch(Archivo &, int &, int &);
         int getIndiceReversa() { return lineaOrigenComienzo; }
+        bool editaAPartirDe(int);
     private:
         int lineaDestino;
         int lineaOrigenComienzo;

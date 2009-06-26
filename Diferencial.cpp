@@ -73,7 +73,7 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuenc
 Diferencial::Diferencial(Archivo & Diff, Archivo & origen, bool reversa) {
     archorig = &origen;
     archobj = NULL;
-    calcularCambiosDiff(Diff,reversa);
+    calcularCambiosDiff(Diff, reversa);
 }
 
 void Diferencial::imprimirDiff()
@@ -173,4 +173,29 @@ int Diferencial::calcularLineasObjetivo()
         it.sucesor();
     }
     return archorig->getCantLineas() + lineas_agregadas - lineas_eliminadas;
+}
+
+void Diferencial::aplicarPatch()
+{
+    int n = calcularLineasObjetivo();
+    Archivo resultado(n);
+    IteradorLista<Cambio*> it(this);
+    int ind_orig = 1;
+    int ind_obj = 1;
+    while(!it.terminado()) {
+        Cambio * cambio = it.elemActual();
+        while (!cambio->editaAPartirDe(ind_orig)) {
+            resultado.setLinea(ind_obj, archorig->getLinea(ind_orig));
+            ind_orig++;
+            ind_obj++;
+        }
+        cambio->aplicarPatch(resultado, ind_orig, ind_obj);
+        it.sucesor();
+    }
+    while (ind_orig <= archorig->getCantLineas()) {
+        resultado.setLinea(ind_obj, archorig->getLinea(ind_orig));
+        ind_orig++;
+        ind_obj++;
+    }
+    resultado.imprimir();
 }
