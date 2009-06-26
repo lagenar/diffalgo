@@ -12,6 +12,7 @@ enum TipoCambio {AGREGAR, ELIMINAR};
 class Cambio
 {
     public:
+        virtual ~Cambio() { }
         virtual string getDiff() = 0;
         virtual void aplicarPatch(Archivo&, int &, int &) = 0;
         virtual TipoCambio tipoCambio() = 0;
@@ -25,6 +26,7 @@ class CambioAgregar: public Cambio
     public:
         CambioAgregar(const Archivo &, int);
         CambioAgregar(const Archivo &, int, int, int);
+        ~CambioAgregar() { }
         string getDiff();
         TipoCambio tipoCambio() { return AGREGAR;}
         int getCantLineas() { return lineaDestinoFinal - lineaDestinoComienzo +1; }
@@ -43,6 +45,7 @@ class CambioEliminar: public Cambio
     public:
         CambioEliminar(const Archivo &, int);
         CambioEliminar(const Archivo &, int, int, int);
+        ~CambioEliminar() { }
         string getDiff();
         TipoCambio tipoCambio() { return ELIMINAR;}
         int getCantLineas() { return lineaOrigenFinal - lineaOrigenComienzo + 1; }
