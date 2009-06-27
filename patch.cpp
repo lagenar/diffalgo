@@ -6,25 +6,25 @@ using namespace std;
 
 void uso()
 {
-    cout << "uso: ./patch [-o] <archivo a patchear> <archivo diff>" << endl;
+    cout << "uso: ./patch [-R] <archivo a patchear> <archivo diff>" << endl;
     cout << "opciones: " << endl;
-    cout << "          -o --> aplica el diff de objetivo a origen" << endl;
+    cout << "          -R --> aplica el diff de objetivo a origen (inversa)" << endl;
 }
 
 int main(int argc, char *argv[])
 {
-    bool reversa = false;
+    bool inversa = false;
     char * nombrediff, * nombreobj;
     if (argc < 3 || argc > 4) {
         uso();
         return 0;
     }
     if (argc == 4) {
-        if (string(argv[1]) != "-o") {
+        if (string(argv[1]) != "-R") {
             cout << "opción inválida " << argv[1] << endl;
             return 1;
         } else
-            reversa = true;
+            inversa = true;
     }
     nombreobj = (argc == 3) ? argv[1] : argv[2];
     nombrediff = (argc == 3) ? argv[2] : argv[3];
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         cout << "Error al intentar abrir: " << nombrediff << endl;
         return 1;
     }
-    Diferencial diferencial(diff, obj, reversa);
+    Diferencial diferencial(diff, obj, inversa);
     diferencial.aplicarPatch();
     return 0;
 }
