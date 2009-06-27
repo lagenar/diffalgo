@@ -5,6 +5,8 @@
 
 using namespace std;
 
+/*compilación condicional para la subsecuencia más larga,
+comentar la siguiente línea si se quiere usar el algoritmo básico*/
 #define LCS
 #ifndef LCS
 void calcularSubsecuencia(const Archivo & archorig, const Archivo & archobj, Subsecuencia & subsecuencia)
@@ -108,10 +110,10 @@ Diferencial::Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuenc
     crearCambiosSubsecuencia(subsec);
 }
 
-Diferencial::Diferencial(Archivo & Diff, Archivo & origen, bool reversa) {
+Diferencial::Diferencial(Archivo & Diff, Archivo & origen, bool inversa) {
     archorig = &origen;
     archobj = NULL;
-    calcularCambiosDiff(Diff, reversa);
+    calcularCambiosDiff(Diff, inversa);
 }
 
 void Diferencial::imprimirDiff()
@@ -123,7 +125,7 @@ void Diferencial::imprimirDiff()
     }
 }
 
-void revertirDiff(Archivo & Diff)
+void invertirDiff(Archivo & Diff)
 {
     int i = 1;
     while (i <= Diff.getCantLineas()) {
@@ -164,10 +166,10 @@ void revertirDiff(Archivo & Diff)
     }
 }
 
-void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
+void Diferencial::calcularCambiosDiff(Archivo & Diff, bool inversa)
 {
-    if(reversa)
-        revertirDiff(Diff);
+    if(inversa)
+        invertirDiff(Diff);
     int i = 1;
     while (i <= Diff.getCantLineas()) {
         Cambio * cambio = NULL;
@@ -176,11 +178,11 @@ void Diferencial::calcularCambiosDiff(Archivo & Diff, bool reversa)
         else
             cambio = new CambioEliminar(Diff, i);
         i += cambio->getCantLineas() + 1;
-        if(reversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
+        if(inversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
             Cambio * cambio2 = NULL;
             if(Diff.getLinea(i).find('a') != string::npos) {
                 cambio2 = new CambioAgregar(Diff,i);
-                if(cambio2->getIndiceReversa() <= cambio->getIndiceReversa()){
+                if(cambio2->getIndiceInversa() <= cambio->getIndiceInversa()){
                     this->insertarFinal(cambio2);
                     this->insertarFinal(cambio);
                 } else {
