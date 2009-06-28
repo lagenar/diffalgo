@@ -166,37 +166,36 @@ void invertirDiff(Archivo & Diff)
     }
 }
 
+Cambio * getCambioDiff(Archivo & Diff, int i)
+{
+    if (Diff.getLinea(i).find('a') != string::npos)
+        return new CambioAgregar(Diff, i);
+    return new CambioEliminar(Diff, i);
+}
+
 void Diferencial::calcularCambiosDiff(Archivo & Diff, bool inversa)
 {
     if(inversa)
         invertirDiff(Diff);
     int i = 1;
+    Cambio * anterior = NULL;
     while (i <= Diff.getCantLineas()) {
-        Cambio * cambio = NULL;
-        if(Diff.getLinea(i).find('a') != string::npos)
-            cambio = new CambioAgregar(Diff, i);
-        else
-            cambio = new CambioEliminar(Diff, i);
-        i += cambio->getCantLineas() + 1;
-        if(inversa && i <= Diff.getCantLineas() && cambio->tipoCambio() == ELIMINAR) {
-            Cambio * cambio2 = NULL;
-            if(Diff.getLinea(i).find('a') != string::npos) {
-                cambio2 = new CambioAgregar(Diff,i);
-                if(cambio2->getIndiceInversa() <= cambio->getIndiceInversa()){
-                    this->insertarFinal(cambio2);
-                    this->insertarFinal(cambio);
-                } else {
-                    this->insertarFinal(cambio);
-                    this->insertarFinal(cambio2);
-                }
-                i += cambio2->getCantLineas() + 1;
-            }
-            else
-                this->insertarFinal(cambio);
+        Cambio * actual = getCambioDiff(Diff, i);
+        i += actual->getCantLineas() + 1;
+        if (anterior != NULL && actual->getIndiceOrigen() < anterior->getIndiceOrigen()) {
+            insertarFinal(actual);
+            insertarFinal(anterior);
+            anterior = NULL;
         }
-        else
-            this->insertarFinal(cambio);
+        else {
+            if (anterior != NULL) {
+                insertarFinal(anterior);
+            }
+            anterior = actual;
+        }
     }
+    if (anterior != NULL)
+        insertarFinal(anterior);
 }
 
 int Diferencial::calcularLineasObjetivo()
