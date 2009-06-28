@@ -21,13 +21,13 @@ class Diferencial : public Lista<Cambio*>
         //constructor para crear cambios a partir de dos archivos y su subsecuencia (diff)
         Diferencial(Archivo &, Archivo &, const Subsecuencia &);
         //constructor para crear cambios a partir dos archivos (origen y diff) y un flag
-        //para la opción de aplicación inversa (patch)
+        //para la opciÃ³n de aplicaciÃ³n inversa (patch)
         Diferencial(Archivo &, Archivo &, bool);
         ~Diferencial() { }
         void imprimirDiff();
         void aplicarPatch();
     private:
-        //calcula la cantidad de lineas del archivo resultante en la aplicación del patch.
+        //calcula la cantidad de lineas del archivo resultante en la aplicaciÃ³n del patch.
         int calcularLineasObjetivo();
         void calcularCambiosDiff(Archivo &, bool);
         void crearCambiosSubsecuencia(const Subsecuencia &);
