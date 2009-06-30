@@ -44,10 +44,6 @@
 
 \begin_layout Title
 Utilidades Diff y Patch
-\begin_inset Newline newline
-\end_inset
-
-Primera entrega
 \end_layout
 
 \begin_layout Author
@@ -407,105 +403,6 @@ TYPES Subsecuencia
 END-CLASS
 \end_layout
 
-\begin_layout Subsubsection
-Arreglo
-\end_layout
-
-\begin_layout Standard
-Es una colección de elementos de acceso aleatorio y de tamaño fijo.
- Se optó por un indexamiento al estilo pascal, es decir, de 1 a n.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Siendo n el tamaño del arreglo
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Este tipo es base de los TDAs Archivo y Línea.
-\end_layout
-
-\begin_layout LyX-Code
-CLASS Arreglo[Elem]
-\end_layout
-
-\begin_layout LyX-Code
-IMPORTS Nat
-\end_layout
-
-\begin_layout LyX-Code
-BASIC CONSTRUCTORS crear, setCelda
-\end_layout
-
-\begin_layout LyX-Code
-DEFERRED
-\end_layout
-
-\begin_layout LyX-Code
-TYPES Arreglo
-\end_layout
-
-\begin_layout LyX-Code
-FUNCTIONS
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-\begin_inset Formula $crear:\: Nat\rightarrow Arreglo$
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset Formula $tamaño:\: Arreglo\rightarrow Nat$
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset Formula $setCelda:\: Arreglo\left(a\right)\: x\: Nat(i)\rightarrow Arreglo$
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-\begin_inset Formula $pre:\:1\leq i\leq tamaño\left(a\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-\begin_inset Formula $getCelda:\: Arreglo\left(a\right)\: x\: Nat(i)\rightarrow Elem$
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-\begin_inset Formula $pre:\:1\leq i\leq tamaño\left(a\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout LyX-Code
-END-CLASS
-\end_layout
-
 \begin_layout Subsection
 Tipos Principales
 \end_layout
@@ -516,10 +413,8 @@ Línea
 
 \begin_layout Standard
 Representa una cadena de caracteres.
- Para su definición se utiliza como base el TDA Arreglo parametrizado con
- el tipo básico char.
- También se agregó a la especificación la funcionalidad básica para comparar
- dos líneas.
+ Se agregó a la especificación la funcionalidad básica para comparar dos
+ líneas.
 \end_layout
 
 \begin_layout LyX-Code
@@ -527,15 +422,15 @@ CLASS Línea
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Char, Boolean
-\end_layout
-
-\begin_layout LyX-Code
-INHERITS Arreglo[Char]
+IMPORTS Char, Boolean, Nat
 \end_layout
 
 \begin_layout LyX-Code
 DEFERRED
+\end_layout
+
+\begin_layout LyX-Code
+BASIC CONSTRUCTORS Crear, setChar
 \end_layout
 
 \begin_layout LyX-Code
@@ -547,6 +442,52 @@ FUNCTIONS
 \end_layout
 
 \begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $Crear:\ \rightarrow Línea$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $tamaño:\ Línea\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getChar:\ Línea\left(l\right)\ x\ Nat\left(n\right)\rightarrow Char$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:1\leq n\leq tamaño(l)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $setChar:\ Línea(l)\ x\ Nat(n)\ x\ Char\rightarrow Línea$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:1\leq n\leq tamaño(l)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout LyX-Code
 \begin_inset Formula $iguales:\: Línea\: x\: Línea\rightarrow Boolean$
 \end_inset
@@ -565,10 +506,8 @@ Archivo
 
 \begin_layout Standard
 Es la representación de una secuencia de líneas.
- Utiliza el tipo arreglo parametrizado con el tipo Línea como base.
  Su funcionalidad es dar acceso aleatorio a las líneas.
- Para mayor claridad se redefinieron los nombres de las funciones setCelda
- y getCelda del TDA Arreglo.
+ 
 \end_layout
 
 \begin_layout LyX-Code
@@ -576,17 +515,73 @@ CLASS Archivo
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Línea
+IMPORTS Línea, Nat
 \end_layout
 
 \begin_layout LyX-Code
-INHERITS Arreglo[Línea] [setLínea : setCelda, getLínea : getCelda]
+BASIC CONSTRUCTORS Crear, setLinea
 \end_layout
 
 \begin_layout LyX-Code
 DEFERRED
 \end_layout
 
+\begin_layout LyX-Code
+TYPES Archivo
+\end_layout
+
+\begin_layout LyX-Code
+FUNCTIONS
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $Crear:\ Nat\rightarrow Archivo$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getCantLíneas:\ Archivo\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getLínea:\ Archivo\left(a\right)\ x\ Nat\left(n\right)\rightarrow Línea$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\ 1\leq n\leq getCantLíneas\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $setLínea:\ Archivo\left(a\right)\ x\ Nat\left(n\right)\ Línea\rightarrow Archivo$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $pre:\ 1\leq n\leq getCantLíneas\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
 \begin_layout LyX-Code
 END-CLASS
 \end_layout
@@ -600,6 +595,12 @@ Representa un cambio genérico a un archivo, sirve de base para los dos tipos
  de cambio específicos.
  Su funcionalidad es la de producir y aplicar eliminaciones o adiciones
  a un archivo en la porción que le corresponde.
+ La función getDiff retorna en el formato Diff las modificaciones que deben
+ realizarse.
+ AplicarPatch retorna un archivo modificado con el cambio aplicado.
+ GetCantLineas retorna la cantidad de líneas que edita el cambio.
+ La función EditaAPartirDe retorna un boolean que indica si el cambio empieza
+ a editar a partir del índice pasado como argumento.
 \end_layout
 
 \begin_layout LyX-Code
@@ -607,7 +608,7 @@ CLASS Cambio
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Nat, Arreglo[Línea]
+IMPORTS Nat, Archivo, Boolean
 \end_layout
 
 \begin_layout LyX-Code
@@ -643,6 +644,20 @@ FUNCTIONS
 
 \begin_layout LyX-Code
 \begin_inset Formula $aplicarPatch:\: Cambio\: x\: Archivo\rightarrow Archivo$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getCantLíneas:\ Cambio\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $editaAPartirDe:\ Cambio\ x\ Nat\rightarrow Boolean$
 \end_inset
 
 
@@ -738,7 +753,7 @@ IMPORTS Subsecuencia, Archivo, Lista[Cambio], CambioAgregar,
 
 \end_deeper
 \begin_layout LyX-Code
-BASIC CONSTRUCTORS crear
+BASIC CONSTRUCTORS Crear
 \end_layout
 
 \begin_layout LyX-Code
@@ -755,7 +770,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $crear:\: Archivo\: x\: Archivo\rightarrow Diferencial$
+\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\rightarrow Diferencial$
 \end_inset
 
 
