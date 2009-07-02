@@ -152,7 +152,8 @@ Lista
 \begin_layout Standard
 Es una lista genérica, pero con funcionalidad reducida comparado con la
  especificación estándar de lista.
- Este tipo sólo permite inserciones al final y no es posible eliminar elementos.
+ Este tipo sólo permite inserciones al final y al principio.
+ No es posible eliminar elementos.
 \end_layout
 
 \begin_layout LyX-Code
@@ -189,6 +190,13 @@ FUNCTIONS
 
 \begin_layout LyX-Code
 \begin_inset Formula $agregarFinalLista:\: Lista\: x\: Elem\rightarrow Lista$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $agregarPrincipioLista:\: Lista\: x\: Elem\rightarrow Lista$
 \end_inset
 
 
@@ -337,21 +345,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $setPrimero:\: Int\: x\: ParInt\rightarrow ParInt$
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
 \begin_inset Formula $getPrimero:\: ParInt\rightarrow Int$
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset Formula $setSegundo:\: Int\: x\: ParInt\rightarrow ParInt$
 \end_inset
 
 
@@ -413,8 +407,10 @@ Línea
 
 \begin_layout Standard
 Representa una cadena de caracteres.
- Se agregó a la especificación la funcionalidad básica para comparar dos
- líneas.
+ La funcionalidad básica es la de modificar y devolver un carácter de una
+ posición(setChar y getChar).
+ También se agregó a la especificación la función para comparar dos líneas
+ por igualdad(iguales).
 \end_layout
 
 \begin_layout LyX-Code
@@ -443,21 +439,21 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\ \rightarrow Línea$
+\begin_inset Formula $Crear:\: Nat\rightarrow Línea$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $tamaño:\ Línea\rightarrow Nat$
+\begin_inset Formula $tamaño:\: Línea\rightarrow Nat$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getChar:\ Línea\left(l\right)\ x\ Nat\left(n\right)\rightarrow Char$
+\begin_inset Formula $getChar:\: Línea\left(l\right)\: x\: Nat\left(n\right)\rightarrow Char$
 \end_inset
 
 
@@ -473,7 +469,7 @@ FUNCTIONS
 
 \end_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $setChar:\ Línea(l)\ x\ Nat(n)\ x\ Char\rightarrow Línea$
+\begin_inset Formula $setChar:\: Línea(l)\: x\: Nat(n)\: x\: Char\rightarrow Línea$
 \end_inset
 
 
@@ -506,7 +502,7 @@ Archivo
 
 \begin_layout Standard
 Es la representación de una secuencia de líneas.
- Su funcionalidad es dar acceso aleatorio a las líneas.
+ Su funcionalidad es dar acceso aleatorio a las líneas(getLinea y setLinea).
  
 \end_layout
 
@@ -536,21 +532,21 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\ Nat\rightarrow Archivo$
+\begin_inset Formula $Crear:\: Nat\rightarrow Archivo$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getCantLíneas:\ Archivo\rightarrow Nat$
+\begin_inset Formula $getCantLíneas:\: Archivo\rightarrow Nat$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getLínea:\ Archivo\left(a\right)\ x\ Nat\left(n\right)\rightarrow Línea$
+\begin_inset Formula $getLínea:\: Archivo\left(a\right)\: x\: Nat\left(n\right)\rightarrow Línea$
 \end_inset
 
 
@@ -558,7 +554,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $pre:\ 1\leq n\leq getCantLíneas\left(a\right)$
+\begin_inset Formula $pre:\:1\leq n\leq getCantLíneas\left(a\right)$
 \end_inset
 
 
@@ -566,7 +562,7 @@ FUNCTIONS
 
 \end_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $setLínea:\ Archivo\left(a\right)\ x\ Nat\left(n\right)\ Línea\rightarrow Archivo$
+\begin_inset Formula $setLínea:\: Archivo\left(a\right)\: x\: Nat\left(n\right)\: Línea\rightarrow Archivo$
 \end_inset
 
 
@@ -574,7 +570,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $pre:\ 1\leq n\leq getCantLíneas\left(a\right)$
+\begin_inset Formula $pre:\:1\leq n\leq getCantLíneas\left(a\right)$
 \end_inset
 
 
@@ -599,8 +595,6 @@ Representa un cambio genérico a un archivo, sirve de base para los dos tipos
  realizarse.
  AplicarPatch retorna un archivo modificado con el cambio aplicado.
  GetCantLineas retorna la cantidad de líneas que edita el cambio.
- La función EditaAPartirDe retorna un boolean que indica si el cambio empieza
- a editar a partir del índice pasado como argumento.
 \end_layout
 
 \begin_layout LyX-Code
@@ -629,7 +623,7 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\: Nat\: x\: Nat\: x\: Nat\rightarrow Cambio$
+\begin_inset Formula $Crear:\: Nat\: x\: Nat\: x\: Nat\: x\: Archivo\rightarrow Cambio$
 \end_inset
 
 
@@ -650,14 +644,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getCantLíneas:\ Cambio\rightarrow Nat$
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset Formula $editaAPartirDe:\ Cambio\ x\ Nat\rightarrow Boolean$
+\begin_inset Formula $getCantLíneas:\: Cambio\rightarrow Nat$
 \end_inset
 
 
@@ -731,11 +718,27 @@ Diferencial
 
 \begin_layout Standard
 Es el tipo más importante del sistema.
- A partir de dos archivos genera una subsecuencia de líneas comunes y a
- partir de ésta calcula una lista con los cambios necesarios para obtener
- un archivo a partir del otro.
- La función getDiff devuelve el resultado de los cambios con el formato
- del diff.
+ Es una lista de cambios pero con funcionalidad extendida.
+\end_layout
+
+\begin_layout Standard
+Las dos formas de instanciar la clase Diferencial son:
+\end_layout
+
+\begin_layout Itemize
+A partir de dos Archivos(origen y objetivo) y una subsecuencia común.
+\end_layout
+
+\begin_layout Itemize
+A partir de dos Archivos(origen y diff) y un bool(para especificar si se
+ debe invertir el diff).
+\end_layout
+
+\begin_layout Standard
+La función getDiff retorna un archivo en el formato del diff con la concatenació
+n de los diffs de sus cambios.
+ La función aplicarPatch retorna un archivo resultante de realizar las modificac
+iones de cada uno de sus cambios al archivo pasado en el constructor.
 \end_layout
 
 \begin_layout LyX-Code
@@ -743,15 +746,13 @@ CLASS Diferencial
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Subsecuencia, Archivo, Lista[Cambio], CambioAgregar,
+IMPORTS Subsecuencia, Archivo, Lista[Cambio], bool
 \end_layout
 
-\begin_deeper
 \begin_layout LyX-Code
-    CambioEliminar
+INHERITS Lista[Cambio]
 \end_layout
 
-\end_deeper
 \begin_layout LyX-Code
 BASIC CONSTRUCTORS Crear
 \end_layout
@@ -770,28 +771,28 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\rightarrow Diferencial$
+\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\: Subsecuencia\rightarrow Diferencial$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $calcularSubsecuencia:\: Diferencial\rightarrow Subsecuencia$
+\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\: x\: bool\rightarrow Diferencial$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $calcularCambios:\: Subsecuencia\: x\: Diferencial\rightarrow Lista[Cambio]$
+\begin_inset Formula $getDiff:\: Diferencial\rightarrow Archivo$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getDiff:\: Lista[Cambio]\: x\: Diferencial\rightarrow Archivo$
+\begin_inset Formula $aplicarPatch:\: Diferencial\rightarrow Archivo$
 \end_inset
 
 
@@ -807,12 +808,12 @@ Implementación de los TDAs
 \end_layout
 
 \begin_layout Subsection
-Estructura del proyecto
+Estructura de los proyectos
 \end_layout
 
 \begin_layout Standard
-El proyecto fue desarrollado con el entorno de desarrollo integrado Code::Blocks.
- 
+Los proyectos(diff y patch) fueron desarrollados con el entorno de desarrollo
+ integrado Code::Blocks.
 \end_layout
 
 \begin_layout Standard
@@ -820,39 +821,67 @@ El código está contenido en los siguientes archivos:
 \end_layout
 
 \begin_layout Itemize
-diffalgo.cbp: archivo principal del proyecto.
+diffalgo.cbp: proyecto del diff.
 \end_layout
 
 \begin_layout Itemize
-diff.cpp: programa principal.
+diff.cpp: programa principal del diff.
 \end_layout
 
 \begin_layout Itemize
-Diferencial.h: encabezado de la clase Diferencial.
+Diferencial.h: encabezado de la clase Diferencial(*).
 \end_layout
 
 \begin_layout Itemize
-Diferencial.cpp: implementación de la clase Diferencial.
+Diferencial.cpp: implementación de la clase Diferencial(*).
 \end_layout
 
 \begin_layout Itemize
-Cambio.h: encabezado de la clase Cambio y sus derivadas.
+Cambio.h: encabezado de la clase Cambio y sus derivadas(*).
 \end_layout
 
 \begin_layout Itemize
-Cambio.cpp: implementación de la clase Cambio y sus derivadas.
+Cambio.cpp: implementación de la clase Cambio y sus derivadas(*).
 \end_layout
 
 \begin_layout Itemize
-Archivo.h: encabezado de la clase Archivo.
+Archivo.h: encabezado de la clase Archivo(*).
 \end_layout
 
 \begin_layout Itemize
-Archivo.cpp: implementación de la clase Archivo.
+Archivo.cpp: implementación de la clase Archivo(*).
 \end_layout
 
 \begin_layout Itemize
-Lista.h: encabezado e implementación del template Lista e IteradorLista.
+Lista.h: encabezado e implementación del template Lista e IteradorLista(*).
+\end_layout
+
+\begin_layout Itemize
+Algoritmos.h: contiene la declaración de la función para calcular una subsecuenci
+a común(el básico y el óptimo), y los tipos parInt y subsecuencia.
+\end_layout
+
+\begin_layout Itemize
+Algoritmos.cpp: implementación de las declaraciones en Algoritmos.h.
+\end_layout
+
+\begin_layout Itemize
+patch.cbp: proyecto para el patch.
+\end_layout
+
+\begin_layout Itemize
+patch.cpp: programa principal del patch.
+\end_layout
+
+\begin_layout Standard
+Los archivos marcados con (*) son comúnes a ambos proyectos.
+\end_layout
+
+\begin_layout Standard
+Como los diff de la primera y segunda entrega sólo difieren en la función
+ para calcular una subsecuencia común, se decidió implementar ambos en el
+ mismo proyecto y agregar una macro de compilación condicional en el archivo
+ Algoritmos.h.
 \end_layout
 
 \begin_layout Subsection
@@ -868,13 +897,13 @@ Este tipo se implementó con un template para que pueda ser parametrizado.
 \end_layout
 
 \begin_layout Standard
-Para que la inserción al final de la lista tenga una complejidad temporal
- 
+Para que la inserción final de la lista tenga una complejidad temporal 
 \begin_inset Formula $O\left(1\right)$
 \end_inset
 
 , se mantiene un puntero al último nodo.
- La función más importante de Lista es insertarFinal.
+ La inserción al principio también es constante.
+ Las funciones principales son: 
 \end_layout
 
 \begin_layout LyX-Code
@@ -885,13 +914,28 @@ template <class T>
 void insertarFinal(const T & elem); 
 \end_layout
 
+\begin_layout LyX-Code
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+template <class T>
+\end_layout
+
+\begin_layout LyX-Code
+void insertarPrincipio(const T & elem);
+\end_layout
+
 \begin_layout Standard
 El destructor recorre los nodos de la lista y los elimina uno por uno, su
  complejidad es de 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-.
+, con n la cantidad de nodos.
 \end_layout
 
 \begin_layout Subsubsection
@@ -957,38 +1001,46 @@ ParInt
 \end_layout
 
 \begin_layout Standard
-Es una clase contenedora con sus atributos públicos (primero y segundo).
+Es una clase contenedora de un par de enteros.
  En el constructor se pasan los dos valores iniciales del par.
 \end_layout
 
 \begin_layout LyX-Code
-class parInt
-\end_layout
-
-\begin_layout LyX-Code
-{
+class parInt {
 \end_layout
 
 \begin_deeper
 \begin_layout LyX-Code
-public: 
+public:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+int Primero() { return primero;}
 \end_layout
 
 \begin_layout LyX-Code
-        int primero; 
+int Segundo() { return segundo;}
 \end_layout
 
 \begin_layout LyX-Code
-        int segundo;         
-\end_layout
-
-\begin_layout LyX-Code
-        parInt(int p, int s) : primero(p), segundo(s) { }
+parInt(int p, int s) : primero(p), segundo(s) { }
 \end_layout
 
 \end_deeper
 \begin_layout LyX-Code
-};
+private:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+int primero, segundo;
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+}
 \end_layout
 
 \begin_layout Subsubsection
@@ -1000,7 +1052,7 @@ Se implementa simplemente parametrizando el template Lista con parInt.
 \end_layout
 
 \begin_layout LyX-Code
-Lista<parInt> Subsecuencia;
+typedef Lista<parInt> Subsecuencia;
 \end_layout
 
 \begin_layout Subsubsection
@@ -1030,20 +1082,7 @@ Archivo
 
 \begin_layout Standard
 En la implementación de este TDA se representaron las líneas mediante la
- composición de un arreglo de strings
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Si bien podríamos haber creado una clase arreglo de la que pueda heredarse,
- preferimos hacerlo por composición, para conseguir más control sobre el
- arreglo en caso de situaciones problemáticas, como la no existencia de
- un archivo o los errores de lectura.
-\end_layout
-
-\end_inset
-
-.
+ composición de un arreglo de strings.
 \end_layout
 
 \begin_layout Standard
@@ -1055,10 +1094,23 @@ Para crear un Archivo se le pasa el nombre del archivo físico al constructor.
  estático nroLineas que recibe un objeto de tipo ifstream y retorna un entero,
  con esta información se crea dinámicamente el arreglo de líneas (string
  * lineas) y se lo carga con el contenido del archivo.
+ El constructor está sobrecargado para crear un archivo vacio a partir del
+ número de líneas.
 \end_layout
 
 \begin_layout LyX-Code
 Archivo::Archivo(const char nombre[])
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+Archivo::Archivo(int n)
+\end_layout
+
+\begin_layout LyX-Code
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1094,7 +1146,18 @@ int Archivo::nroLineas(ifstream & arch)
 \begin_inset VSpace defskip
 \end_inset
 
-int Archivo::getCantLineas() const 
+int Archivo::getCantLineas() const
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+void Archivo::imprimir() const
 \end_layout
 
 \begin_layout Standard
@@ -1103,11 +1166,12 @@ La complejidad de isOpen, getLinea, setLinea, getCantLineas es de
 \end_inset
 
 .
- La complejidad para calcular el número de líneas y cargarlas es de 
+ La complejidad para calcular el número de líneas y cargarlas, y para imprimir
+ el archivo es de 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-.
+, con n cantidad de líneas.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1117,44 +1181,110 @@ Cambio
 \begin_layout Standard
 Para favorecer el polimorfismo se implementó una clase abstracta, que representa
  a un cambio genérico.
- La funcionalidad para aplicar un patch no se implementó en esta entrega
+ Se debieron agregar métodos para simplificar la implementación(principalmente
+ del patch).
+ 
+\end_layout
+
+\begin_layout LyX-Code
+public:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+virtual string getDiff() = 0;
+\end_layout
+
+\begin_layout LyX-Code
+virtual void aplicarPatch(Archivo&, int &, int &) = 0;
+\end_layout
+
+\begin_layout LyX-Code
+virtual TipoCambio tipoCambio() = 0;
+\end_layout
+
+\begin_layout LyX-Code
+virtual int getCantLineas() = 0;
+\end_layout
+
+\begin_layout LyX-Code
+virtual int getIndiceOrigen() = 0;
+\end_layout
+
+\begin_layout LyX-Code
+virtual bool editaAPartirDe(int) = 0;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+protected:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+Lista<string> lineas;
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+El atributo protejido lineas, contiene las líneas que se deben agregar o
+ eliminar.
+ Se agregó reflexión en la clase Cambio a través de el método tipoCambio,
+ que retorna un valor de tipo TipoCambio:
+\end_layout
+
+\begin_layout LyX-Code
+enum TipoCambio {AGREGAR, ELIMINAR};
+\end_layout
+
+\begin_layout Standard
+El método getDiff retorna la porción del diff del cambio, éste esta implementado
+ especificamente en cada subclase de cambio, pero básicamente lo que hace
+ es: recorre la lista de líneas y genera el la parte del diff con el formato
+ correspondiente.
+ Entonces, su complejidad es de 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, siendo n la cantidad de líneas a agregar o eliminar.
+\end_layout
+
+\begin_layout Standard
+El método getIndiceOrigen retorna el indice en el cual el cambio edita en
+ el archivo origen(a partir de donde agrega si es CambioAgregar o a partir
+ de donde elimina si es CambioEliminar).
+ Este método es necesario para insertar los cambios en forma ordenada en
+ el Diferencial cuando los cambios se extraen de un archivo diff; si bien
+ los cambios estan bien ordenados cuando se interpreta el diff en el sentido
+ en el que fue escrito(de origen a objetivo), el inconveniente surge cuando
+ se debe interpretar el diff en forma inversa.
+\end_layout
+
+\begin_layout Standard
+El método editaAPartirDe es utilizado en el algoritmo para aplicar el patch,
+ se le pasa un número de línea del archivo al que se aplica el patch y este
+ retorna afirmativamente si el cambio comienza a editar a partir de esa
+ línea.
+ Se detallará más sobre este método cuando se vea el algoritmo para aplicar
+ un patch.
+\end_layout
+
+\begin_layout Standard
+Por último, el método apicarPatch también está adaptado al algoritmo general
+ de aplicación.
+ Recibe el archivo en donde se está creando el archivo patcheado
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-Simplemente se declaró un método que no recibe parámetros y no retorna nada,
- que será declarado e implementado correctamente en la segunda entrega
+Se verá más adelante que la estrategía para aplicar un patch es crear un
+ archivo nuevo, en vez de modificar uno existente.
 \end_layout
 
 \end_inset
 
-.
- Los archivos se pasan al método getDiff para que este pueda extraer las
- lineas que necesite para crear la porción del diff.
-\end_layout
-
-\begin_layout LyX-Code
-class Cambio
-\end_layout
-
-\begin_layout LyX-Code
-{
-\end_layout
-
-\begin_layout LyX-Code
-    public:
-\end_layout
-
-\begin_layout LyX-Code
-        virtual string getDiff(const Archivo &, const Archivo &) = 0;
-\end_layout
-
-\begin_layout LyX-Code
-        virtual void aplicarPatch() = 0; 
-\end_layout
-
-\begin_layout LyX-Code
-};
+, el índice la línea actual del archivo origen y el índice de la línea actual
+ del archivo resultante(todos por referencia).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1165,7 +1295,25 @@ CambioAgregar
 Este TDA se implementó como una clase derivada de la clase Cambio.
  Contiene tres atributos privados que representan la línea del archivo origen
  a partir de la cual se agrega y las líneas de comienzo y fin del archivo
- destino (pasados en el constructor).
+ destino.
+ Tiene dos constructores uno que obtiene las líneas a agregar a partir del
+ archivo objetivo, y otro que las obtiene a partir del archivo diff.
+ La complejidad de ambos es de 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, con n líneas a agregar, ya que ambos deben iterar sobre el archivo pasado
+ e insertar cada una de las líneas en el atributo lineas.
+\end_layout
+
+\begin_layout Standard
+El método aplicarPatch setea las líneas a agregar en el archivo resultante(a
+ partir del índice pasado), actualizando también el indice de éste archivo.
+ Su complejidad es de 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, con n líneas a agregar.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1175,66 +1323,25 @@ CambioEliminar
 \begin_layout Standard
 Esta clase es la simétrica a CambioAgregar para eliminación.
  Contiene tres atributos privados que representan las líneas de comienzo
- y fin del archivo origen y la línea del archivo destino (pasados en el
- constructor).
+ y fin del archivo origen y la línea del archivo destino.
+\end_layout
+
+\begin_layout Standard
+Los constructores son análogos a los de CambioAgregar.
+\end_layout
+
+\begin_layout Standard
+El método aplicarPatch simplemente actualiza el índice del archivo origen
+ pasado por referencia(hace un salto de las líneas que deben eliminarse);
+ por lo que su complejidad es de 
+\begin_inset Formula $O\left(1\right)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
 Diferencial
-\end_layout
-
-\begin_layout Standard
-Un objeto Diferencial se construye pasando dos objetos de tipo Archivo (origen
- y objetivo), este setea sus atributos privados subsecuencia y cambios invocando
- a los métodos privados calcularSubsecuencia y calcularCambios.
- Una vez creado el objeto el cliente puede invocar al método público imprimirDif
-f que saca por consola el resultado del diff.
-\end_layout
-
-\begin_layout LyX-Code
-Diferencial::Diferencial(Archivo & archorig, Archivo & archobj)
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-void Diferencial::calcularSubsecuencia()
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-void Diferencial::calcularCambios()
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-void Diferencial::imprimirDiff()
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-La complejidad del método imprimirDiff es de 
-\begin_inset Formula $O\left(n\right)$
-\end_inset
-
-, siendo 
-\begin_inset Formula $n$
-\end_inset
-
- la cantidad de cambios.
- Los métodos calcularSubsecuencia y calcularCambios se estudiarán en la
- próxima sección.
 \end_layout
 
 \begin_layout Section
@@ -1242,13 +1349,12 @@ Algoritmos utilizados y su complejidad
 \end_layout
 
 \begin_layout Subsection
-Algoritmo para calcular una subsecuencia común
+Algoritmo simple para calcular una subsecuencia común
 \end_layout
 
 \begin_layout Standard
-En esta primera entrega se implementó un algoritmo simple para calcular
- subsecuencias comunes de líneas entre dos archivos.
- Está implementado en el método calcularSubsecuencia de la clase Diferencial.
+El algoritmo simple para calcular una subsecuencia, esta implementado en
+ el archivo Algoritmos.cpp.
 \end_layout
 
 \begin_layout Standard
@@ -1289,13 +1395,13 @@ k = 1 //índice que marca por donde se comienza en el archivo objetivo
 \begin_layout LyX-Code
 
 \size footnotesize
-j = 1
+i = 1 //índice del archivo origen
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-for (i = 1; i <= longitud(ArchOri) AND k <= longitud(ArchObj); i++)
+while (i <= longitud(ArchOri) && k <= longitud(ArchObj))
 \end_layout
 
 \begin_deeper
@@ -1356,7 +1462,7 @@ Entonces, sea
 \begin_inset Formula $T\left(m,n\right)$
 \end_inset
 
- el tiempo que tarda el algoritmo:
+ el tiempo que toma el algoritmo:
 \end_layout
 
 \begin_layout Standard
@@ -1390,6 +1496,207 @@ El mejor de los casos se da cuando los archivos son iguales debido a que
 \end_layout
 
 \begin_layout Subsection
+Algoritmo calcular la subsecuencia más larga
+\end_layout
+
+\begin_layout Standard
+Para calcular la subsecuencia más larga entre dos archivos, se implementó
+ el algoritmo dinámico dado en las clases de laboratorio.
+ El algoritmo se encuentra implementado en el archivo Algoritmos.cpp.
+\end_layout
+
+\begin_layout Standard
+Su pseudocódigo es:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+for i = 1 to m
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+LCS[i][0] = {0, nada}
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+for i = 0 to n
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+LCS[0][i] = {0, nada}
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+for i = 1 to m
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+for k = 1 to n
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (archorig[i] == archobj[k]) 
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+LCS[i][k] = {LCS[i-1][k-1]+1, diagonal}
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else if (LCS[i-1][k] >= LCS[i][k-1])
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+LCS[i][k] = {LCS[i-1][k], arriba}
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+LCS[i][k] = {LCS[i][k-1], izquierda}
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+m--
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+n--
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+while m > 0 AND n > 0
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (LCS[m][n].flecha == diagonal)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+m--
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+n--
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+subsecuencia.insertarPrincipio(m,n)
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else if (LCS[m][n].flecha = arriba)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+m--
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+n--
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+La complejidad temporal en el peor de los casos es de 
+\begin_inset Formula $O\left(m.n\right)$
+\end_inset
+
+, siendo m y n la cantidad de líneas de los archivos origen y objetivo respectiv
+amente.
+ Esto se ve claramente analizando los dos bucles for anidados, y considerando
+ que la complejidad del bucle while final es sólo 
+\begin_inset Formula $O\left(m+n\right)$
+\end_inset
+
+.
+ Considerando el mejor de los casos, vemos que la complejidad del algoritmo
+ no cambia por lo que obtenemos una complejidad de 
+\begin_inset Formula $\Omega\left(m.n\right)$
+\end_inset
+
+.
+ Como ambas complejidades calculadas son iguales, deducimos que la complejidad
+ del algoritmo es 
+\begin_inset Formula $\Theta\left(m.n\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
 Algoritmo para crear la lista de cambios
 \end_layout
 
@@ -1397,8 +1704,8 @@ Algoritmo para crear la lista de cambios
 A partir de una subsecuencia común de líneas, se debe generar la lista de
  cambios que permita transformar un archivo a otro por medio de ediciones
  (adiciones y eliminaciones de líneas).
- Este algoritmo está implementado en el método calcularCambios de la clase
- Diferencial.
+ Este algoritmo está implementado en el método calcularCambiosSubsecuencia
+ de la clase Diferencial.
 \end_layout
 
 \begin_layout Standard
@@ -1411,6 +1718,9 @@ El algoritmo consiste en iterar sobre la subsecuencia y encontrar los saltos
  del archivo objetivo.
  Esta iteración puede implementarse con un bucle, pero es necesario considerar
  fuera de éste las ediciones al principio y al final.
+ Para que los cambios queden ordenados en orden de aplicación, si hay dos
+ saltos en un par de la subsecuencia, se crea el CambioAgregar antes que
+ el CambioEliminar.
 \end_layout
 
 \begin_layout Standard
@@ -1451,28 +1761,6 @@ if (!it.terminado()) //si hay elementos en la subsecuencia
 \begin_layout LyX-Code
 
 \size footnotesize
-if (it.elemActual.primero > i) //se produjo un salto al principio?
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-cambios.insertar(cambioEliminar(...))//
-\size scriptsize
-se crea el cambio que elimina al principio
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-i = it.elemActual.primero
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
 if (it.elemActual.segundo > k) //salto al principio?
 \end_layout
 
@@ -1489,6 +1777,28 @@ cambios.insertar(cambioAgregar(...))
 
 \size footnotesize
 k = it.elemActual.segundo
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.primero > i) //se produjo un salto al principio?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...))//
+\size scriptsize
+se crea el cambio que elimina al principio
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+i = it.elemActual.primero
 \end_layout
 
 \end_deeper
@@ -1531,20 +1841,6 @@ while (!it.terminado())
 \begin_layout LyX-Code
 
 \size footnotesize
-if (it.elemActual.primero > i + 1) // se produjo un salto?
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-cambios.insertar(cambioEliminar(...)) 
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
 if (it.elemActual.segundo > k + 1) // salto?
 \end_layout
 
@@ -1553,6 +1849,20 @@ if (it.elemActual.segundo > k + 1) // salto?
 
 \size footnotesize
 cambios.insertar(cambioAgregar(...))
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (it.elemActual.primero > i + 1) // se produjo un salto?
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...)) 
 \end_layout
 
 \end_deeper
@@ -1585,20 +1895,6 @@ it.sucesor()
 \begin_layout LyX-Code
 
 \size footnotesize
-if (longitud(archorig) > i)
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-cambios.insertar(cambioEliminar(...))
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
 if (longitud(archobj) > k)
 \end_layout
 
@@ -1610,42 +1906,38 @@ cambios.insertar(cambioAgregar(...))
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-La complejidad temporal del algoritmo depende directamente de la longitud
- de la subsecuencia.
- Las ediciones al principio y al final son 
-\begin_inset Formula $\Theta\left(1\right)$
-\end_inset
+\begin_layout LyX-Code
 
-, pero el bucle while es 
-\begin_inset Formula $\Theta\left(n\right)$
-\end_inset
-
- siendo n el tamaño de la subsecuencia.
- Por lo tanto la complejidad del algoritmo es de 
-\begin_inset Formula $\Theta\left(n\right)$
-\end_inset
-
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-En este caso se puede usar la notación 
-\begin_inset Formula $\Theta$
-\end_inset
-
- porque la complejidad 
-\begin_inset Formula $\Omega$
-\end_inset
-
- y 
-\begin_inset Formula $O$
-\end_inset
-
- es la misma
+\size footnotesize
+if (longitud(archorig) > i)
 \end_layout
 
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambios.insertar(cambioEliminar(...))
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Podemos calcular la complejidad temporal de éste algoritmo a partir de la
+ longitud de los archivos y considerando la complejidad para crear un cambio,
+ que es de 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, con n el número de líneas a editar.
+\end_layout
+
+\begin_layout Standard
+Sea m y n la cantidad de líneas de los archivos origen y objetivo respectivament
+e, el peor de los casos ocurre cuando los archivos no tienen líneas en común,
+ y en consecuencia, la subsecuencia es vacia.
+ En este caso, deben crearse dos cambios: uno para eliminar todas las líneas
+ del archivo origen, y otro que agregue las líneas del archivo objetivo.
+ Entonces la complejidad del algoritmo es de 
+\begin_inset Formula $O(m+n)$
 \end_inset
 
 .

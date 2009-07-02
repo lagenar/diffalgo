@@ -21,6 +21,8 @@ class Cambio
         virtual int getCantLineas() = 0;
         virtual int getIndiceOrigen() = 0;
         virtual bool editaAPartirDe(int) = 0;
+    protected:
+        Lista<string> lineas;
 };
 
 class CambioAgregar: public Cambio
@@ -39,7 +41,6 @@ class CambioAgregar: public Cambio
         int lineaOrigen;
         int lineaDestinoComienzo;
         int lineaDestinoFinal;
-        Lista<string> lineas;
 };
 
 class CambioEliminar: public Cambio
@@ -58,6 +59,5 @@ class CambioEliminar: public Cambio
         int lineaDestino;
         int lineaOrigenComienzo;
         int lineaOrigenFinal;
-        Lista<string> lineas;
 };
 #endif // CAMBIO_H
