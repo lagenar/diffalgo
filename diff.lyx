@@ -1126,7 +1126,7 @@ bool Archivo::isOpen() const
 \end_layout
 
 \begin_layout LyX-Code
-string Archivo::getLínea(int n) const
+string Archivo::getLinea(int n) const
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1347,6 +1347,91 @@ El método aplicarPatch simplemente actualiza el índice del archivo origen
 
 \begin_layout Subsubsection
 Diferencial
+\end_layout
+
+\begin_layout Standard
+El tipo Diferencial se implementó usando la clase Lista parametrizada con
+ punteros a objetos de tipo Cambio(para que sea polimórfica).
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+public:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuencia &
+ subsec);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Diferencial(Archivo & Diff, Archivo & origen, bool inversa);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+void imprimirDiff();
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+void aplicarPatch();
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+private:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+int calcularLineasObjetivo();
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+void calcularCambiosDiff(Archivo &, bool);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+void crearCambiosSubsecuencia(const Subsecuencia &);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Archivo *archorig, *archobj;
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Los métodos imprimirDiff y aplicarPatch muestran los resultados por  consola.
+\end_layout
+
+\begin_layout Standard
+El método crearCambiosSubsecuencia es invocado en el primer constructor
+ y calcularCambiosDiff en el segundo.
+\end_layout
+
+\begin_layout Standard
+El método calcularLineasObjetivo es utilizado por aplicarPatch, devuelve
+ la cantidad de líneas que tendrá el archivo origen después de que se le
+ apliquen los cambios del objeto diferencial.
 \end_layout
 
 \begin_layout Section
