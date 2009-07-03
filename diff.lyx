@@ -591,7 +591,7 @@ Representa un cambio genérico a un archivo, sirve de base para los dos tipos
  de cambio específicos.
  Su funcionalidad es la de producir y aplicar eliminaciones o adiciones
  a un archivo en la porción que le corresponde.
- La función getDiff retorna en el formato Diff las modificaciones que deben
+ La función getDiff retorna en el formato diff las modificaciones que deben
  realizarse.
  AplicarPatch retorna un archivo modificado con el cambio aplicado.
  GetCantLineas retorna la cantidad de líneas que edita el cambio.
@@ -606,7 +606,7 @@ IMPORTS Nat, Archivo, Boolean
 \end_layout
 
 \begin_layout LyX-Code
-BASIC CONSTRUCTORS Crear
+BASIC CONSTRUCTORS crear
 \end_layout
 
 \begin_layout LyX-Code
@@ -623,14 +623,14 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\: Nat\: x\: Nat\: x\: Nat\: x\: Archivo\rightarrow Cambio$
+\begin_inset Formula $crear:\: Nat\: x\: Nat\: x\: Nat\: x\: Archivo\rightarrow Cambio$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $getDiff:\: Cambio\: x\: Archivo\rightarrow Archivo$
+\begin_inset Formula $getDiff:\: Cambio\rightarrow Archivo$
 \end_inset
 
 
@@ -858,7 +858,7 @@ Lista.h: encabezado e implementación del template Lista e IteradorLista(*).
 
 \begin_layout Itemize
 Algoritmos.h: contiene la declaración de la función para calcular una subsecuenci
-a común(el básico y el óptimo), y los tipos parInt y subsecuencia.
+a común(el básico y el óptimo), y los tipos parInt y Subsecuencia.
 \end_layout
 
 \begin_layout Itemize
@@ -935,7 +935,7 @@ El destructor recorre los nodos de la lista y los elimina uno por uno, su
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, con n la cantidad de nodos.
+, siendo n la cantidad de nodos.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1171,7 +1171,7 @@ La complejidad de isOpen, getLinea, setLinea, getCantLineas es de
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, con n cantidad de líneas.
+, siendo n cantidad de líneas.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1239,14 +1239,14 @@ enum TipoCambio {AGREGAR, ELIMINAR};
 
 \begin_layout Standard
 El método getDiff retorna la porción del diff del cambio, éste esta implementado
- especificamente en cada subclase de cambio, pero básicamente lo que hace
- es: recorre la lista de líneas y genera el la parte del diff con el formato
+ especificamente en cada subclase de cambio, pero en general lo que hace
+ es: recorre la lista de líneas y genera la parte del diff con el formato
  correspondiente.
  Entonces, su complejidad es de 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, siendo n la cantidad de líneas a agregar o eliminar.
+, siendo n la cantidad de líneas a editar.
 \end_layout
 
 \begin_layout Standard
@@ -1272,7 +1272,8 @@ El método editaAPartirDe es utilizado en el algoritmo para aplicar el patch,
 \begin_layout Standard
 Por último, el método apicarPatch también está adaptado al algoritmo general
  de aplicación.
- Recibe el archivo en donde se está creando el archivo patcheado
+ Recibe el archivo en donde se está guardando el resultado de aplicación
+ de cambios
 \begin_inset Foot
 status collapsed
 
@@ -1296,14 +1297,18 @@ Este TDA se implementó como una clase derivada de la clase Cambio.
  Contiene tres atributos privados que representan la línea del archivo origen
  a partir de la cual se agrega y las líneas de comienzo y fin del archivo
  destino.
- Tiene dos constructores uno que obtiene las líneas a agregar a partir del
+ 
+\end_layout
+
+\begin_layout Standard
+Tiene dos constructores: uno que obtiene las líneas a agregar a partir del
  archivo objetivo, y otro que las obtiene a partir del archivo diff.
  La complejidad de ambos es de 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, con n líneas a agregar, ya que ambos deben iterar sobre el archivo pasado
- e insertar cada una de las líneas en el atributo lineas.
+, siendo n las líneas a agregar, ya que ambos deben iterar sobre el archivo
+ pasado e insertar cada una de las líneas en el atributo lineas.
 \end_layout
 
 \begin_layout Standard
@@ -1313,7 +1318,7 @@ El método aplicarPatch setea las líneas a agregar en el archivo resultante(a
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, con n líneas a agregar.
+, siendo n las líneas a agregar.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1683,7 +1688,8 @@ amente.
 
 .
  Considerando el mejor de los casos, vemos que la complejidad del algoritmo
- no cambia por lo que obtenemos una complejidad de 
+ no cambia(sólo cambia la parte del bucle while pero los bucles for son
+ los dominantes) por lo que obtenemos una complejidad de 
 \begin_inset Formula $\Omega\left(m.n\right)$
 \end_inset
 
@@ -1697,6 +1703,84 @@ amente.
 \end_layout
 
 \begin_layout Subsection
+Comparación entre el algoritmo básico y el óptimo
+\end_layout
+
+\begin_layout Standard
+Las ventajas del algoritmo básico son:
+\end_layout
+
+\begin_layout Itemize
+Es más facil de entender y más compacto.
+\end_layout
+
+\begin_layout Itemize
+La complejidad temporal en el mejor de los casos es menor que la del óptimo.
+\end_layout
+
+\begin_layout Itemize
+No requiere espacio adicional.
+\end_layout
+
+\begin_layout Standard
+Y sus desventajas son:
+\end_layout
+
+\begin_layout Itemize
+En algunos casos calcula subsecuencias de tamaño mucho menor en comparación
+ con la subsecuencia más larga.
+\end_layout
+
+\begin_layout Standard
+Las ventajas del algoritmo óptimo son:
+\end_layout
+
+\begin_layout Itemize
+Calcula la subsecuencia más larga en todos los casos.
+\end_layout
+
+\begin_layout Itemize
+Su complejidad temporal en el peor de los casos es igual a la del algoritmo
+ básico
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Aunque hay que tener en cuenta que el peor de los casos en el algoritmo
+ básico ocurre con poca frecuencia, mientras que en el óptimo es el caso
+ general.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Y sus desventajas:
+\end_layout
+
+\begin_layout Itemize
+Su complejidad espacial es mayor: 
+\begin_inset Formula $O\left(m.n\right)$
+\end_inset
+
+, siendo m y n el tamaño de los archivos.
+\end_layout
+
+\begin_layout Itemize
+En general, la complejidad temporal es mayor con respecto al algoritmo básico.
+\end_layout
+
+\begin_layout Standard
+En conclusión podemos decir que el algoritmo básico es más rápido y requiere
+ menos espacio.
+ Pero, quizás la ventaja más importante, que casi podría considerarse una
+ cuestión de correctitud, la tiene el algoritmo óptimo, que calcula la subsecuen
+cia más larga en todos los casos.
+\end_layout
+
+\begin_layout Subsection
 Algoritmo para crear la lista de cambios
 \end_layout
 
@@ -1704,8 +1788,8 @@ Algoritmo para crear la lista de cambios
 A partir de una subsecuencia común de líneas, se debe generar la lista de
  cambios que permita transformar un archivo a otro por medio de ediciones
  (adiciones y eliminaciones de líneas).
- Este algoritmo está implementado en el método calcularCambiosSubsecuencia
- de la clase Diferencial.
+ Este algoritmo está implementado en el método calcularCambiosSubsecuencia(priva
+do) de la clase Diferencial.
 \end_layout
 
 \begin_layout Standard
@@ -1718,7 +1802,11 @@ El algoritmo consiste en iterar sobre la subsecuencia y encontrar los saltos
  del archivo objetivo.
  Esta iteración puede implementarse con un bucle, pero es necesario considerar
  fuera de éste las ediciones al principio y al final.
- Para que los cambios queden ordenados en orden de aplicación, si hay dos
+ 
+\end_layout
+
+\begin_layout Standard
+Para que los cambios queden ordenados en orden de aplicación si hay dos
  saltos en un par de la subsecuencia, se crea el CambioAgregar antes que
  el CambioEliminar.
 \end_layout
@@ -1927,7 +2015,7 @@ Podemos calcular la complejidad temporal de éste algoritmo a partir de la
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
-, con n el número de líneas a editar.
+, siendo n el número de líneas a editar.
 \end_layout
 
 \begin_layout Standard
