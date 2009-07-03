@@ -32,6 +32,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Algoritmos.cpp" />
+		<Unit filename="Algoritmos.h" />
 		<Unit filename="Archivo.cpp" />
 		<Unit filename="Archivo.h" />
 		<Unit filename="Cambio.cpp" />

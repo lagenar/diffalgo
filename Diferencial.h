@@ -3,17 +3,7 @@
 #include "Lista.h"
 #include "Cambio.h"
 #include "Archivo.h"
-
-class parInt {
-    public:
-        int Primero() { return primero; }
-        int Segundo() { return segundo; }
-        parInt(int p, int s) : primero(p), segundo(s) { }
-    private:
-        int primero, segundo;
-};
-
-typedef Lista<parInt> Subsecuencia;
+#include "Algoritmos.h"
 
 class Diferencial : public Lista<Cambio*>
 {
@@ -34,5 +24,4 @@ class Diferencial : public Lista<Cambio*>
         Archivo *archorig, *archobj;
 };
 
-void calcularSubsecuencia(const Archivo &, const Archivo &, Subsecuencia &);
 #endif // DIFERENCIAL_H
