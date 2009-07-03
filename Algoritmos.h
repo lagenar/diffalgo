@@ -12,7 +12,7 @@ class parInt {
         int primero, segundo;
 };
 
-typedef Lista<parInt> Subsecuencia; 
+typedef Lista<parInt> Subsecuencia;
 
 void calcularSubsecuencia(const Archivo &, const Archivo &, Subsecuencia &);
 

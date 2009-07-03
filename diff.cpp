@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Archivo.h"
+#include "Algoritmos.h"
 #include "Diferencial.h"
 
 using namespace std;

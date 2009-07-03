@@ -858,11 +858,11 @@ Lista.h: encabezado e implementación del template Lista e IteradorLista(*).
 
 \begin_layout Itemize
 Algoritmos.h: contiene la declaración de la función para calcular una subsecuenci
-a común(el básico y el óptimo), y los tipos parInt y Subsecuencia.
+a común(el básico y el óptimo), y los tipos parInt y Subsecuencia(*).
 \end_layout
 
 \begin_layout Itemize
-Algoritmos.cpp: implementación de las declaraciones en Algoritmos.h.
+Algoritmos.cpp: implementación de las declaraciones en Algoritmos.h(*).
 \end_layout
 
 \begin_layout Itemize
@@ -1420,7 +1420,7 @@ Archivo *archorig, *archobj;
 
 \end_deeper
 \begin_layout Standard
-Los métodos imprimirDiff y aplicarPatch muestran los resultados por  consola.
+Los métodos imprimirDiff y aplicarPatch muestran los resultados por consola.
 \end_layout
 
 \begin_layout Standard
