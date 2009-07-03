@@ -1055,14 +1055,6 @@ Se implementa simplemente parametrizando el template Lista con parInt.
 typedef Lista<parInt> Subsecuencia;
 \end_layout
 
-\begin_layout Subsubsection
-Arreglo
-\end_layout
-
-\begin_layout Standard
-Se utilizan los arreglos estándares de C/C++.
-\end_layout
-
 \begin_layout Subsection
 Tipos Indispensables
 \end_layout
@@ -1866,7 +1858,7 @@ cia más larga en todos los casos.
 \end_layout
 
 \begin_layout Subsection
-Algoritmo para crear la lista de cambios
+Algoritmo para crear la lista de cambios a partir de una subsecuencia
 \end_layout
 
 \begin_layout Standard

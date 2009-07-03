@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     if (argc < 3) {
-        cout << "uso: diff <archivo origen> <archivo objetivo>" << endl;
+        cout << "uso: " << argv[0] << " <archivo origen> <archivo objetivo>" << endl;
         return 0;
     }
     Archivo origen(argv[1]);
