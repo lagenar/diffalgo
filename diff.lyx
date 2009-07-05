@@ -1427,7 +1427,7 @@ El método calcularLineasObjetivo es utilizado por aplicarPatch, devuelve
 \end_layout
 
 \begin_layout Section
-Algoritmos utilizados y su complejidad
+Diff: algoritmos utilizados y su complejidad
 \end_layout
 
 \begin_layout Subsection
@@ -2102,11 +2102,15 @@ e, el peor de los casos ocurre cuando los archivos no tienen líneas en común,
  En este caso, deben crearse dos cambios: uno para eliminar todas las líneas
  del archivo origen, y otro que agregue las líneas del archivo objetivo.
  Entonces la complejidad del algoritmo es de 
-\begin_inset Formula $O(m+n)$
+\begin_inset Formula $O\left(m+n\right)$
 \end_inset
 
 .
  
+\end_layout
+
+\begin_layout Section
+Patch
 \end_layout
 
 \end_body

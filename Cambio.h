@@ -32,8 +32,8 @@ class CambioAgregar: public Cambio
         CambioAgregar(const Archivo &, int, int, int);
         ~CambioAgregar() { }
         string getDiff();
-        TipoCambio tipoCambio() { return AGREGAR;}
-        int getCantLineas() { return lineaDestinoFinal - lineaDestinoComienzo +1; }
+        TipoCambio tipoCambio() { return AGREGAR; }
+        int getCantLineas() { return lineaDestinoFinal - lineaDestinoComienzo + 1; }
         void aplicarPatch(Archivo &, int &, int &);
         int getIndiceOrigen() { return lineaOrigen; }
         bool editaAPartirDe(int);
@@ -50,7 +50,7 @@ class CambioEliminar: public Cambio
         CambioEliminar(const Archivo &, int, int, int);
         ~CambioEliminar() { }
         string getDiff();
-        TipoCambio tipoCambio() { return ELIMINAR;}
+        TipoCambio tipoCambio() { return ELIMINAR; }
         int getCantLineas() { return lineaOrigenFinal - lineaOrigenComienzo + 1; }
         void aplicarPatch(Archivo &, int &, int &);
         int getIndiceOrigen() { return lineaOrigenComienzo; }
