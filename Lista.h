@@ -1,5 +1,6 @@
 #ifndef LISTA_H
 #define LISTA_H
+#include <iostream>
 
 template <class T> class Lista;
 template <class T> class IteradorLista;
@@ -30,15 +31,15 @@ class Lista {
 template <class T>
 Lista<T>::Lista()
 {
-  cabeza = 0;
-  cola = 0;
+  cabeza = NULL;
+  cola = NULL;
 }
 
 template <class T>
 void Lista<T>::insertarFinal(const T & elem)
 {
-  Nodo<T>* nuevo = new Nodo<T>(elem, 0);
-  if (cabeza == 0)
+  Nodo<T>* nuevo = new Nodo<T>(elem, NULL);
+  if (cabeza == NULL)
     cabeza = cola =  nuevo;
   else {
     cola->sig = nuevo;
@@ -50,7 +51,7 @@ template <class T>
 void Lista<T>::insertarPrincipio(const T & elem)
 {
   Nodo<T>* nuevo = new Nodo<T>(elem, cabeza);
-  if (cabeza == 0)
+  if (cabeza == NULL)
     cola = nuevo;
   cabeza = nuevo;
 }
@@ -59,7 +60,7 @@ template <class T>
 void Lista<T>::_eliminarLista()
 {
   Nodo<T>* cursor;
-  while (cabeza != 0) {
+  while (cabeza != NULL) {
     cursor = cabeza;
     cabeza = cabeza->sig;
     delete cursor;
@@ -100,7 +101,7 @@ void IteradorLista<T>::sucesor()
 template <class T>
 bool IteradorLista<T>::terminado()
 {
-  return (cursor == 0);
+  return (cursor == NULL);
 }
 
 template <class T>
