@@ -1578,7 +1578,7 @@ El mejor de los casos se da cuando los archivos son iguales debido a que
 \end_layout
 
 \begin_layout Subsection
-Algoritmo calcular la subsecuencia más larga
+Algoritmo para calcular la subsecuencia más larga
 \end_layout
 
 \begin_layout Standard
@@ -2106,6 +2106,7 @@ e, el peor de los casos ocurre cuando los archivos no tienen líneas en común,
 \end_inset
 
 .
+ 
 \end_layout
 
 \end_body
