@@ -4,19 +4,16 @@
 
 using namespace std;
 
-void uso(char argv0[])
-{
-    cout << "uso: " << argv0 << " [-R] <archivo a patchear> <archivo diff>" << endl;
-    cout << "opciones: " << endl;
-    cout << "          -R --> aplica el diff de objetivo a origen (inversa)" << endl;
-}
-
 int main(int argc, char *argv[])
 {
+
+    string uso =  "uso: " + string(argv[0]) + " [OPCIÓN] <archivo a patchear> <archivo diff>\n"
+                  + "opciones: \n " +
+                    "\t-R \taplica el diff de objetivo a origen (inversa)\n";
     bool inversa = false;
     char * nombrediff, * nombreobj;
     if (argc < 3 || argc > 4) {
-        uso(argv[0]);
+        cout << uso;
         return 0;
     }
     if (argc == 4) {
