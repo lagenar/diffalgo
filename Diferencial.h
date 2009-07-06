@@ -9,19 +9,18 @@ class Diferencial : public Lista<Cambio*>
 {
     public:
         //constructor para crear cambios a partir de dos archivos y su subsecuencia (diff)
-        Diferencial(Archivo &, Archivo &, const Subsecuencia &);
+        Diferencial(const Archivo &, const Archivo &, const Subsecuencia &);
         //constructor para crear cambios a partir dos archivos (origen y diff) y un flag
         //para la opción de aplicación inversa (patch)
-        Diferencial(Archivo &, Archivo &, bool);
+        Diferencial(Archivo &, bool);
         ~Diferencial() { }
         void imprimirDiff();
-        void aplicarPatch();
-    private:
+        void aplicarCambios(const Archivo &, Archivo &);
         //calcula la cantidad de lineas del archivo resultante en la aplicación del patch.
-        int calcularLineasObjetivo();
-        void calcularCambiosDiff(Archivo &, bool);
-        void crearCambiosSubsecuencia(const Subsecuencia &);
-        Archivo *archorig, *archobj;
+        int calcularLineasObjetivo(const Archivo &);
+    private:
+        void crearCambiosDiff(Archivo &, bool);
+        void crearCambiosSubsecuencia(const Archivo &, const Archivo &, const Subsecuencia &);
 };
 
 #endif // DIFERENCIAL_H
