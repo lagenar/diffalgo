@@ -22,7 +22,7 @@ class Lista {
 
  public:
   Lista();
-  ~Lista();
+  virtual ~Lista();
   void insertarFinal(const T & elem);
   void insertarPrincipio(const T & elem);
   friend class IteradorLista<T>;

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
                   + "opciones: \n " +
                     "\t-R \taplica el diff de objetivo a origen (inversa)\n";
     bool inversa = false;
-    char * nombrediff, * nombreobj;
+    char * nombre_diff, * nombre_orig;
     if (argc < 3 || argc > 4) {
         cout << uso;
         return 0;
@@ -23,20 +23,23 @@ int main(int argc, char *argv[])
         } else
             inversa = true;
     }
-    nombreobj = (argc == 3) ? argv[1] : argv[2];
-    nombrediff = (argc == 3) ? argv[2] : argv[3];
+    nombre_orig = (argc == 3) ? argv[1] : argv[2];
+    nombre_diff = (argc == 3) ? argv[2] : argv[3];
 
-    Archivo obj(nombreobj);
-    if (!obj.isOpen()) {
-        cout << "Error al intentar abrir: " << nombreobj << endl;
+    Archivo origen(nombre_orig);
+    if (!origen.isOpen()) {
+        cout << "Error al intentar abrir: " << nombre_orig << endl;
         return 1;
     }
-    Archivo diff(nombrediff);
+    Archivo diff(nombre_diff);
     if (!diff.isOpen()) {
-        cout << "Error al intentar abrir: " << nombrediff << endl;
+        cout << "Error al intentar abrir: " << nombre_diff << endl;
         return 1;
     }
-    Diferencial diferencial(diff, obj, inversa);
-    diferencial.aplicarPatch();
+    Diferencial diferencial(diff, inversa);
+    int n = diferencial.calcularLineasObjetivo(origen);
+    Archivo objetivo(n);
+    diferencial.aplicarCambios(origen, objetivo);
+    objetivo.imprimir();
     return 0;
 }

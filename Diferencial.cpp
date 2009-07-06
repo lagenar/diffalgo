@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void Diferencial::crearCambiosSubsecuencia(const Subsecuencia & subsec)
+void Diferencial::crearCambiosSubsecuencia(const Archivo & orig, const Archivo & obj, const Subsecuencia & subsec)
 {
     int i = 1;
     int k = 1;
@@ -13,12 +13,12 @@ void Diferencial::crearCambiosSubsecuencia(const Subsecuencia & subsec)
     if (!it.terminado()) {
         if (it.elemActual().Segundo() > 1) { /* se agregan las lineas anteriores a la primera linea
                                               del archivo objetivo que esta en la subsec*/
-            insertarFinal(new CambioAgregar(*archobj, 0, 1, it.elemActual().Segundo() - 1));
+            insertarFinal(new CambioAgregar(obj, 0, 1, it.elemActual().Segundo() - 1));
             k = it.elemActual().Segundo();
         }
         if (it.elemActual().Primero() > 1) { /* se eliminan las lineas anteriores a la primera linea
                                               del archivo origen que esta en la subsec*/
-            insertarFinal(new CambioEliminar(*archorig, 0, 1, it.elemActual().Primero() - 1));
+            insertarFinal(new CambioEliminar(orig, 0, 1, it.elemActual().Primero() - 1));
             i = it.elemActual().Primero();
         }
         it.sucesor();
@@ -27,36 +27,33 @@ void Diferencial::crearCambiosSubsecuencia(const Subsecuencia & subsec)
                      las lineas del archivo objetivo y se eliminen todas las del origen*/
     while (!it.terminado()) {
         if (it.elemActual().Segundo() > k + 1)
-            insertarFinal(new CambioAgregar(*archobj, i, k + 1, it.elemActual().Segundo() - 1));
+            insertarFinal(new CambioAgregar(obj, i, k + 1, it.elemActual().Segundo() - 1));
         if (it.elemActual().Primero() > i + 1)
-            insertarFinal(new CambioEliminar(*archorig, k , i + 1, it.elemActual().Primero() - 1));
+            insertarFinal(new CambioEliminar(orig, k , i + 1, it.elemActual().Primero() - 1));
         i = it.elemActual().Primero();
         k = it.elemActual().Segundo();
         it.sucesor();
     }
-    if (archobj->getCantLineas() > k) /* se crea el cambio que agrega las lineas
+    if (obj.getCantLineas() > k) /* se crea el cambio que agrega las lineas
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo objetivo
                                         */
-        insertarFinal(new CambioAgregar(*archobj, i, k + 1, archobj->getCantLineas()));
-    if (archorig->getCantLineas() > i) /* se crea el cambio que elimina las lineas
+        insertarFinal(new CambioAgregar(obj, i, k + 1, obj.getCantLineas()));
+    if (orig.getCantLineas() > i) /* se crea el cambio que elimina las lineas
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo origen
                                         */
-        insertarFinal(new CambioEliminar(*archorig, k, i + 1, archorig->getCantLineas()));
+        insertarFinal(new CambioEliminar(orig, k, i + 1, orig.getCantLineas()));
 }
 
-Diferencial::Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuencia & subsec)
+Diferencial::Diferencial(const Archivo & orig, const Archivo & obj, const Subsecuencia & subsec)
 {
-    this->archorig = &archorig;
-    this->archobj = &archobj;
-    crearCambiosSubsecuencia(subsec);
+    crearCambiosSubsecuencia(orig, obj, subsec);
 }
 
-Diferencial::Diferencial(Archivo & Diff, Archivo & origen, bool inversa) {
-    archorig = &origen;
-    archobj = NULL;
-    calcularCambiosDiff(Diff, inversa);
+Diferencial::Diferencial(Archivo & Diff, bool inversa)
+{
+    crearCambiosDiff(Diff, inversa);
 }
 
 void Diferencial::imprimirDiff()
@@ -116,9 +113,9 @@ Cambio * getCambioDiff(Archivo & Diff, int i)
     return new CambioEliminar(Diff, i);
 }
 
-void Diferencial::calcularCambiosDiff(Archivo & Diff, bool inversa)
+void Diferencial::crearCambiosDiff(Archivo & Diff, bool inversa)
 {
-    if(inversa)
+    if (inversa)
         invertirDiff(Diff);
     int i = 1;
     Cambio * anterior = NULL;
@@ -141,7 +138,7 @@ void Diferencial::calcularCambiosDiff(Archivo & Diff, bool inversa)
         insertarFinal(anterior);
 }
 
-int Diferencial::calcularLineasObjetivo()
+int Diferencial::calcularLineasObjetivo(const Archivo & origen)
 {
     IteradorLista<Cambio*> it(this);
     int lineas_eliminadas = 0;
@@ -154,30 +151,27 @@ int Diferencial::calcularLineasObjetivo()
             lineas_eliminadas += cambio->getCantLineas();
         it.sucesor();
     }
-    return archorig->getCantLineas() + lineas_agregadas - lineas_eliminadas;
+    return origen.getCantLineas() + lineas_agregadas - lineas_eliminadas;
 }
 
-void Diferencial::aplicarPatch()
+void Diferencial::aplicarCambios(const Archivo & origen, Archivo & objetivo)
 {
-    int n = calcularLineasObjetivo();
-    Archivo resultado(n);
     IteradorLista<Cambio*> it(this);
     int ind_orig = 1;
     int ind_obj = 1;
     while(!it.terminado()) {
         Cambio * cambio = it.elemActual();
         while (!cambio->editaAPartirDe(ind_orig)) {
-            resultado.setLinea(ind_obj, archorig->getLinea(ind_orig));
+            objetivo.setLinea(ind_obj, origen.getLinea(ind_orig));
             ind_orig++;
             ind_obj++;
         }
-        cambio->aplicarPatch(resultado, ind_orig, ind_obj);
+        cambio->aplicarCambio(objetivo, ind_orig, ind_obj);
         it.sucesor();
     }
-    while (ind_orig <= archorig->getCantLineas()) {
-        resultado.setLinea(ind_obj, archorig->getLinea(ind_orig));
+    while (ind_orig <= origen.getCantLineas()) {
+        objetivo.setLinea(ind_obj, origen.getLinea(ind_orig));
         ind_orig++;
         ind_obj++;
     }
-    resultado.imprimir();
 }
