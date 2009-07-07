@@ -593,7 +593,7 @@ Representa un cambio genérico a un archivo, sirve de base para los dos tipos
  a un archivo en la porción que le corresponde.
  La función getDiff retorna en el formato diff las modificaciones que deben
  realizarse.
- AplicarPatch retorna un archivo modificado con el cambio aplicado.
+ AplicarCambio retorna un archivo modificado con el cambio aplicado.
  GetCantLineas retorna la cantidad de líneas que edita el cambio.
 \end_layout
 
@@ -637,7 +637,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $aplicarPatch:\: Cambio\: x\: Archivo\rightarrow Archivo$
+\begin_inset Formula $aplicarCambio:\: Cambio\: x\: Archivo\rightarrow Archivo$
 \end_inset
 
 
@@ -737,8 +737,8 @@ A partir de dos Archivos(origen y diff) y un bool(para especificar si se
 \begin_layout Standard
 La función getDiff retorna un archivo en el formato del diff con la concatenació
 n de los diffs de sus cambios.
- La función aplicarPatch retorna un archivo resultante de realizar las modificac
-iones de cada uno de sus cambios al archivo pasado en el constructor.
+ La función aplicarCambios retorna un archivo resultante de realizar las
+ modificaciones de cada uno de sus cambios al archivo pasado en el constructor.
 \end_layout
 
 \begin_layout LyX-Code
@@ -792,7 +792,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $aplicarPatch:\: Diferencial\rightarrow Archivo$
+\begin_inset Formula $aplicarCambios:\: Diferencial\: x\: Archivo\rightarrow Archivo$
 \end_inset
 
 
@@ -857,12 +857,16 @@ Lista.h: encabezado e implementación del template Lista e IteradorLista(*).
 \end_layout
 
 \begin_layout Itemize
-Algoritmos.h: contiene la declaración de la función para calcular una subsecuenci
-a común(el básico y el óptimo), y los tipos parInt y Subsecuencia(*).
+Subsecuencia.h: contiene la declaración de los tipos parInt y subsecuencia(*).
 \end_layout
 
 \begin_layout Itemize
-Algoritmos.cpp: implementación de las declaraciones en Algoritmos.h(*).
+Algoritmos.h: contiene la declaración de la función para calcular una subsecuenci
+a común(el básico y el óptimo).
+\end_layout
+
+\begin_layout Itemize
+Algoritmos.cpp: implementación de las declaraciones en Algoritmos.h.
 \end_layout
 
 \begin_layout Itemize
@@ -1188,7 +1192,7 @@ virtual string getDiff() = 0;
 \end_layout
 
 \begin_layout LyX-Code
-virtual void aplicarPatch(Archivo&, int &, int &) = 0;
+virtual void aplicarCambio(Archivo&, int &, int &) = 0;
 \end_layout
 
 \begin_layout LyX-Code
@@ -1304,7 +1308,7 @@ Tiene dos constructores: uno que obtiene las líneas a agregar a partir del
 \end_layout
 
 \begin_layout Standard
-El método aplicarPatch setea las líneas a agregar en el archivo resultante(a
+El método aplicarCambio setea las líneas a agregar en el archivo resultante(a
  partir del índice pasado), actualizando también el indice de éste archivo.
  Su complejidad es de 
 \begin_inset Formula $O\left(n\right)$
@@ -1328,7 +1332,7 @@ Los constructores son análogos a los de CambioAgregar.
 \end_layout
 
 \begin_layout Standard
-El método aplicarPatch simplemente actualiza el índice del archivo origen
+El método aplicarCambio simplemente actualiza el índice del archivo origen
  pasado por referencia(hace un salto de las líneas que deben eliminarse);
  por lo que su complejidad es de 
 \begin_inset Formula $O\left(1\right)$
@@ -1356,8 +1360,8 @@ public:
 \begin_layout LyX-Code
 
 \size footnotesize
-Diferencial(Archivo & archorig, Archivo & archobj, const Subsecuencia &
- subsec);
+Diferencial(const Archivo & orig, const Archivo & obj,const Subsecuencia
+ & subsec);
 \end_layout
 
 \begin_layout LyX-Code
@@ -1375,7 +1379,13 @@ void imprimirDiff();
 \begin_layout LyX-Code
 
 \size footnotesize
-void aplicarPatch();
+void aplicarCambios(const Archivo & origen, Archivo & objetivo);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+int calcularLineasObjetivo();
 \end_layout
 
 \end_deeper
@@ -1389,12 +1399,6 @@ private:
 \begin_layout LyX-Code
 
 \size footnotesize
-int calcularLineasObjetivo();
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
 void calcularCambiosDiff(Archivo &, bool);
 \end_layout
 
@@ -1404,26 +1408,20 @@ void calcularCambiosDiff(Archivo &, bool);
 void crearCambiosSubsecuencia(const Subsecuencia &);
 \end_layout
 
-\begin_layout LyX-Code
-
-\size footnotesize
-Archivo *archorig, *archobj;
-\end_layout
-
 \end_deeper
 \begin_layout Standard
-Los métodos imprimirDiff y aplicarPatch muestran los resultados por consola.
+El método imprimirDiff muestra los resultados por consola.
 \end_layout
 
 \begin_layout Standard
 El método crearCambiosSubsecuencia es invocado en el primer constructor
- y calcularCambiosDiff en el segundo.
+ y crearCambiosDiff en el segundo.
 \end_layout
 
 \begin_layout Standard
-El método calcularLineasObjetivo es utilizado por aplicarPatch, devuelve
- la cantidad de líneas que tendrá el archivo origen después de que se le
- apliquen los cambios del objeto diferencial.
+El método calcularLineasObjetivo devuelve la cantidad de líneas que tendrá
+ el archivo origen después de que se le apliquen los cambios del objeto
+ diferencial.
 \end_layout
 
 \begin_layout Section
@@ -2112,6 +2110,383 @@ e, el peor de los casos ocurre cuando los archivos no tienen líneas en común,
 \begin_layout Section
 Patch
 \end_layout
+
+\begin_layout Subsection
+Obtención de los cambios a partir de un archivo diff
+\end_layout
+
+\begin_layout Standard
+En el patch se crea un objeto diferencial a partir de un archivo diff y
+ un parámetro booleano.
+ El constructor invoca al método privado crearCambiosDiff, que se encarga
+ de crear los cambios a partir del archivo diff e insertarlos en el objeto
+ diferencial.
+\end_layout
+
+\begin_layout Standard
+Como el patch debe ser capaz de aplicar los cambios del diff en ambos sentidos,
+ se agregó una función(invertirDiff) que traduce(reescribe) un archivo diff.
+ Ésta función es invocada por crearCambiosDiff en caso que el flag inversa
+ sea verdadero.
+ La función recorre cada uno de los cambios, traduciendo tanto la cabecera
+ del cambio como las líneas que edita el mismo.
+ A partir de ésta descripción se deduce que la complejidad de la función
+ es 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, siendo n la cantidad de líneas del diff.
+\end_layout
+
+\begin_layout Standard
+El método crearCambiosDiff inserta los cambios en el objeto diferencial
+ ordenados en forma creciente por el índice en que comienzan a editar en
+ el archivo origen.
+ Considerando que el programa diff produce los cambios ordenados de esta
+ manera, crearCambiosDiff sólo necesitaría recorrer los cambios del archivo
+ diff e insertarlos secuencialmente.
+ Pero el inconveniente surge cuando se debe interpretar el diff en forma
+ inversa.
+ Por ejemplo:
+\end_layout
+
+\begin_layout LyX-Code
+1a4,5
+\end_layout
+
+\begin_layout LyX-Code
+> A
+\end_layout
+
+\begin_layout LyX-Code
+> B
+\end_layout
+
+\begin_layout LyX-Code
+2,4d3
+\end_layout
+
+\begin_layout LyX-Code
+< C
+\end_layout
+
+\begin_layout LyX-Code
+< D
+\end_layout
+
+\begin_layout LyX-Code
+< E
+\end_layout
+
+\begin_layout Standard
+Se traduce a:
+\end_layout
+
+\begin_layout LyX-Code
+4,5d1
+\end_layout
+
+\begin_layout LyX-Code
+< A
+\end_layout
+
+\begin_layout LyX-Code
+< B
+\end_layout
+
+\begin_layout LyX-Code
+3a2,4
+\end_layout
+
+\begin_layout LyX-Code
+> C
+\end_layout
+
+\begin_layout LyX-Code
+> D
+\end_layout
+
+\begin_layout LyX-Code
+> E
+\end_layout
+
+\begin_layout Standard
+En ejemplo se ve que los cambios quedan desordenados por orden de aplicación,
+ por lo que es necesario insertar el segundo antes que el primero(swapearlos).
+ Este inconveniente ocurre en los casos en los que dos cambios comienzan a editar
+ en las mismas líneas. Presumimos que por esta razón el formato del diff tradicional(Unix),
+ incluye un comando de edición adicional, el change(c).
+\end_layout
+
+\begin_layout Standard
+El algoritmo para insertar los cambios en forma ordenada(tanto si se invirtió el diff o no),
+ consiste en iterar sobre los cambios del archivo diff considerando el cambio anterior.
+ Y dependiendo las condiciones que se cumplan, se insertan los cambios: si el orden
+ es el correcto se insertan en el mismo orden y en caso contrario se inserta 
+ el segundo antes que el primero(swap). Las instancias de las subclases Cambio
+ se crean invocando al constructor correspondiente, que recibe el archivo diff
+ y el índice del comienzo del cambio. Las subclases de Cambio a partir de éstos 
+ parámetros obtienen la información necesaria(parsean el diff).
+\end_layout
+
+\begin_layout Standard
+El pseudocódigo es:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if (inversa)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+invertirDiff(diff)
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size small
+i = 1 //indice del diff
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+anterior = NULL //cambio anterior
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+while (i <= longitud(diff))
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+actual = getCambioDiff(diff, i)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+i += actual.getCantLineas()
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if (anterior != NULL && actual.getIndiceOrigen()  < anterior.getIndiceOrigen())
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+//hay que swapear
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+insertar(actual)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+insertar(anterior)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+anterior = NULL
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size small
+else
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+if (anterior != NULL)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+insertar(anterior)
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size small
+anterior = actual
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+
+\size small
+if (anterior != NULL)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size small
+insertar(anterior)
+\end_layout
+
+\end_deeper
+
+\begin_layout Subsection
+Algoritmo de aplicación de cambios
+\end_layout
+
+\begin_layout Standard
+El algoritmo de aplicación de cambios esta implementado en el método aplicarCambios
+ de la clase Diferencial.
+ Como se ha anticipado, para simplificar la implementación del patch, para no 
+ necesitar archivos dinámicos y no tener que lidiar con corrimientos, los cambios
+ se aplican sobre un archivo nuevo. Esto implica dos cosas:
+\end_layout
+
+\begin_layout Itemize
+Como los archivos son de tamaño estático, se necesita calcular el tamaño del archivo
+ resultante de la aplicación del patch.
+ El metodo calcularLineasObjetivo de la clase Diferencial cumple esta función.
+ Dado el archivo al que se le aplican los cambios itera sobre los cambios del
+ objeto diferencial y retorna la cantidad de líneas del archivo resultante.
+\end_layout
+
+\begin_layout Itemize
+Los cambios que eliminan líneas simplemente registran saltos en el archivo origen
+ pero no editan en el archivo resultante, ya que las líneas que eliminan no fueron
+ agregadas en primera instancia.
+\end_layout
+
+\begin_layout Standard
+El método aplicarCambios recibe como parámetros dos archivos, origen y objetivo.
+ Se asume que el tamaño del archivo objetivo es el indicado.
+ El algoritmo empleado itera sobre la lista de cambios, se encarga de copiar al archivo
+ objetivo las líneas que permanecen sin modificarse e invocar el método aplicarCambio
+ de cada cambio.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_orig = 1 //índice del archivo origen
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_obj = 1 //índice del archivo objetivo
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+while (!it.terminado()) 
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+cambio = it.elemActual()
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+while (!cambio->editaAPartirDe(ind_orig))  //mientras no aplique el cambio
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+objetivo[ind_obj] = origen[ind_orig] // copia las líneas
+ de origen
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_orig++
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_obj++
+\end_layout
+
+\end_deeper
+
+\begin_layout LyX-Code
+
+\size footnotesize
+cambio.aplicarCambio(objetivo,ind_orig,ind_obj) //aplica el cambio
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+it.sucesor()
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\begin_layout LyX-Code
+
+\size footnotesize
+while (ind_orig <= longitud(origen)) //copia las líneas que quedaron
+ al final
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+objetivo[ind_obj] = origen[ind_orig]
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_orig++
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_obj++
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\end_layout
+
 
 \end_body
 \end_document
