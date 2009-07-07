@@ -3,7 +3,7 @@
 #include "Lista.h"
 #include "Cambio.h"
 #include "Archivo.h"
-#include "Algoritmos.h"
+#include "Subsecuencia.h"
 
 class Diferencial : public Lista<Cambio*>
 {

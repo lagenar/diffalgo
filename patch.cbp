@@ -32,8 +32,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Algoritmos.cpp" />
-		<Unit filename="Algoritmos.h" />
 		<Unit filename="Archivo.cpp" />
 		<Unit filename="Archivo.h" />
 		<Unit filename="Cambio.cpp" />
@@ -41,6 +39,7 @@
 		<Unit filename="Diferencial.cpp" />
 		<Unit filename="Diferencial.h" />
 		<Unit filename="Lista.h" />
+		<Unit filename="Subsecuencia.h" />
 		<Unit filename="patch.cpp" />
 		<Extensions>
 			<code_completion />
