@@ -2360,6 +2360,51 @@ insertar(anterior)
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+La complejidad de este algoritmo puede analizarse considerando el tamaño
+ del archivo diff.
+ El peor de los casos ocurre cuando la flag inversa es verdadera, ya que
+ se debe invocar a la función invertirDiff, que tiene una complejidad de
+ 
+\begin_inset Formula $O\left(n\right)$
+\end_inset
+
+, siendo n la cantidad de líneas del diff.
+\end_layout
+
+\begin_layout Standard
+Para analizar el bucle while se debe tener en cuenta la complejidad de creación
+ de un cambio a partir del diff, ésta es 
+\begin_inset Formula $O\left(m\right)$
+\end_inset
+
+, siendo m las líneas que edita el cambio.
+ Supongamos que el diff tiene m cambios: 
+\begin_inset Formula $\left(C_{1},C_{2},\ldots,C_{m}\right)$
+\end_inset
+
+ entonces la cantidad de líneas de cada cambio queda representada por la
+ m-upla 
+\begin_inset Formula $\left(L_{1},L_{2},\ldots,L_{m}\right)$
+\end_inset
+
+.
+ La suma de las líneas de los cambios es igual a la cantidad de líneas del
+ diff.
+ El bucle while itera sobre los cambios del diff y los crea, por lo que
+ su complejidad es 
+\begin_inset Formula $O\left(L_{1}+L_{2}+\ldots+L_{m}\right)=O\left(n\right)$
+\end_inset
+
+.
+ Sumando las complejidades de las dos partes deducimos que la complejidad
+ del algoritmo es  
+\begin_inset Formula $O\left(2n\right)=O\left(n\right)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 Algoritmo de aplicación de cambios
 \end_layout
@@ -2490,8 +2535,39 @@ ind_obj++
 \end_layout
 
 \end_deeper
-\begin_layout LyX-Code
+\begin_layout Standard
+Para obtener la complejidad de aplicarCambios se debe considerar el costo
+ que tiene el método aplicarCambio en las subclases de Cambio y la cantidad
+ de líneas que se deben copiar de origen a objetivo porque no son editadas
+ por ningún cambio.
+ La complejidad del método aplicarCambio en la clase CambioEliminar es 
+\begin_inset Formula $O\left(1\right)$
+\end_inset
 
+ mientras que la de CambioAgregar es 
+\begin_inset Formula $O\left(k\right)$
+\end_inset
+
+, siendo k la cantidad de líneas a agregar.
+ Además los cambios que eliminan reducen la cantidad de líneas que deben
+ copiarse al archivo objetivo.
+ Entonces, se observa claramente que el peor de los casos se da cuando todos
+ los cambios del diff son de tipo CambioAgregar y en especial cuando hay
+ un cambio solo, porque en este caso se deben agregar más líneas(solo una
+ línea del diff no se  agrega, la cabecera del cambio).
+\end_layout
+
+\begin_layout Standard
+ Sean m y n el número de líneas del los archivos origen y diff respectivamente,
+ y supongamos que el diff sólo contiene un CambioAgregar.
+ En este caso, se agregan todas las líneas del archivo origen al objetivo(ya
+ que no hay cambios que eliminan) y n-1 líneas del archivo diff(las que
+ edita el CambioAgregar).
+ Entonces la complejidad del algoritmo es 
+\begin_inset Formula $O\left(m+n\right)$
+\end_inset
+
+.
 \end_layout
 
 \end_body
