@@ -83,35 +83,39 @@ Este informe contiene la documentación del trabajo práctico especial realizado
 \end_layout
 
 \begin_layout Standard
-La primera etapa del trabajo consiste en el diseño y la implementación de
- una utilidad denominada 
+La primera etapa del trabajo consistió en el diseño y la implementación
+ de una utilidad denominada 
 \emph on
 diff
 \emph default
-, que dados dos archivos (origen y objetivo) devuelva una secuencia de cambios
+, que dados dos archivos (origen y objetivo) devuelve una secuencia de cambios
  que permiten pasar de uno a otro.
+ En la segunda etapa del trabajo se mejoró la utilidad diff empleando un
+ algoritmo más efectivo.
+ Además se diseño e implemento la utilidad patch que permite aplicar a un
+ archivo los cambios especificados en un archivo diff.
 \end_layout
 
 \begin_layout Standard
 Para el diseño del proyecto se tuvieron en cuenta tanto los tipos de datos
- necesarios, como el algoritmo a implementar.
+ necesarios, como los algoritmos a implementar.
 \end_layout
 
 \begin_layout Standard
 En cuanto a los tipos de datos, se consideraron los cuatro principales:
  Línea, Archivo, Cambio y Diferencial y otros auxiliares: Lista, IteradorLista,
- Subsecuencia, ParInt y Arreglo, que fueron necesarios para poder implementar
- el algoritmo.
+ Subsecuencia y ParInt, que fueron necesarios para poder implementar el
+ algoritmo.
  Además se realizaron las correspondientes especificaciones en NEREUS de
  los TDAs.
 \end_layout
 
 \begin_layout Standard
-El algoritmo empleado para buscar una subsecuencia común entre los archivos
- fue seleccionado de acuerdo a los requerimientos del enunciado, por lo
- que no se eligió el óptimo.
- Se realizó un análisis de la complejidad temporal de dicho algoritmo, así
- como también del utilizado para crear la lista de cambios.
+La única diferencia entre las implementaciones de la utilidad diff es el
+ algoritmo utilizado para obtener una subsecuencia entre dos archivos.
+ En la primera se  implementó un algoritmo simple que no obtiene la subsecuencia
+ mas larga en todos los casos, mientras que en la segunda se implementó
+ un algoritmo óptimo que usa técnicas de programación dinámica.
 \end_layout
 
 \begin_layout Standard
@@ -121,8 +125,12 @@ Para la implementación, se utilizó el lenguaje C++ y el entorno de desarrollo
 Code::Blocks
 \emph default
 .
- Se procedió llevando las especificaciones algebraicas de los TDAs a clases
- de C++ e implementando el mencionado algoritmo.
+ El informe está divido en cuatro secciones principales.
+ En la primera sección se detalla la especificación de los tipos de datos
+ abstractos.
+ A continuación, se explica como se implementó cada TDA.
+ En la tercera sección se analizan los algoritmos utilizados en el diff,
+ y en la última sección se analizan los algoritmos del patch.
 \end_layout
 
 \begin_layout Section
