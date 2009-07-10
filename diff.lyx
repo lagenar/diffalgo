@@ -1887,7 +1887,7 @@ El algoritmo consiste en iterar sobre la subsecuencia y encontrar los saltos
  el índice del archivo origen y CambioAgregar cuando el salto es en el índice
  del archivo objetivo.
  Esta iteración puede implementarse con un bucle, pero es necesario considerar
- fuera de éste las ediciones al principio y al final.
+ fuera de éste las ediciones al final.
  
 \end_layout
 
@@ -1910,13 +1910,7 @@ su pseudocódigo es:
 \begin_layout LyX-Code
 
 \size footnotesize
-i = 1
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-k = 1
+i = k = 0
 \end_layout
 
 \begin_layout LyX-Code
@@ -1925,86 +1919,6 @@ k = 1
 Iterador it(subsecuencia)
 \end_layout
 
-\begin_layout LyX-Code
-
-\size footnotesize
-if (!it.terminado()) //si hay elementos en la subsecuencia
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-if (it.elemActual.segundo > k) //salto al principio?
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-cambios.insertar(cambioAgregar(...))
-\size scriptsize
-//se crea el cambio que agrega al principio
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-k = it.elemActual.segundo
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-if (it.elemActual.primero > i) //se produjo un salto al principio?
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-cambios.insertar(cambioEliminar(...))//
-\size scriptsize
-se crea el cambio que elimina al principio
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-i = it.elemActual.primero
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-it.sucesor() //se actualiza el iterador para el comienzo del bucle
-\end_layout
-
-\end_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-else // subsecuencia vacía
-\end_layout
-
-\begin_deeper
-\begin_layout LyX-Code
-
-\size footnotesize
-i = k = 0 
-\size scriptsize
-//en este caso se deben agregar todas las de objetivo
-\end_layout
-
-\begin_layout LyX-Code
-
-\size scriptsize
-            //y eliminar todas las de origen
-\end_layout
-
-\end_deeper
 \begin_layout LyX-Code
 
 \size footnotesize
@@ -2463,6 +2377,12 @@ ind_obj = 1 //índice del archivo objetivo
 \begin_layout LyX-Code
 
 \size footnotesize
+Iterador it(this) // iterador de la lista de cambios
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
 while (!it.terminado()) 
 \end_layout
 
@@ -2476,7 +2396,7 @@ cambio = it.elemActual()
 \begin_layout LyX-Code
 
 \size footnotesize
-while (!cambio->editaAPartirDe(ind_orig))  //mientras no aplique el cambio
+while (!cambio.editaAPartirDe(ind_orig))  //mientras no aplique el cambio
 \end_layout
 
 \begin_deeper
@@ -2512,10 +2432,6 @@ it.sucesor()
 \end_layout
 
 \end_deeper
-\begin_layout LyX-Code
-
-\end_layout
-
 \begin_layout LyX-Code
 
 \size footnotesize
@@ -2566,7 +2482,7 @@ Para obtener la complejidad de aplicarCambios se debe considerar el costo
 \end_layout
 
 \begin_layout Standard
- Sean m y n el número de líneas del los archivos origen y diff respectivamente,
+Sean m y n el número de líneas del los archivos origen y diff respectivamente,
  y supongamos que el diff sólo contiene un CambioAgregar.
  En este caso, se agregan todas las líneas del archivo origen al objetivo(ya
  que no hay cambios que eliminan) y n-1 líneas del archivo diff(las que
