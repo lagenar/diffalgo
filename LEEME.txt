@@ -1,0 +1,4 @@
+Los diff de la primera y segunda entrega se encuentran en el mismo proyecto: diffalgo.cbp
+Se usó compilación condicional. Por defecto se compila la función usada en la segunda entrega
+(el algoritmo óptimo) para usar el algoritmo básico se debe comentar la macro #define LCS en
+el archivo Algoritmos.cpp.
