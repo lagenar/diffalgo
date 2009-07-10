@@ -7,24 +7,9 @@ using namespace std;
 
 void Diferencial::crearCambiosSubsecuencia(const Archivo & orig, const Archivo & obj, const Subsecuencia & subsec)
 {
-    int i = 1;
-    int k = 1;
     IteradorLista<parInt> it(&subsec);
-    if (!it.terminado()) {
-        if (it.elemActual().Segundo() > 1) { /* se agregan las lineas anteriores a la primera linea
-                                              del archivo objetivo que esta en la subsec*/
-            insertarFinal(new CambioAgregar(obj, 0, 1, it.elemActual().Segundo() - 1));
-            k = it.elemActual().Segundo();
-        }
-        if (it.elemActual().Primero() > 1) { /* se eliminan las lineas anteriores a la primera linea
-                                              del archivo origen que esta en la subsec*/
-            insertarFinal(new CambioEliminar(orig, 0, 1, it.elemActual().Primero() - 1));
-            i = it.elemActual().Primero();
-        }
-        it.sucesor();
-    } else
-        k = i = 0; /*subsecuencia vacia: los indices se ponen en 0 para que se agregen todas
-                     las lineas del archivo objetivo y se eliminen todas las del origen*/
+    int i, k;
+    k = i = 0;
     while (!it.terminado()) {
         if (it.elemActual().Segundo() > k + 1)
             insertarFinal(new CambioAgregar(obj, i, k + 1, it.elemActual().Segundo() - 1));
@@ -34,15 +19,15 @@ void Diferencial::crearCambiosSubsecuencia(const Archivo & orig, const Archivo &
         k = it.elemActual().Segundo();
         it.sucesor();
     }
-    if (obj.getCantLineas() > k) /* se crea el cambio que agrega las lineas
+    if (obj.getCantLineas() > k) /*       se crea el cambio que agrega las lineas
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo objetivo
-                                        */
+                                 */
         insertarFinal(new CambioAgregar(obj, i, k + 1, obj.getCantLineas()));
-    if (orig.getCantLineas() > i) /* se crea el cambio que elimina las lineas
+    if (orig.getCantLineas() > i) /*      se crea el cambio que elimina las lineas
                                           que estan despues de la ultima linea de la subsec
                                           perteneciente al archivo origen
-                                        */
+                                  */
         insertarFinal(new CambioEliminar(orig, k, i + 1, orig.getCantLineas()));
 }
 
