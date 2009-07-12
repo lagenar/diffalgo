@@ -1480,14 +1480,22 @@ El método imprimirDiff itera sobre los cambios invocando al método getDiff
 \end_layout
 
 \begin_layout Standard
-El método crearCambiosSubsecuencia es invocado en el primer constructor
- y crearCambiosDiff en el segundo.
+El método crearCambiosSubsecuencia es invocado en el primer constructor,
+ se encarga de crear los cambios a partir de una subsecuencia y de insertarlos
+ en el objeto diferencial.
+ Mientras que crearCambiosDiff, que es invocado en el segundo constructor,
+ crea los cambios a partir de un archivo diff.
 \end_layout
 
 \begin_layout Standard
 El método calcularLineasObjetivo devuelve la cantidad de líneas que tendrá
  el archivo origen después de que se le apliquen los cambios del objeto
  diferencial.
+\end_layout
+
+\begin_layout Standard
+El método aplicarCambios recibe el archivo al que se le aplicaran los cambios(or
+igen) y el archivo en donde se guardara el resultado de la aplicación(objetivo).
 \end_layout
 
 \begin_layout Section
