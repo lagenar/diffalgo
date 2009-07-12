@@ -151,9 +151,16 @@ void Diferencial::aplicarCambios(const Archivo & origen, Archivo & objetivo)
             ind_orig++;
             ind_obj++;
         }
-        cambio->aplicarCambio(objetivo, ind_orig, ind_obj);
+        cambio->aplicarCambio(objetivo, ind_obj);
+        // se actualizan los indices
+        // si el cambio es para agregar se actualiza el indice del archivo objetivo
+        if (cambio->tipoCambio() == AGREGAR)
+            ind_obj += cambio->getCantLineas();
+        else // si es eliminar se actualiza el origen
+            ind_orig += cambio->getCantLineas();
         it.sucesor();
     }
+    //se copian las líneas que quedaron al final
     while (ind_orig <= origen.getCantLineas()) {
         objetivo.setLinea(ind_obj, origen.getLinea(ind_orig));
         ind_orig++;

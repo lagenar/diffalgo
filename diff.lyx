@@ -103,7 +103,7 @@ diff
  que permiten pasar de uno a otro.
  En la segunda etapa del trabajo se mejoró la utilidad diff empleando un
  algoritmo más efectivo.
- Además se diseño e implemento la utilidad patch que permite aplicar a un
+ Además se diseñó e implementó la utilidad patch que permite aplicar a un
  archivo los cambios especificados en un archivo diff.
 \end_layout
 
@@ -610,10 +610,56 @@ Representa un cambio genérico a un archivo, sirve de base para los dos tipos
  de cambio específicos.
  Su funcionalidad es la de producir y aplicar eliminaciones o adiciones
  a un archivo en la porción que le corresponde.
- La función getDiff retorna en el formato diff las modificaciones que deben
+\end_layout
+
+\begin_layout Standard
+Las dos formas de crear un cambio son:
+\end_layout
+
+\begin_layout Itemize
+A partir de un archivo(de donde se extraen las líneas) y los tres índices
+ del cambio.
+\end_layout
+
+\begin_layout Itemize
+A partir de un archivo(diff) y el índice del archivo donde comienza la descripci
+ón del cambio a crear.
+\end_layout
+
+\begin_layout Standard
+La función getDiff retorna en el formato diff las modificaciones que deben
  realizarse.
- AplicarCambio retorna un archivo modificado con el cambio aplicado.
- GetCantLineas retorna la cantidad de líneas que edita el cambio.
+ 
+\end_layout
+
+\begin_layout Standard
+La función aplicarCambio recibe el archivo que contiene el resultado parcial
+ de la aplicación de cambios y el índice a partir del cual se debe realizar
+ el cambio, retorna un archivo con el cambio aplicado.
+ 
+\end_layout
+
+\begin_layout Standard
+getCantLineas retorna la cantidad de líneas que edita el cambio.
+ 
+\end_layout
+
+\begin_layout Standard
+getIndiceOrigen retorna el indice en el cual el cambio edita en el archivo
+ origen(a partir de donde agrega si es CambioAgregar o a partir de donde
+ elimina si es CambioEliminar).
+ Esta función es necesaria para insertar los cambios en forma ordenada en
+ el Diferencial cuando los cambios se extraen de un archivo diff; si bien
+ los cambios estan bien ordenados cuando se interpreta el diff en el sentido
+ en el que fue escrito(de origen a objetivo), el inconveniente surge cuando
+ se debe interpretar el diff en forma inversa.
+\end_layout
+
+\begin_layout Standard
+La función editaAPartirDe es utilizada en el algoritmo para aplicar el patch,
+ se le pasa un número de línea del archivo al que se aplica el patch y este
+ retorna afirmativamente si el cambio comienza a editar a partir de esa
+ línea.
 \end_layout
 
 \begin_layout LyX-Code
@@ -642,7 +688,14 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $crear:\: Nat\: x\: Nat\: x\: Nat\: x\: Archivo\rightarrow Cambio$
+\begin_inset Formula $crear:\: Archivo\: x\: Nat\: x\: Nat\: x\: Nat\rightarrow Cambio$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $crear:\: Archivo\: x\: Nat\rightarrow Cambio$
 \end_inset
 
 
@@ -656,7 +709,7 @@ FUNCTIONS
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $aplicarCambio:\: Cambio\: x\: Archivo\rightarrow Archivo$
+\begin_inset Formula $aplicarCambio:\: Cambio\: x\: Archivo\: x\: Nat\rightarrow Archivo$
 \end_inset
 
 
@@ -664,6 +717,20 @@ FUNCTIONS
 
 \begin_layout LyX-Code
 \begin_inset Formula $getCantLíneas:\: Cambio\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $getIndiceOrigen:\: Cambio\rightarrow Nat$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $editaAPartirDe:\: Cambio\: x\: Nat\rightarrow Boolean$
 \end_inset
 
 
@@ -749,8 +816,8 @@ A partir de dos Archivos(origen y objetivo) y una subsecuencia común.
 \end_layout
 
 \begin_layout Itemize
-A partir de dos Archivos(origen y diff) y un bool(para especificar si se
- debe invertir el diff).
+A partir de dos Archivos(origen y diff) y un boolean(para especificar si
+ se debe invertir el diff).
 \end_layout
 
 \begin_layout Standard
@@ -765,7 +832,7 @@ CLASS Diferencial
 \end_layout
 
 \begin_layout LyX-Code
-IMPORTS Subsecuencia, Archivo, Lista[Cambio], bool
+IMPORTS Subsecuencia, Archivo, Lista, Cambio, boolean
 \end_layout
 
 \begin_layout LyX-Code
@@ -773,7 +840,7 @@ INHERITS Lista[Cambio]
 \end_layout
 
 \begin_layout LyX-Code
-BASIC CONSTRUCTORS Crear
+BASIC CONSTRUCTORS crear
 \end_layout
 
 \begin_layout LyX-Code
@@ -790,14 +857,14 @@ FUNCTIONS
 
 \begin_deeper
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\: Subsecuencia\rightarrow Diferencial$
+\begin_inset Formula $crear:\: Archivo\: x\: Archivo\: x\: Subsecuencia\rightarrow Diferencial$
 \end_inset
 
 
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $Crear:\: Archivo\: x\: Archivo\: x\: bool\rightarrow Diferencial$
+\begin_inset Formula $crear:\: Archivo\: x\: Archivo\: x\: boolean\rightarrow Diferencial$
 \end_inset
 
 
@@ -1196,9 +1263,6 @@ Cambio
 \begin_layout Standard
 Para favorecer el polimorfismo se implementó una clase abstracta, que representa
  a un cambio genérico.
- Se debieron agregar métodos para simplificar la implementación(principalmente
- del patch).
- 
 \end_layout
 
 \begin_layout LyX-Code
@@ -1211,7 +1275,7 @@ virtual string getDiff() = 0;
 \end_layout
 
 \begin_layout LyX-Code
-virtual void aplicarCambio(Archivo&, int &, int &) = 0;
+virtual void aplicarCambio(Archivo&, int) = 0;
 \end_layout
 
 \begin_layout LyX-Code
@@ -1244,7 +1308,11 @@ Lista<string> lineas;
 \begin_layout Standard
 El atributo protejido lineas, contiene las líneas que se deben agregar o
  eliminar.
- Se agregó reflexión en la clase Cambio a través de el método tipoCambio,
+ 
+\end_layout
+
+\begin_layout Standard
+Se agregó reflexión en la clase Cambio a través de el método tipoCambio,
  que retorna un valor de tipo TipoCambio:
 \end_layout
 
@@ -1257,7 +1325,7 @@ El método getDiff retorna la porción del diff del cambio, éste esta implement
  especificamente en cada subclase de cambio, pero en general lo que hace
  es: recorre la lista de líneas y genera la parte del diff con el formato
  correspondiente.
- Entonces, su complejidad es de 
+ Entonces, su complejidad es 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
 
@@ -1265,42 +1333,19 @@ El método getDiff retorna la porción del diff del cambio, éste esta implement
 \end_layout
 
 \begin_layout Standard
-El método getIndiceOrigen retorna el indice en el cual el cambio edita en
- el archivo origen(a partir de donde agrega si es CambioAgregar o a partir
- de donde elimina si es CambioEliminar).
- Este método es necesario para insertar los cambios en forma ordenada en
- el Diferencial cuando los cambios se extraen de un archivo diff; si bien
- los cambios estan bien ordenados cuando se interpreta el diff en el sentido
- en el que fue escrito(de origen a objetivo), el inconveniente surge cuando
- se debe interpretar el diff en forma inversa.
-\end_layout
-
-\begin_layout Standard
-El método editaAPartirDe es utilizado en el algoritmo para aplicar el patch,
- se le pasa un número de línea del archivo al que se aplica el patch y este
- retorna afirmativamente si el cambio comienza a editar a partir de esa
- línea.
- Se detallará más sobre este método cuando se vea el algoritmo para aplicar
- un patch.
-\end_layout
-
-\begin_layout Standard
-Por último, el método apicarPatch también está adaptado al algoritmo general
- de aplicación.
- Recibe el archivo en donde se está guardando el resultado de aplicación
- de cambios
+El método aplicarCambio recibe el archivo en donde se estan guardando los
+ cambios realizados al archivo origen
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-Se verá más adelante que la estrategía para aplicar un patch es crear un
- archivo nuevo, en vez de modificar uno existente.
+El algoritmo para aplicar un patch consiste en crear un archivo nuevo en
+ vez de cambiar el archivo origen.
 \end_layout
 
 \end_inset
 
-, el índice la línea actual del archivo origen y el índice de la línea actual
- del archivo resultante(todos por referencia).
+ y el índice a partir de donde debe realizar su edición.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1328,7 +1373,7 @@ Tiene dos constructores: uno que obtiene las líneas a agregar a partir del
 
 \begin_layout Standard
 El método aplicarCambio setea las líneas a agregar en el archivo resultante(a
- partir del índice pasado), actualizando también el indice de éste archivo.
+ partir del índice pasado).
  Su complejidad es de 
 \begin_inset Formula $O\left(n\right)$
 \end_inset
@@ -1351,9 +1396,9 @@ Los constructores son análogos a los de CambioAgregar.
 \end_layout
 
 \begin_layout Standard
-El método aplicarCambio simplemente actualiza el índice del archivo origen
- pasado por referencia(hace un salto de las líneas que deben eliminarse);
- por lo que su complejidad es de 
+El método aplicarCambio tiene implementación vacia, porque en el archivo
+ nuevo las líneas a eliminar no han sido agregadas.
+ Su complejidad es 
 \begin_inset Formula $O\left(1\right)$
 \end_inset
 
@@ -1418,7 +1463,7 @@ private:
 \begin_layout LyX-Code
 
 \size footnotesize
-void calcularCambiosDiff(Archivo &, bool);
+void crearCambiosDiff(Archivo &, bool);
 \end_layout
 
 \begin_layout LyX-Code
@@ -1430,7 +1475,8 @@ ia &);
 
 \end_deeper
 \begin_layout Standard
-El método imprimirDiff muestra los resultados por consola.
+El método imprimirDiff itera sobre los cambios invocando al método getDiff
+ y muestra los resultados por consola.
 \end_layout
 
 \begin_layout Standard
@@ -2044,7 +2090,7 @@ e, el peor de los casos ocurre cuando los archivos no tienen líneas en común,
 \end_layout
 
 \begin_layout Section
-Patch
+Patch: algoritmos y utilizados y su complejidad
 \end_layout
 
 \begin_layout Subsection
@@ -2294,6 +2340,38 @@ insertar(anterior)
 
 \end_deeper
 \begin_layout Standard
+Donde getCambioDiff es:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+getCambioDiff(diff, i)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+if (diff[i].find('a'))
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+return CambioAgregar(diff, i)
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+return CambioEliminar(diff, i)
+\end_layout
+
+\end_deeper
+\begin_layout Standard
 La complejidad de este algoritmo puede analizarse considerando el tamaño
  del archivo diff.
  El peor de los casos ocurre cuando la flag inversa es verdadera, ya que
@@ -2308,10 +2386,10 @@ La complejidad de este algoritmo puede analizarse considerando el tamaño
 \begin_layout Standard
 Para analizar el bucle while se debe tener en cuenta la complejidad de creación
  de un cambio a partir del diff, ésta es 
-\begin_inset Formula $O\left(m\right)$
+\begin_inset Formula $O\left(k\right)$
 \end_inset
 
-, siendo m las líneas que edita el cambio.
+, siendo k las líneas que edita el cambio(más la cabecera del cambio).
  Supongamos que el diff tiene m cambios: 
 \begin_inset Formula $\left(C_{1},C_{2},\ldots,C_{m}\right)$
 \end_inset
@@ -2330,12 +2408,12 @@ Para analizar el bucle while se debe tener en cuenta la complejidad de creación
 \end_inset
 
 .
- Sumando las complejidades de las dos partes deducimos que la complejidad
- del algoritmo es  
+ Sumando las complejidades de las dos partes(invertirDiff y el bucle while)
+ deducimos que la complejidad del algoritmo es  
 \begin_inset Formula $O\left(2n\right)=O\left(n\right)$
 \end_inset
 
-.
+, siendo n la cantidad de líneas del diff.
 \end_layout
 
 \begin_layout Subsection
@@ -2367,10 +2445,14 @@ Los cambios que eliminan líneas simplemente registran saltos en el archivo
 
 \begin_layout Standard
 El método aplicarCambios recibe como parámetros dos archivos, origen y objetivo.
- Se asume que el tamaño del archivo objetivo es el indicado.
+ Se asume que el tamaño del archivo objetivo es el indicado(que ha sido
+ creado con el tamaño resultante de invocar a calcularLineasObjetivo pasando
+ el archivo origen).
  El algoritmo empleado itera sobre la lista de cambios, se encarga de copiar
  al archivo objetivo las líneas que permanecen sin modificarse e invocar
- el método aplicarCambio de cada cambio.
+ el método aplicarCambio de cada cambio, después de invocar al método aplicarCam
+bio actualiza los índices de los archivos usando el método getCantLineas
+ del cambio.
 \end_layout
 
 \begin_layout LyX-Code
@@ -2433,9 +2515,49 @@ ind_obj++
 \begin_layout LyX-Code
 
 \size footnotesize
-cambio.aplicarCambio(objetivo,ind_orig,ind_obj) //aplica el cambio
+cambio.aplicarCambio(objetivo, ind_obj) //aplica el cambio
 \end_layout
 
+\begin_layout LyX-Code
+
+\size footnotesize
+// se actualizan los índices
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+// si el cambio es para agregar se actualiza el indice del archivo objetivo
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+if (cambio.tipoCambio() == AGREGAR)
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_obj += cambio.getCantLineas + 1;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+else // si es eliminar se actualiza el origen
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+
+\size footnotesize
+ind_orig += cambio.getCantLineas + 1;
+\end_layout
+
+\end_deeper
 \begin_layout LyX-Code
 
 \size footnotesize
