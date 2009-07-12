@@ -26,7 +26,7 @@ CambioAgregar::CambioAgregar(const Archivo & objetivo, int lineaOrigen, int line
         lineas.insertarFinal(objetivo.getLinea(k));
 }
 
-void CambioAgregar::aplicarCambio(Archivo & objetivo, int & ind_orig, int & ind_obj)
+void CambioAgregar::aplicarCambio(Archivo & objetivo, int ind_obj)
 {
     IteradorLista<string> it(&lineas);
     while(!it.terminado()) {
@@ -79,9 +79,10 @@ CambioEliminar::CambioEliminar(const Archivo & origen, int lineaDestino, int lin
         lineas.insertarFinal(origen.getLinea(k));
 }
 
-void CambioEliminar::aplicarCambio(Archivo & objetivo, int & ind_orig, int & ind_obj)
+void CambioEliminar::aplicarCambio(Archivo & objetivo, int ind_obj)
 {
-    ind_orig += getCantLineas();
+    /*Este método no hace nada porque las líneas a eliminar
+    no fueron copiadas a objetivo en primera instancia*/
 }
 
 string CambioEliminar::getDiff()

@@ -14,7 +14,7 @@ class Cambio
     public:
         virtual ~Cambio() { }
         virtual string getDiff() = 0;
-        virtual void aplicarCambio(Archivo&, int &, int &) = 0;
+        virtual void aplicarCambio(Archivo&, int) = 0;
         //Utilizado para reflexión de tipos de cambio
         virtual TipoCambio tipoCambio() = 0;
         //retorna la cantidad de líneas que edita
@@ -34,7 +34,7 @@ class CambioAgregar: public Cambio
         string getDiff();
         TipoCambio tipoCambio() { return AGREGAR; }
         int getCantLineas() { return lineaDestinoFinal - lineaDestinoComienzo + 1; }
-        void aplicarCambio(Archivo &, int &, int &);
+        void aplicarCambio(Archivo &, int);
         int getIndiceOrigen() { return lineaOrigen; }
         bool editaAPartirDe(int);
     private:
@@ -52,7 +52,7 @@ class CambioEliminar: public Cambio
         string getDiff();
         TipoCambio tipoCambio() { return ELIMINAR; }
         int getCantLineas() { return lineaOrigenFinal - lineaOrigenComienzo + 1; }
-        void aplicarCambio(Archivo &, int &, int &);
+        void aplicarCambio(Archivo &, int);
         int getIndiceOrigen() { return lineaOrigenComienzo; }
         bool editaAPartirDe(int);
     private:
