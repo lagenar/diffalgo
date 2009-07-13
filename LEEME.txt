@@ -2,3 +2,6 @@ Los diff de la primera y segunda entrega se encuentran en el mismo proyecto: dif
 Se usó compilación condicional. Por defecto se compila la función usada en la segunda entrega
 (el algoritmo óptimo) para usar el algoritmo básico se debe comentar la macro #define LCS en
 el archivo Algoritmos.cpp.
+
+Los ejecutables para linux son diff.bin y patch.bin
+y para windows diff.exe y patch.exe

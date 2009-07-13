@@ -30,7 +30,10 @@ void calcularSubsecuencia(const Archivo & archorig, const Archivo & archobj, Sub
     };
     int m = archorig.getCantLineas() + 1;
     int n = archobj.getCantLineas() + 1;
-    elem_mat MatLCS[m][n];
+    elem_mat **MatLCS;
+    MatLCS = new elem_mat*[m];
+    for (int i = 0; i < m; i++)
+    	MatLCS[i] = new elem_mat[n];
     for (int i = 1; i < m; i++) {
         MatLCS[i][0].fl = nada;
         MatLCS[i][0].lcs = 0;
@@ -69,5 +72,8 @@ void calcularSubsecuencia(const Archivo & archorig, const Archivo & archobj, Sub
            n--;
        }
    }
+   for (int i = 0; i < m; i++)
+    	delete MatLCS[i];
+    delete []MatLCS;
 }
 #endif
